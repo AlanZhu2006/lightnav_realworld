@@ -2,7 +2,6 @@ import asyncio
 
 import pytest
 from aiohttp import web
-
 from vln_mujoco.vln_client import VlnClient
 
 

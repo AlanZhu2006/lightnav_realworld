@@ -24,4 +24,4 @@ check:
 lint: check
 
 test:
-	PYTHONPATH=src $(PYTHON) -m pytest -q -m "not gpu"
+	PYTHON=$(PYTHON) bash deployment/test.sh

@@ -1,0 +1,13 @@
+[Unit]
+Description=LightNav ROS 2 camera client and Go2 controller
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+WorkingDirectory=/ABSOLUTE/PATH/lightnav_realworld
+ExecStart=/ABSOLUTE/PATH/lightnav_realworld/deployment/robot/start.sh
+Restart=no
+TimeoutStopSec=30
+KillMode=control-group
+[Install]
+WantedBy=default.target

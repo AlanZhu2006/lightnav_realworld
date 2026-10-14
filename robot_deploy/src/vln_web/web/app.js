@@ -362,7 +362,7 @@
     const pipelineStarting = state.autoOwner && (!vln.enabled || !mpc.enabled);
     setDisabled(
       ui.vlnToggle,
-      !state.connected || pipelineStarting || (
+      !state.connected || (
         !pipelineEnabled && (!vln.available || !mpc.available || !robot.connected)
       )
     );
@@ -382,7 +382,7 @@
       : (state.manualConfigPending
           ? "Applying…"
           : (state.locked ? "Editable after releasing control" : "Takes effect immediately in the current process"));
-    setText(ui.vlnToggle, pipelineStarting ? "Starting…" : (pipelineEnabled ? "Stop VLN" : "Start VLN"));
+    setText(ui.vlnToggle, pipelineStarting ? "Cancel start" : (pipelineEnabled ? "Stop VLN" : "Start VLN"));
     ui.vlnToggle.classList.toggle("active", pipelineEnabled);
     ui.count.textContent = vln.waypoint_count ?? state.waypoints.length;
     ui.latency.textContent = Number.isFinite(Number(vln.last_latency_ms)) ? `${Number(vln.last_latency_ms).toFixed(0)} ms` : "—";
@@ -690,8 +690,25 @@
   addEventListener("blur", releaseControl);
   document.addEventListener("visibilitychange", () => { if (document.hidden) releaseControl(); });
   setInterval(publishManual, 100);
-  setInterval(loadCameraFrame, 100);
+  setInterval(loadCameraFrame, 50);
   render();
   connect();
   loadCameraFrame();
 })();
+
+// Read-only recording status; never changes navigation or control.
+setInterval(async () => {
+  const label = document.getElementById("recording-status");
+  if (!label) return;
+  try {
+    const response = await fetch("/api/health");
+    const data = await response.json();
+    const rec = data.recording;
+    label.textContent = rec?.warning ? "Recording warning: " + rec.warning
+      : rec?.error ? "Recording error: " + rec.error
+      : rec?.active ? "● REC " + rec.directory
+      : rec?.saving ? "Generating both videos…"
+      : rec?.directory ? "Saved: " + rec.directory : "Auto recording ready";
+    label.style.color = rec?.warning ? "#ffb454" : rec?.error ? "#ff7070" : rec?.active ? "#ffb454" : "";
+  } catch { label.textContent = "Recording status unavailable"; }
+}, 1000);

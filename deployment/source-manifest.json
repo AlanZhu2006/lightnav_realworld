@@ -1,0 +1,388 @@
+{
+  "upstream_repository": "https://github.com/lightorigins/LightNav-0",
+  "upstream_commit": "3015508b70fb6e30bbd66701e94c9b916dcb8df8",
+  "model_repository": "LightOriginsHQ/LightNav-0",
+  "model_revision": "826dc5fbfa37afa8293d2e336d329b6ffc0bfb64",
+  "robot_snapshot_session": "20261009_151148_dbd02d",
+  "robot_snapshot_file_hashes": [
+    {
+      "path": "config/fastdds-camera.xml",
+      "sha256": "03bdc7f978f76b3b2201f718307d75497a6395cb910b263893b272acbb8be501"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "3cd28a56c9ed63f04ac278247c858a762452256c0e5bbb8a669a3b80cb528ed7"
+    },
+    {
+      "path": "robot-env.sh",
+      "sha256": "eaca463c78c7258b450885d4501ac2878caad12608e3085962fbb1200510d95a"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/go2_adapter/__init__.py",
+      "sha256": "021c6a31d9899cd555be8661eb1555f328bad02eb12eca8ec5f97d7fc4f69eeb"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/go2_adapter/adapter_node.py",
+      "sha256": "e0e1335647c432c3970c96397d765a835697704c78a7c14e31688d65159b91cf"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/go2_adapter/safety.py",
+      "sha256": "9eaa288abec89adb97495a8b72705f52c1c0aa25e7596033490ffa50495b4628"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/go2_adapter/unitree_client.py",
+      "sha256": "93f66cdfb6f9ff0b640a6fe9219a8b3afeecd6682318247a82758270c51fa035"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/package.xml",
+      "sha256": "1077ee6176e3f554e1f985ee64b4dbe37163392d768c593f45ea30d96f604992"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/setup.py",
+      "sha256": "c025a4ac55c1e154cfcf57c2387c6f80fcbe2a9cc823ae33a1f81897dd2f0e5c"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/test/test_safety.py",
+      "sha256": "f754d4ec5620258938d517616aaa74c65cdd7db0d5d7211cb00acf2e679761d6"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/test/test_state_freshness.py",
+      "sha256": "b8732ae671747fd39a9419ad15017d885522374a80334c22cb4790a5561adf9a"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/go2_adapter/test/test_unitree_client.py",
+      "sha256": "8382cea06bd61ea09016544117b05f07e143b0c66e3978c4e3979015cb0a2103"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/tron_adapter/package.xml",
+      "sha256": "da46912b198363027d00be0eff7c419f073875376845e43d27c452b1fb213f28"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/tron_adapter/setup.py",
+      "sha256": "2c7ff957f47a4d09025700069c7c793f2ea38357ea9bb4ee43527c92996c4c4d"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/tron_adapter/test/test_safety.py",
+      "sha256": "d0379c35e4ec8b7098a6f72113d70c53f28f4acc11964f6a7b720d0fb182bd6e"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/tron_adapter/tron_adapter/__init__.py",
+      "sha256": "1436f8244a313d39e69d8f3974ae11aba36fcec4767124aba61294963d2acd49"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/tron_adapter/tron_adapter/adapter_node.py",
+      "sha256": "2e6f5c3fbe30a97468b62ff1438ea17815a69acb2402391bb63e297ffa54aab3"
+    },
+    {
+      "path": "robot_deploy/src/robot_adapters/tron_adapter/tron_adapter/safety.py",
+      "sha256": "b520a69b894db6bb7b9b9c858be5dd2be05936866d9a853de3114e14ca8a0d9b"
+    },
+    {
+      "path": "robot_deploy/src/vln_bringup/launch/go2.launch.py",
+      "sha256": "c1fe1984f60563ce9ed58683cf7e11d80b189875f33f0516fa2bd675da0c374d"
+    },
+    {
+      "path": "robot_deploy/src/vln_bringup/launch/go2_realsense.launch.py",
+      "sha256": "b71fa1466472c9ba988ee716ed4d6aaa0055eaffd2dcae7b8943f0c0bc371c33"
+    },
+    {
+      "path": "robot_deploy/src/vln_bringup/launch/tron.launch.py",
+      "sha256": "ba58fe74d70a6d36f426b13d0bca39f2c6ce1a6f67858b40daf87dfd05a01da6"
+    },
+    {
+      "path": "robot_deploy/src/vln_bringup/package.xml",
+      "sha256": "ccb475fa30de0f89b237e8eb040ed852229b04ef136a99340d26e513963d2be0"
+    },
+    {
+      "path": "robot_deploy/src/vln_client/package.xml",
+      "sha256": "31c9ec5553c9e549dd19319919d508a1cae6535b3b771976441e14858dcf04be"
+    },
+    {
+      "path": "robot_deploy/src/vln_client/setup.py",
+      "sha256": "00631c66a8e6f1f88cd93fd8d89b2025f5ce9cab969e1b8ded9a9a99a4b9804a"
+    },
+    {
+      "path": "robot_deploy/src/vln_client/test/test_vln_client.py",
+      "sha256": "4ba530ba790650279f271b591ccb2ef29b273b34dd2cc36ddb15f81fd0c48bb0"
+    },
+    {
+      "path": "robot_deploy/src/vln_client/vln_client/__init__.py",
+      "sha256": "2c6a9fabc1e4cce6c77a6a6f34cfb91ef526676744c61c2f7bd8ca2850771da1"
+    },
+    {
+      "path": "robot_deploy/src/vln_client/vln_client/vln_client.py",
+      "sha256": "0cc20933511d75f90a4a9873430ef3672c7faaece5d30dfea327f01b834b69d5"
+    },
+    {
+      "path": "robot_deploy/src/vln_client/vln_client/vln_node.py",
+      "sha256": "047cbe7f26d26aaf64e6be2c4ee1db423afe2c6e95af0ba39d6e841f1e23e8ca"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/package.xml",
+      "sha256": "929aaf921d86f0299a0d01d0c9d79606a66e6c0613fdaac5a07a37f0bc3fbd2c"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/setup.py",
+      "sha256": "362716fb057ec2ffeaf15af69c7abb7dcc57a4af4ccd38aaf0427100cb3ff763"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/test/test_geometry.py",
+      "sha256": "0a0c049c0fa782bb8f00d572066e5c3c75e95325db5068cf448e13a8729069a4"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/test/test_mpc.py",
+      "sha256": "f22166bc333ff1f011871f54704e1de31881fe4e5e5c32837cc48bbfbabb9984"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/test/test_mpc_node.py",
+      "sha256": "63f8d2879e9f7a739c0ab928468762edd508a5c65931ebd78e8800ffb1ca1ab1"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/vln_mpc/__init__.py",
+      "sha256": "428e0f21ec675ca2b81d5dd2d08b3b3477078fa79c7cf0e7c8034f26392b7749"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/vln_mpc/geometry.py",
+      "sha256": "af72a6ebca4ff18b3d1a09b69583c431d6cbdd071c478945cbe9aa45690d3a14"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/vln_mpc/mpc.py",
+      "sha256": "fe97c24c6eb5ec443892ea8e6719493390a448ed036cebac1fcbd213c795c0a8"
+    },
+    {
+      "path": "robot_deploy/src/vln_mpc/vln_mpc/mpc_node.py",
+      "sha256": "e659d1dcd978379571be12c6ac82386c01ddc96766764f467bdaa81870e2a8b9"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/package.xml",
+      "sha256": "a43ec88bd310f8b61b21f0d6caf84cfd5ad026cf675a7aec0c679a815b447539"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/setup.py",
+      "sha256": "67e7a1ee0455187d8d2ef0828b20c5c2a591eec2d24b70aafd17e559aef1992f"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/test/test_control_interruption.py",
+      "sha256": "f8d3c44f33d8602362050ce535342d497bc861f010e117e024df1c8b02c4bb3d"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/test/test_recorder.py",
+      "sha256": "bc6d446cb491055d7791eb10aedb1c012373aadaa1fe0bd210b5648e3cccb9d0"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/test/test_web_server.py",
+      "sha256": "12167529492ea7e2b08da86bc5564fa03a811c57a2aebda281088d71c9538974"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/test/test_wifi.py",
+      "sha256": "4ace14f7a343d429ada8048919a87020206afa8c9dd21aa6d483026b51f18301"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/observability.py",
+      "sha256": "6929161aaf4a51a4164b2da550a933a8e5e7ca7fd4e2da4052de957438e6a003"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/recorder.py",
+      "sha256": "c191ffa49bb2a491ec120070b77c4f6298e5bff7730dcb814baab1a03ae3e968"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/recording_archive.py",
+      "sha256": "2c0b5e60801129fc60a72df026ee728be1070a1b832f4aed7dd27fce43ff38cd"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/render_recording.py",
+      "sha256": "f5394291051cd3db23b4b401ebe88de0b528132cb4c1e526804e644ca76fadee"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/web_node.py",
+      "sha256": "c1badfb1d181e0463332b86f71212350721659740582b21d27703c63692671ad"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/web_server.py",
+      "sha256": "92a1e9c9d4774ff3120b4f04181274c4f645fd1902054a43f75d995efb439912"
+    },
+    {
+      "path": "robot_deploy/src/vln_web/vln_web/wifi.py",
+      "sha256": "ad7b043f6ee6888579c5beb48977ba391e1464c20760d5d12aaef8ba18d5c0f8"
+    },
+    {
+      "path": "src/lightnav/__init__.py",
+      "sha256": "79b2b0b1e64902dd441bc76dd6160e95e7710d0269bf5aa48b5de609f36fa236"
+    },
+    {
+      "path": "src/lightnav/cli/__init__.py",
+      "sha256": "a059a7ecea60a694a609144db2e6be7b2f5129bf25a8d1eba170f46a772d0128"
+    },
+    {
+      "path": "src/lightnav/cli/eval_habitat.py",
+      "sha256": "dce3727aed9946b6d816af8807f4609cf2a80a57336dedc637bfa1e1a0d4cf09"
+    },
+    {
+      "path": "src/lightnav/cli/eval_merge.py",
+      "sha256": "229999f6313fd8e3a59c2a43e1fe118459897037a61855dca8fdbc0679802167"
+    },
+    {
+      "path": "src/lightnav/cli/predict.py",
+      "sha256": "824103b62da7f1a16d248a37f019be16fe224b8e9e14b51636b679c63ca02c94"
+    },
+    {
+      "path": "src/lightnav/cli/render.py",
+      "sha256": "576ad54cd21ce1047b2eeb6e6fc294ee0b8c61da2a4802627f9c02772b32f412"
+    },
+    {
+      "path": "src/lightnav/cli/ws_client.py",
+      "sha256": "878c05ba2278807420d58b8a0f424cd00d39a245116995c6c56d587815466a60"
+    },
+    {
+      "path": "src/lightnav/data_processor.py",
+      "sha256": "3feb92fa0b0e02d1de0ec12446cf769efd3000cfece83a410250e403fa1f551a"
+    },
+    {
+      "path": "src/lightnav/eval_config.py",
+      "sha256": "5cd23cd9f8040c90e7e572c706cb0b5778750f1b68d1a6e03ed65a2f58a98318"
+    },
+    {
+      "path": "src/lightnav/habitat/__init__.py",
+      "sha256": "cf56d36f6014741d9e1a2e636bdb4e1061741e40b74e71a3a47991c393aa3cf9"
+    },
+    {
+      "path": "src/lightnav/habitat/merge.py",
+      "sha256": "e492b7ef6f6cded65b366444f463145c550a25dd7ec1aae1aad1ba55d17acbfb"
+    },
+    {
+      "path": "src/lightnav/habitat/policy.py",
+      "sha256": "1e7231de07a61f11719116d12c715df9f55e83ffcece88498f087b68f8edd3db"
+    },
+    {
+      "path": "src/lightnav/habitat/remote_env.py",
+      "sha256": "a89d79d4d0c8ad89d58b8ab2ea079bdc04ba2238e4cd2fb8320ef8b3ae9bd1fe"
+    },
+    {
+      "path": "src/lightnav/habitat/results.py",
+      "sha256": "cf7ba49a16c29d1c11977f49f59e58d480bd705d0c71fc06deb8e62ef58b6c47"
+    },
+    {
+      "path": "src/lightnav/habitat/runner.py",
+      "sha256": "6c9a7816af291128495cf3f7fa75d27162a8cf8dde8306bdd6816a8c13e08957"
+    },
+    {
+      "path": "src/lightnav/inference/__init__.py",
+      "sha256": "2b040be9a48bdcb0398c3343b2246224e4f6040e8b9e974c815dc0e79c31d2fd"
+    },
+    {
+      "path": "src/lightnav/inference/config.py",
+      "sha256": "3683ccd42037ded602764c2b1962a9b3e80f1f3841497a9c22dac1f540df70f1"
+    },
+    {
+      "path": "src/lightnav/inference/engine.py",
+      "sha256": "0c955a7bee0df7363165c64f5e4b20bd065c1f132c36c50967fe9b2530c67ec0"
+    },
+    {
+      "path": "src/lightnav/inference/frame_preprocessing.py",
+      "sha256": "e339b9b9038dd17af27e1addb357ea12f509da0cb34f742f05ba935455a4ebfa"
+    },
+    {
+      "path": "src/lightnav/inference/model.py",
+      "sha256": "e745d3f7755eba62834168ec5e1676b611d5cf47e866a256d44f13accdbe44c1"
+    },
+    {
+      "path": "src/lightnav/inference/policies.py",
+      "sha256": "05c6a37b11911498d25812a2320084994a0fefd965ca883c7f55c8dbf8b57c03"
+    },
+    {
+      "path": "src/lightnav/inference/samples.py",
+      "sha256": "6e9c24fc70526f7dd910d4a2601d14c856e698850eba5c50c71f2bea7d0ced69"
+    },
+    {
+      "path": "src/lightnav/inference/vit_cache.py",
+      "sha256": "267fd3c1df605a869a0f8eaddd72b3d9645a7f8a9db78630122f2792c37bd797"
+    },
+    {
+      "path": "src/lightnav/inference/vllm_utils.py",
+      "sha256": "869d7ec0eff457239efede1c6e164f2766f50a553ef5113906e72d0fe442506c"
+    },
+    {
+      "path": "src/lightnav/processing.py",
+      "sha256": "470c1bc84bce40648105492e5b1b657bfe5cc49fec1c192bed27649add18684c"
+    },
+    {
+      "path": "src/lightnav/prompts.py",
+      "sha256": "9968adadffeed91327edbe2c04bd355171c32d51b2abad63755e24009aa0fd41"
+    },
+    {
+      "path": "src/lightnav/serving/__init__.py",
+      "sha256": "f83c9be3b60e5c6798fee78ac2ed6d60151caa010261c69f4d518f93ca1f64ae"
+    },
+    {
+      "path": "src/lightnav/serving/batcher.py",
+      "sha256": "b8505fc35ad5e3959dba22f3e0fc6a2e303f422492d454ccff29d5db106d308a"
+    },
+    {
+      "path": "src/lightnav/serving/protocol.py",
+      "sha256": "75b42419cfbe506a5fc78aee33025fb2a2e51051db10e1e59bbf53cd409bff7a"
+    },
+    {
+      "path": "src/lightnav/serving/token_budget.py",
+      "sha256": "d8ceb6c3b0a43c68a0f7fc1cb944e4a4f72e5de3282f37b77c7f3cc4ad8685f0"
+    },
+    {
+      "path": "src/lightnav/serving/tracking_service.py",
+      "sha256": "88a1912ce2b3ad7dede12c28f08475bbb9115756c3e5cd9b8e6018768fe17add"
+    },
+    {
+      "path": "src/lightnav/serving/ws_server.py",
+      "sha256": "303cdb777e911087b62f6545b8da8e391c132ee9dbc9c622cb5627dc80e60701"
+    },
+    {
+      "path": "src/lightnav/slowfast.py",
+      "sha256": "ac7deb3535341154f06b5419e6fe6b740ca169c136b3d03ad37bfed64de162cc"
+    },
+    {
+      "path": "src/lightnav/tracking.py",
+      "sha256": "59de24911956821e00f80ca82d4cfad4b15ab0de4d85e85244436694ea805b69"
+    },
+    {
+      "path": "src/lightnav/traj_vocab.py",
+      "sha256": "84c83780ba893d468e7529f5de44223f5f2aa44c099eb46fac3edb1786c14f0d"
+    },
+    {
+      "path": "src/lightnav/velocity.py",
+      "sha256": "aa155b4a674298c1bf234679be4295ff6d387a87818dc66d407dfa74d2ca076f"
+    },
+    {
+      "path": "src/lightnav/viz/__init__.py",
+      "sha256": "b0ddf34f974c7c1562ba603a7cb6e06aca7e77b4f49a881c5ed924d409d7fbec"
+    },
+    {
+      "path": "src/lightnav/viz/projection.py",
+      "sha256": "a49840f72972c0d109a4f976ae314270bcdf98abb8dbb9bf441b9f165ceef345"
+    },
+    {
+      "path": "src/lightnav/viz/recorder.py",
+      "sha256": "a2f979127935a37ea1e1cd4568d4da5d05b03ffb333204c3a71e94dc1181bace"
+    },
+    {
+      "path": "src/lightnav/viz/render.py",
+      "sha256": "fb70c9bfcb8b5906c4f29d5f81a7e7781a6f3e5091d8babd09b58f26d274ef1b"
+    },
+    {
+      "path": "src/lightnav/viz/render_episode.py",
+      "sha256": "8d2bf01de6beb00d38e763a3e5e546718334a7e62cefa137958c51d5b3a3822a"
+    },
+    {
+      "path": "src/lightnav/viz/video.py",
+      "sha256": "67318a2d0d5d6b21b6c40313ce7c6e30eb7373c09befe2d11b9d08b529e23a54"
+    },
+    {
+      "path": "src/lightnav/vln_utils.py",
+      "sha256": "3d2e35fbe793497f6043a45d53a9d0a7b9498e07b10d4458df4832a04b5b8bec"
+    }
+  ],
+  "robot_patch_sha256": "d7e28cf9277fbd77705c99894604ba0a706f95e376038265815ac5108223c326",
+  "server_patch_sha256": "38f4f43199fee7ab33e87ade5a7f36502d3ff69f4d6c78cbb1dab4599b1642c0",
+  "scope": "Deployment source only; model weights and experimental recordings are obtained or generated separately."
+}

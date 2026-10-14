@@ -1,0 +1,13 @@
+LightNav real-world deployment integration
+
+This repository incorporates LightNav-0 by lightorigins / LightOrigins,
+upstream https://github.com/lightorigins/LightNav-0,
+base commit 3015508b70fb6e30bbd66701e94c9b916dcb8df8.
+The upstream Apache-2.0 license and attribution are retained.
+
+Local deployment changes were restored from an existing Go2 / RealSense
+runtime snapshot and workstation changes. See docs/REALWORLD_PROVENANCE.md
+and deployment/source-manifest.json for provenance.
+
+Unitree SDK2, CycloneDDS, ROS 2, RealSense drivers, and model weights are
+external dependencies with their own licenses; they are not vendored here.

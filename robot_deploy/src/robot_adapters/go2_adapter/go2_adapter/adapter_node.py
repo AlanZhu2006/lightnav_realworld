@@ -46,20 +46,12 @@ class Go2AdapterNode(Node):
         self.declare_parameter("odom_frame", "odom")
         self.declare_parameter("base_frame", "base_link")
 
-        self.network_interface = self._required_string_parameter(
-            "network_interface"
-        )
+        self.network_interface = self._required_string_parameter("network_interface")
         self.dds_domain_id = int(self.get_parameter("dds_domain_id").value)
         self.sdk_timeout_s = float(self.get_parameter("sdk_timeout_s").value)
-        self.state_timeout_s = float(
-            self.get_parameter("state_timeout_s").value
-        )
-        self.control_rate_hz = float(
-            self.get_parameter("control_rate_hz").value
-        )
-        self.input_watchdog_s = float(
-            self.get_parameter("input_watchdog_s").value
-        )
+        self.state_timeout_s = float(self.get_parameter("state_timeout_s").value)
+        self.control_rate_hz = float(self.get_parameter("control_rate_hz").value)
+        self.input_watchdog_s = float(self.get_parameter("input_watchdog_s").value)
         self.final_zero_frames = int(self.get_parameter("zero_frames").value)
         self.publish_tf = bool(self.get_parameter("publish_tf").value)
         self.odom_frame = str(self.get_parameter("odom_frame").value)
@@ -84,45 +76,31 @@ class Go2AdapterNode(Node):
             reliability=ReliabilityPolicy.RELIABLE,
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
         )
-        self.diagnostics_pub = self.create_publisher(
-            DiagnosticArray, "diagnostics", 10
-        )
+        self.diagnostics_pub = self.create_publisher(DiagnosticArray, "diagnostics", 10)
         self.odom_pub = self.create_publisher(Odometry, "odom", 20)
         self.sent_pub = self.create_publisher(TwistStamped, "cmd_vel", 20)
-        self.source_pub = self.create_publisher(
-            String, "control/source", latched
-        )
+        self.source_pub = self.create_publisher(String, "control/source", latched)
         self.event_pub = self.create_publisher(String, "robot/events", 20)
-        self.tf_broadcaster = (
-            TransformBroadcaster(self) if self.publish_tf else None
-        )
-        self.create_subscription(
-            TwistStamped, "web/cmd_vel", self._on_manual_command, 10
-        )
-        self.create_subscription(
-            TwistStamped, "mpc/cmd_vel", self._on_auto_command, 10
-        )
-        self.create_service(
-            SetBool, "control/set_manual", self._set_manual_enabled
-        )
-        self.create_service(
-            SetBool, "control/set_auto", self._set_auto_enabled
-        )
+        self.tf_broadcaster = TransformBroadcaster(self) if self.publish_tf else None
+        self.create_subscription(TwistStamped, "web/cmd_vel", self._on_manual_command, 10)
+        self.create_subscription(TwistStamped, "mpc/cmd_vel", self._on_auto_command, 10)
+        self.create_service(SetBool, "control/set_manual", self._set_manual_enabled)
+        self.create_service(SetBool, "control/set_auto", self._set_auto_enabled)
         self.create_service(Trigger, "control/stop", self._software_stop)
         self.create_service(Trigger, "robot/stand", self._request_stand)
         self.create_service(Trigger, "robot/walk", self._request_walk)
         self.create_service(Trigger, "robot/sit", self._request_sit)
-        self.create_service(
-            Trigger, "robot/emergency_stop", self._emergency_stop
-        )
+        self.create_service(Trigger, "robot/emergency_stop", self._emergency_stop)
 
         self._lock = threading.Lock()
         self._source = "disabled"
+        self._control_reason = "startup"
         self._manual_command = (0.0, 0.0)
         self._auto_command = (0.0, 0.0)
         self._manual_received_s = float("-inf")
         self._auto_received_s = float("-inf")
         self._zero_frames_remaining = 0
+        self._pending_state: Go2State | None = None
         self._state: Go2State | None = None
         self._battery: Go2Battery | None = None
         self._last_sdk_error = ""
@@ -161,6 +139,13 @@ class Go2AdapterNode(Node):
         return value
 
     def _put_incoming(self, kind: str, value: Any) -> None:
+        if kind == "state":
+            # Watchdog freshness follows SDK reception, not ROS queue drainage.
+            # Preserve received_s so a real transport outage still trips protection.
+            with self._lock:
+                self._state = value
+                self._pending_state = value
+            return
         item = (kind, value)
         try:
             self._incoming.put_nowait(item)
@@ -172,6 +157,11 @@ class Go2AdapterNode(Node):
             self._incoming.put_nowait(item)
 
     def _process_incoming(self) -> None:
+        with self._lock:
+            latest = self._pending_state
+            self._pending_state = None
+        if latest is not None:
+            self._publish_odom(latest)
         for _ in range(200):
             try:
                 kind, value = self._incoming.get_nowait()
@@ -180,7 +170,6 @@ class Go2AdapterNode(Node):
             if kind == "state":
                 with self._lock:
                     self._state = value
-                    self._last_sdk_error = ""
                 self._publish_odom(value)
             elif kind == "battery":
                 with self._lock:
@@ -188,6 +177,13 @@ class Go2AdapterNode(Node):
             elif kind == "sent":
                 self._publish_sent_twist(value)
             elif kind == "event":
+                self.get_logger().info(f"Go2 control event: {json.dumps(value)}")
+                if value.get("success") and value.get("action") in {
+                    "acquire_control",
+                    "release_control",
+                }:
+                    with self._lock:
+                        self._last_sdk_error = ""
                 message = String()
                 message.data = json.dumps(value, separators=(",", ":"))
                 self.event_pub.publish(message)
@@ -202,10 +198,7 @@ class Go2AdapterNode(Node):
 
     def _connected_and_mode(self, now_s: float) -> tuple[bool, str]:
         state = self._state
-        connected = (
-            state is not None
-            and now_s - state.received_s <= self.state_timeout_s
-        )
+        connected = state is not None and now_s - state.received_s <= self.state_timeout_s
         return (
             connected,
             normalized_mode(
@@ -234,28 +227,25 @@ class Go2AdapterNode(Node):
             self._auto_received_s = time.monotonic()
 
     def _set_manual_enabled(self, request, response):
-        self._set_source("manual" if request.data else "disabled")
+        self._set_source("manual" if request.data else "disabled", "manual service request")
         response.success = True
-        response.message = (
-            "manual control enabled" if request.data else "control disabled"
-        )
+        response.message = "manual control enabled" if request.data else "control disabled"
         return response
 
     def _set_auto_enabled(self, request, response):
-        self._set_source("auto" if request.data else "disabled")
+        self._set_source("auto" if request.data else "disabled", "auto service request")
         response.success = True
-        response.message = (
-            "auto control enabled" if request.data else "control disabled"
-        )
+        response.message = "auto control enabled" if request.data else "control disabled"
         return response
 
-    def _set_source(self, source: str) -> None:
+    def _set_source(self, source: str, reason: str = "explicit stop or shutdown") -> None:
         if source not in VALID_SOURCES:
             raise ValueError(f"invalid control source {source!r}")
         now_s = time.monotonic()
         with self._lock:
             previous_source = self._source
             self._source = source
+            self._control_reason = reason
             self._manual_command = (0.0, 0.0)
             self._auto_command = (0.0, 0.0)
             self._manual_received_s = now_s
@@ -265,6 +255,8 @@ class Go2AdapterNode(Node):
                 if source == "disabled"
                 else max(self._zero_frames_remaining, self.final_zero_frames)
             )
+        if source != previous_source:
+            self.get_logger().warning(f"Control source {previous_source} -> {source}: {reason}")
         if source == "disabled" and previous_source != "disabled":
             self._client.release_control()
         self._publish_source()
@@ -289,25 +281,17 @@ class Go2AdapterNode(Node):
             return response
         if mode == "walk" and current_mode not in {"STAND", "WALK"}:
             response.success = False
-            response.message = (
-                f"current mode is {current_mode}; request stand first"
-            )
+            response.message = f"current mode is {current_mode}; request stand first"
             return response
         response.success = self._client.request_action(mode)
-        response.message = (
-            f"{mode} request queued"
-            if response.success
-            else "Go2 client is closed"
-        )
+        response.message = f"{mode} request queued" if response.success else "Go2 client is closed"
         return response
 
     def _software_stop(self, _request, response):
         self._set_source("disabled")
         response.success = self._client.request_action("stop")
         response.message = (
-            "control disabled and StopMove queued"
-            if response.success
-            else "Go2 client is closed"
+            "control disabled and StopMove queued" if response.success else "Go2 client is closed"
         )
         return response
 
@@ -315,9 +299,7 @@ class Go2AdapterNode(Node):
         self._set_source("disabled")
         response.success = self._client.request_action("damp")
         response.message = (
-            "control disabled and Damp queued"
-            if response.success
-            else "Go2 client is closed"
+            "control disabled and Damp queued" if response.success else "Go2 client is closed"
         )
         return response
 
@@ -343,7 +325,10 @@ class Go2AdapterNode(Node):
                 command = (0.0, 0.0)
                 self._zero_frames_remaining -= 1
         if disable_source:
-            self._set_source("disabled")
+            age = now_s - self._state.received_s if self._state is not None else float("inf")
+            self._set_source(
+                "disabled", f"robot state timeout: age={age:.3f}s limit={self.state_timeout_s:.3f}s"
+            )
             return
         if command is not None:
             self._client.move(command[0], 0.0, command[1])
@@ -378,9 +363,7 @@ class Go2AdapterNode(Node):
             transform.transform.rotation = message.pose.pose.orientation
             self.tf_broadcaster.sendTransform(transform)
 
-    def _publish_sent_twist(
-        self, command: tuple[float, float, float]
-    ) -> None:
+    def _publish_sent_twist(self, command: tuple[float, float, float]) -> None:
         message = TwistStamped()
         message.header.stamp = self.get_clock().now().to_msg()
         message.header.frame_id = self.base_frame
@@ -409,24 +392,19 @@ class Go2AdapterNode(Node):
         status = DiagnosticStatus()
         status.name = "robot_adapter"
         status.hardware_id = "go2"
-        status.level = (
-            DiagnosticStatus.OK if connected else DiagnosticStatus.WARN
-        )
-        status.message = "online" if connected else "waiting for Go2 state"
+        status.level = DiagnosticStatus.OK if connected and not error else DiagnosticStatus.WARN
+        status.message = error or ("online" if connected else "waiting for Go2 state")
         unitree_mode = state.mode if state is not None else -1
         values = {
             "adapter": "go2",
             "connected": connected,
             "robot_id": "go2",
             "mode": mode,
-            "battery": (
-                battery.percentage if battery is not None else None
-            ),
+            "battery": (battery.percentage if battery is not None else None),
             "imu": "OK" if connected else "UNKNOWN",
-            "motor": (
-                "OK" if battery is not None and battery.motors_ok else "UNKNOWN"
-            ),
+            "motor": ("OK" if battery is not None and battery.motors_ok else "UNKNOWN"),
             "control_source": source,
+            "control_reason": self._control_reason,
             "network_interface": self.network_interface,
             "unitree_mode": GO2_MODE_NAMES.get(unitree_mode, unitree_mode),
             "gait_type": state.gait_type if state is not None else None,

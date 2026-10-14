@@ -29,3 +29,20 @@ logs/
 
 # local Claude Code config; never track
 .claude/
+
+# Machine-specific settings, ROS builds, weights and real-world recordings.
+/config/*.env
+/recordings/
+/recordings-inference/
+/recordings-unitree/
+/runtime/
+/log/
+/robot_deploy/build/
+/robot_deploy/install/
+/robot_deploy/log/
+/deployment/validation-local.json
+*.mcap
+*.db3
+*.safetensors
+*.pth
+*.pt

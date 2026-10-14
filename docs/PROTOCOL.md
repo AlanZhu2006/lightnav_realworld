@@ -184,3 +184,6 @@ with connect("ws://localhost:8050", max_size=64 * 1024 * 1024) as ws:
         if data["rc"] == 0 and "actions" in data:
             fwd, lat, yaw = data["actions"]["actions"][0]
 ```
+
+
+Observability extension: clients may add `data.telemetry` to a `next` request (trace ID, capture and encoding timestamps). It does not change model input or predictions. Successful responses additionally include `data.server_timing` with server receive/reply-prepared wall timestamps, preprocessing and prediction durations, and an optional runtime snapshot path. Existing `timings_ms` contains engine stage wall timings, not isolated GPU kernel timings. With server recording enabled, client telemetry and the full response are stored alongside the exact JPEG. Prediction errors also retain input and error response. Compare cross-host timestamps only after verifying clock synchronization.

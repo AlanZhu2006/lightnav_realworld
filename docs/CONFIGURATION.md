@@ -1,5 +1,9 @@
 # Model assets and parameters
 
+For the two-machine launchers and environment files, see
+[REALWORLD_CONFIGURATION.md](REALWORLD_CONFIGURATION.md). The options below
+describe the upstream inference/CLI interface.
+
 Checkpoint layout, the action decoder, `eval_config.json` and every server / CLI parameter.
 
 ## Checkpoint
@@ -179,3 +183,7 @@ Frames within one session must share one size (the first frame decides; `reset` 
 over). `keep` avoids geometric distortion but changes the token grid the model sees, which
 the released checkpoint was not trained on — validate on your robot before relying on it.
 Full native resolution (feeding the camera's own pixel count) is not supported.
+
+
+### Local experiment observability
+`--record_dir` retains exact client JPEG bytes and per-step responses (including predict errors), engine `timings_ms`, server timing and optional request `telemetry` containing a trace ID and capture/encode timestamps. The `LIGHTNAV_RUNTIME_SNAPSHOT` environment variable identifies the deployment provenance directory attached to each response. Engine stage durations are wall-clock measurements, not isolated CUDA kernel timings. Never subtract timestamps from different hosts to infer one-way latency without validating clock synchronization.

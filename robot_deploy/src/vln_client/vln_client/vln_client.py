@@ -5,12 +5,14 @@ from __future__ import annotations
 import asyncio
 import base64
 import contextlib
+import hashlib
 import json
 import math
 import queue
 import threading
 import time
-from dataclasses import dataclass
+import uuid
+from dataclasses import dataclass, field
 from typing import Protocol
 from urllib.parse import urlparse
 
@@ -50,6 +52,8 @@ class CameraFrame:
     step: int
     rgb: bytes
     jpeg: bytes = b""
+    received_wall_ns: int = 0
+    received_mono_ns: int = 0
 
 
 @dataclass(frozen=True)
@@ -58,6 +62,8 @@ class PendingRequest:
     sequence: int
     frame: CameraFrame
     sent_at: float
+    timings: dict = field(default_factory=dict)
+    send_started: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -85,6 +91,7 @@ class InferenceResult:
     apos_px: Pixel | None
     opos_px: Pixel | None
     latency_ms: float
+    timings: dict = field(default_factory=dict)
 
 
 @dataclass(frozen=True)
@@ -95,6 +102,7 @@ class ClientSnapshot:
     episode: int
     error: str
     server_url: str
+    trace_id: str = ""
 
 
 def normalize_server_url(value: str) -> str:
@@ -140,6 +148,7 @@ class VlnClient:
         self._connected = False
         self._in_flight = 0
         self._error = ""
+        self._trace_id = ""
         self._episode = 0
         self._session = 0
         self._sequence = 0
@@ -164,6 +173,7 @@ class VlnClient:
         with self._lock:
             if not self._server_url:
                 raise ValueError("VLN server URL is not set")
+            self._trace_id = uuid.uuid4().hex
             self._episode += 1
             self._session += 1
             self._instruction = instruction
@@ -230,6 +240,8 @@ class VlnClient:
                 height=int(height),
                 step=int(step),
                 rgb=bytes(rgb),
+                received_wall_ns=time.time_ns(),
+                received_mono_ns=time.monotonic_ns(),
             )
             return True
 
@@ -256,6 +268,8 @@ class VlnClient:
                 step=0,
                 rgb=b"",
                 jpeg=bytes(jpeg),
+                received_wall_ns=time.time_ns(),
+                received_mono_ns=time.monotonic_ns(),
             )
             return True
 
@@ -268,6 +282,7 @@ class VlnClient:
                 episode=self._episode,
                 error=self._error,
                 server_url=self._server_url,
+                trace_id=self._trace_id,
             )
 
     def take_results(self) -> list[InferenceResult]:
@@ -347,7 +362,7 @@ class VlnClient:
             try:
                 await websocket.send_str(
                     json.dumps(
-                        {"action": "login", "data": {"clientId": CLIENT_ID}}
+                        {"action": "login", "data": {"clientId": CLIENT_ID + "_" + self._trace_id}}
                     )
                 )
                 login_raw = await asyncio.wait_for(
@@ -376,18 +391,12 @@ class VlnClient:
 
                         if (
                             pending_request is not None
-                            and time.monotonic() - pending_request.sent_at
-                            >= RESPONSE_TIMEOUT_S
+                            and time.monotonic() - pending_request.sent_at >= RESPONSE_TIMEOUT_S
                         ):
-                            raise TimeoutError(
-                                "response timeout: "
-                                f"seq={pending_request.sequence}"
-                            )
+                            raise TimeoutError(f"response timeout: seq={pending_request.sequence}")
 
                         if receive_task is None and pending_request is not None:
-                            receive_task = asyncio.create_task(
-                                self._receive(websocket)
-                            )
+                            receive_task = asyncio.create_task(self._receive(websocket))
                         if receive_task is not None and receive_task.done():
                             raw = receive_task.result()
                             receive_task = None
@@ -406,6 +415,23 @@ class VlnClient:
                                 session,
                                 in_flight=0,
                             )
+                            observed_ns = time.time_ns()
+                            server_data = self._response_data(raw, "next")
+                            timings = dict(request.timings)
+                            timings.update(
+                                response_observed_wall_ns=observed_ns,
+                                client_roundtrip_ms=(time.monotonic() - request.send_started)
+                                * 1000,
+                                capture_to_result_ms=(
+                                    observed_ns
+                                    - request.frame.stamp_sec * 1000000000
+                                    - request.frame.stamp_nanosec
+                                )
+                                / 1e6,
+                                server_timings_ms=server_data.get("timings_ms", {}),
+                                server_timing=server_data.get("server_timing", {}),
+                                server_latency_ms=server_data.get("latency_ms"),
+                            )
                             self._queue_result(
                                 session,
                                 InferenceResult(
@@ -419,21 +445,45 @@ class VlnClient:
                                     opos_state=payload.opos_state,
                                     apos_px=payload.apos_px,
                                     opos_px=payload.opos_px,
-                                    latency_ms=(
-                                        time.monotonic() - request.sent_at
-                                    )
-                                    * 1000.0,
+                                    timings=timings,
+                                    latency_ms=(time.monotonic() - request.sent_at) * 1000.0,
                                 ),
                             )
 
                         frame = self._take_frame(session)
                         if frame is not None:
+                            encode_start = time.monotonic_ns()
+                            timing = dict(
+                                trace_id=self._trace_id,
+                                capture_stamp_ns=frame.stamp_sec * 1000000000 + frame.stamp_nanosec,
+                                frame_received_wall_ns=frame.received_wall_ns,
+                                encode_started_wall_ns=time.time_ns(),
+                                receive_to_encode_ms=(encode_start - frame.received_mono_ns) / 1e6
+                                if frame.received_mono_ns
+                                else None,
+                                frame_age_at_receive_ms=(
+                                    frame.received_wall_ns
+                                    - frame.stamp_sec * 1000000000
+                                    - frame.stamp_nanosec
+                                )
+                                / 1e6
+                                if frame.received_wall_ns
+                                else None,
+                            )
                             image = await asyncio.to_thread(
                                 self._encode_image,
                                 frame,
                             )
                             if not self._session_is_active(session):
                                 return
+                            timing.update(
+                                input_base64_sha256=hashlib.sha256(
+                                    image.encode("ascii")
+                                ).hexdigest(),
+                                input_base64_length=len(image),
+                                encode_ms=(time.monotonic_ns() - encode_start) / 1e6,
+                                encode_finished_wall_ns=time.time_ns(),
+                            )
                             sequence = self._next_sequence(session)
                             payload = json.dumps(
                                 {
@@ -442,15 +492,24 @@ class VlnClient:
                                         "seq": sequence,
                                         "image": image,
                                         "instruction": instruction,
+                                        "telemetry": dict(timing, seq=sequence),
                                     },
                                 }
                             )
+                            send_started = time.monotonic()
+                            timing["send_started_wall_ns"] = time.time_ns()
                             await websocket.send_str(payload)
+                            timing.update(
+                                send_completed_wall_ns=time.time_ns(),
+                                send_ms=(time.monotonic() - send_started) * 1000,
+                            )
                             pending_request = PendingRequest(
                                 episode=self._episode_for_session(session),
                                 sequence=sequence,
                                 frame=frame,
                                 sent_at=time.monotonic(),
+                                send_started=send_started,
+                                timings=timing,
                             )
 
                         await asyncio.sleep(0.005)
@@ -496,11 +555,7 @@ class VlnClient:
 
     def _take_frame(self, session: int) -> CameraFrame | None:
         with self._lock:
-            if (
-                self._instruction is None
-                or self._session != session
-                or self._in_flight != 0
-            ):
+            if self._instruction is None or self._session != session or self._in_flight != 0:
                 return None
             frame = self._pending_frame
             if frame is None:
@@ -582,11 +637,7 @@ class VlnClient:
     ) -> InferencePayload:
         data = cls._response_data(raw, "next")
         sequence = data.get("seq")
-        if (
-            isinstance(sequence, bool)
-            or not isinstance(sequence, int)
-            or sequence < 0
-        ):
+        if isinstance(sequence, bool) or not isinstance(sequence, int) or sequence < 0:
             raise RuntimeError("next response has no non-negative data.seq")
         pointing = data.get("pointing")
         if not isinstance(pointing, dict):
@@ -631,18 +682,12 @@ class VlnClient:
             if not item:
                 return
             if all(
-                isinstance(number, (int, float))
-                and not isinstance(number, bool)
-                for number in item
+                isinstance(number, (int, float)) and not isinstance(number, bool) for number in item
             ):
                 if len(item) % 3:
-                    raise RuntimeError(
-                        f"flat actions length {len(item)} is not divisible by 3"
-                    )
+                    raise RuntimeError(f"flat actions length {len(item)} is not divisible by 3")
                 for index in range(0, len(item), 3):
-                    waypoint = tuple(
-                        float(number) for number in item[index : index + 3]
-                    )
+                    waypoint = tuple(float(number) for number in item[index : index + 3])
                     if not all(math.isfinite(number) for number in waypoint):
                         raise RuntimeError("actions contain non-finite values")
                     waypoints.append(waypoint)

@@ -469,23 +469,17 @@ class WebServer:
     def send_client(self, client_id: str, payload: dict[str, Any]) -> None:
         loop = self._web_loop
         if loop is not None and loop.is_running():
-            asyncio.run_coroutine_threadsafe(
-                self._send_client(client_id, payload), loop
-            )
+            asyncio.run_coroutine_threadsafe(self._send_client(client_id, payload), loop)
 
     def revoke_controller(self, reason: str) -> None:
         loop = self._web_loop
         if loop is not None and loop.is_running():
-            asyncio.run_coroutine_threadsafe(
-                self._revoke_controller(reason), loop
-            )
+            asyncio.run_coroutine_threadsafe(self._revoke_controller(reason), loop)
 
     def clear_auto_controller(self, reason: str) -> None:
         loop = self._web_loop
         if loop is not None and loop.is_running():
-            asyncio.run_coroutine_threadsafe(
-                self._clear_auto_controller(reason), loop
-            )
+            asyncio.run_coroutine_threadsafe(self._clear_auto_controller(reason), loop)
 
     def broadcast(self, payload: dict[str, Any]) -> None:
         loop = self._web_loop
@@ -522,6 +516,7 @@ class WebServer:
         now = time.monotonic()
         with self._state_lock:
             return {
+                "recording": self.recorder.status() if getattr(self, "recorder", None) else None,
                 "vln": dict(self._vln),
                 "mpc": dict(self._mpc),
                 "mpc_config": dict(self._mpc_config),
@@ -562,8 +557,11 @@ class WebServer:
     def _create_app(self) -> web.Application:
         app = web.Application()
         app.router.add_get("/", self._index_handler)
+        if getattr(self, "recorder", None):
+            app.router.add_static("/recordings/", str(self.recorder.root), show_index=True)
         app.router.add_get("/ws", self._websocket_handler)
         app.router.add_get("/api/health", self._health_handler)
+        app.router.add_get("/api/recordings", self._recordings_handler)
         app.router.add_get("/api/camera.jpg", self._camera_handler)
         app.on_startup.append(self._on_startup)
         app.on_shutdown.append(self._on_shutdown)
@@ -571,9 +569,7 @@ class WebServer:
 
     async def _on_startup(self, _app: web.Application) -> None:
         self._web_loop = asyncio.get_running_loop()
-        self._logger.info(
-            f"VLN web: http://{display_host(self.host)}:{self.port}/"
-        )
+        self._logger.info(f"VLN web: http://{display_host(self.host)}:{self.port}/")
 
     async def _on_shutdown(self, _app: web.Application) -> None:
         self._closed = True
@@ -598,6 +594,26 @@ class WebServer:
 
     async def _health_handler(self, _request: web.Request) -> web.Response:
         return web.json_response({"ok": True, **self._snapshot()})
+
+    async def _recordings_handler(self, _request):
+        recorder = getattr(self, "recorder", None)
+        sessions = []
+        if recorder:
+            for folder in sorted(recorder.root.iterdir()):
+                if not folder.is_dir() or not (folder / "manifest.json").is_file():
+                    continue
+                try:
+                    metadata = json.loads((folder / "metadata.json").read_text())
+                    if metadata.get("status") == "complete":
+                        sessions.append(
+                            {
+                                "id": folder.name,
+                                "manifest": f"/recordings/{folder.name}/manifest.json",
+                            }
+                        )
+                except (OSError, ValueError):
+                    continue
+        return web.json_response({"sessions": sessions})
 
     async def _camera_handler(self, _request: web.Request) -> web.Response:
         with self._state_lock:
@@ -645,14 +661,10 @@ class WebServer:
             if self._auto_controller is websocket:
                 self._auto_controller = None
                 self._queue_command("set_mpc", False, client_id)
-                self._queue_command(
-                    "set_vln", (False, "", self.vln_mode()), client_id
-                )
+                self._queue_command("set_vln", (False, "", self.vln_mode()), client_id)
             self._websockets.pop(websocket, None)
             if released_auto:
-                await self._broadcast_control_state(
-                    "MPC controller disconnected"
-                )
+                await self._broadcast_control_state("MPC controller disconnected")
         return websocket
 
     async def _handle_browser_message(
@@ -667,29 +679,27 @@ class WebServer:
             instruction = str(payload.get("instruction", "")).strip()
             mode = str(payload.get("mode", "")).strip().lower()
             if len(instruction) > 500:
-                await self._input_error(
-                    websocket, "instruction must not exceed 500 characters"
-                )
+                await self._input_error(websocket, "instruction must not exceed 500 characters")
                 return
             if mode not in VALID_VLN_MODES:
-                await self._input_error(
-                    websocket, "VLN mode must be objnav or track"
-                )
+                await self._input_error(websocket, "VLN mode must be objnav or track")
                 return
             if enabled and not instruction:
-                await self._input_error(
-                    websocket, "enter an instruction before enabling VLN"
-                )
+                await self._input_error(websocket, "enter an instruction before enabling VLN")
                 return
             if enabled:
                 with self._state_lock:
                     robot = dict(self._robot)
                     mpc = dict(self._mpc)
                     server_url = str(self._vln.get("server_url", ""))
-                if not server_url:
+                if getattr(self, "recorder", None) and self.recorder.saving:
                     await self._input_error(
-                        websocket, "configure the VLN server URL first"
+                        websocket,
+                        "Previous recording is generating videos; wait until saving finishes",
                     )
+                    return
+                if not server_url:
+                    await self._input_error(websocket, "configure the VLN server URL first")
                     return
                 if not robot.get("connected"):
                     await self._input_error(websocket, "robot is disconnected")
@@ -697,55 +707,35 @@ class WebServer:
                 if robot.get("mode") != "WALK":
                     await self._input_error(
                         websocket,
-                        "robot mode is "
-                        f"{robot.get('mode', 'UNKNOWN')}; enter WALK first",
+                        f"robot mode is {robot.get('mode', 'UNKNOWN')}; enter WALK first",
                     )
                     return
                 if not mpc.get("available"):
                     await self._input_error(websocket, "vln_mpc is unavailable")
                     return
-                if (
-                    self._auto_controller is not None
-                    and self._auto_controller is not websocket
-                ):
-                    await self._input_error(
-                        websocket, "another browser owns MPC control"
-                    )
+                if self._auto_controller is not None and self._auto_controller is not websocket:
+                    await self._input_error(websocket, "another browser owns MPC control")
                     return
-                if (
-                    self._controller is not None
-                    and self._controller is not websocket
-                ):
-                    await self._input_error(
-                        websocket, "another browser owns manual control"
-                    )
+                if self._controller is not None and self._controller is not websocket:
+                    await self._input_error(websocket, "another browser owns manual control")
                     return
                 if self._controller is websocket:
                     await self._release_controller("switching to VLN control")
                 self._auto_controller = websocket
-                self._queue_command(
-                    "set_vln", (True, instruction, mode), client_id
-                )
-                self._queue_command("set_mpc", True, client_id)
+                self._queue_command("start_navigation", (instruction, mode), client_id)
                 await self._broadcast_control_state("VLN control acquired")
                 return
             with self._state_lock:
                 mpc_enabled = bool(self._mpc.get("enabled"))
-            if (
-                self._auto_controller is not None or mpc_enabled
-            ):
+            if self._auto_controller is not None or mpc_enabled:
                 self._auto_controller = None
                 self._queue_command("set_mpc", False, client_id)
                 await self._broadcast_control_state("VLN stopped")
-            self._queue_command(
-                "set_vln", (False, instruction, mode), client_id
-            )
+            self._queue_command("set_vln", (False, instruction, mode), client_id)
             return
         if kind == "set_server_url":
             try:
-                server_url = normalize_server_url(
-                    str(payload.get("server_url", ""))
-                )
+                server_url = normalize_server_url(str(payload.get("server_url", "")))
             except ValueError as exc:
                 await self._input_error(websocket, str(exc))
                 return
@@ -813,13 +803,8 @@ class WebServer:
                 self._queue_command("set_mpc", False, client_id)
                 await self._broadcast_control_state("MPC control released")
                 return
-            if (
-                self._auto_controller is not None
-                and self._auto_controller is not websocket
-            ):
-                await self._input_error(
-                    websocket, "another browser owns MPC control"
-                )
+            if self._auto_controller is not None and self._auto_controller is not websocket:
+                await self._input_error(websocket, "another browser owns MPC control")
                 return
             with self._state_lock:
                 robot = dict(self._robot)
@@ -839,14 +824,10 @@ class WebServer:
                 await self._input_error(websocket, "vln_mpc is unavailable")
                 return
             if not vln.get("enabled") or waypoint_count == 0:
-                await self._input_error(
-                    websocket, "enable VLN and wait for waypoints first"
-                )
+                await self._input_error(websocket, "enable VLN and wait for waypoints first")
                 return
             if self._controller is not None and self._controller is not websocket:
-                await self._input_error(
-                    websocket, "another browser owns manual control"
-                )
+                await self._input_error(websocket, "another browser owns manual control")
                 return
             if self._controller is websocket:
                 await self._release_controller("switching to MPC control")
@@ -864,9 +845,7 @@ class WebServer:
                 await self._input_error(websocket, "MPC auto control is active")
                 return
             if self._controller is not None and self._controller is not websocket:
-                await self._input_error(
-                    websocket, "another browser owns manual control"
-                )
+                await self._input_error(websocket, "another browser owns manual control")
                 return
             self._controller = websocket
             self._queue_command("manual_control", True, client_id)
@@ -895,9 +874,7 @@ class WebServer:
             except (TypeError, ValueError):
                 await self._input_error(websocket, "twist must be numeric")
                 return
-            if not all(
-                math.isfinite(value) for value in (linear, lateral, angular)
-            ):
+            if not all(math.isfinite(value) for value in (linear, lateral, angular)):
                 await self._input_error(websocket, "twist must be finite")
                 return
             if abs(lateral) > 1e-9:
@@ -907,18 +884,13 @@ class WebServer:
                 linear_limit = self.manual_linear_limit
                 angular_limit = self.manual_angular_limit
             if abs(linear) > linear_limit or abs(angular) > angular_limit:
-                await self._input_error(
-                    websocket, "manual speed exceeds configured limit"
-                )
+                await self._input_error(websocket, "manual speed exceeds configured limit")
                 return
             self._queue_command("twist", (linear, angular), client_id)
             return
         if kind == "robot_action":
             action = str(payload.get("action", "")).strip().lower()
-            if (
-                action != "toggle_policy"
-                and self._controller is not websocket
-            ):
+            if action != "toggle_policy" and self._controller is not websocket:
                 await self._input_error(websocket, "control is not acquired")
                 return
             if action not in VALID_ROBOT_ACTIONS:
@@ -941,9 +913,7 @@ class WebServer:
 
     async def _release_controller(self, reason: str) -> None:
         client_id = (
-            self._websockets.get(self._controller, "")
-            if self._controller is not None
-            else ""
+            self._websockets.get(self._controller, "") if self._controller is not None else ""
         )
         self._controller = None
         self._queue_command("twist", (0.0, 0.0), client_id)
@@ -961,8 +931,7 @@ class WebServer:
                         "owner": self._controller is websocket,
                         "auto_owner": self._auto_controller is websocket,
                         "locked": (
-                            self._controller is not None
-                            or self._auto_controller is not None
+                            self._controller is not None or self._auto_controller is not None
                         ),
                         "reason": reason,
                     }

@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from vln_mpc.mpc_node import (
+from vln_mpc.protocol import (
     MPC_CONFIG_NAMES,
     OBJNAV_MODE,
     TRACK_MODE,

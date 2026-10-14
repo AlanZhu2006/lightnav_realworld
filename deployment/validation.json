@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-14",
+  "host_architecture": "linux-x86_64",
+  "upstream_commit": "3015508b70fb6e30bbd66701e94c9b916dcb8df8",
+  "model_repository": "LightOriginsHQ/LightNav-0",
+  "model_revision": "826dc5fbfa37afa8293d2e336d329b6ffc0bfb64",
+  "python311_offline": {"passed": 708, "skipped": 5},
+  "python310_robot_offline": {"passed": 89, "skipped": 4},
+  "ruff": "passed",
+  "shell_syntax": "passed",
+  "python310_syntax_files": 49,
+  "robot_dependency_check": "passed",
+  "gpu_smoke": {
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "python": "3.11.15",
+    "backend": "vllm_local",
+    "torch": "2.10.0",
+    "transformers": "5.8.0",
+    "vllm": "0.19.1",
+    "nvidia_cutlass_dsl": "4.5.2",
+    "input": "synthetic 848x480 RGB image encoded by the actual robot VlnClient",
+    "waypoints": 10,
+    "finite_waypoints": true,
+    "client_sequence_and_capture_stamp": "passed",
+    "response_and_client_telemetry_recorded": true,
+    "source_and_model_provenance": "passed",
+    "sigterm_cleanup": "passed"
+  },
+  "scope": {
+    "robot_motion_started": false,
+    "camera_started": false,
+    "ros_runtime_verified": false,
+    "jetson_arm64_install_verified": false,
+    "fresh_gpu_environment_install_verified": false,
+    "github_actions_verified": false,
+    "navigation_success_evaluated": false
+  }
+}

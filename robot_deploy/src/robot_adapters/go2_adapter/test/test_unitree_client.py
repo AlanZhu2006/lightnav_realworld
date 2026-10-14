@@ -45,9 +45,7 @@ def test_state_from_message_converts_wxyz_to_xyzw():
         error_code=0,
         imu_state=SimpleNamespace(quaternion=[1.0, 0.0, 0.0, 0.0]),
     )
-    state = state_from_message(
-        message, received_ns=123, received_s=4.5
-    )
+    state = state_from_message(message, received_ns=123, received_s=4.5)
     assert state.received_ns == 123
     assert state.orientation_xyzw == (0.0, 0.0, 0.0, 1.0)
     assert state.position == (1.0, 2.0, 0.3)
@@ -61,10 +59,7 @@ def test_normalized_modes_match_shared_interface():
     assert normalized_mode(7) == "DAMPING"
     assert normalized_mode(10) == "SIT"
     assert normalized_mode(99) == "UNKNOWN"
-    assert (
-        normalized_mode(0, error_code=1001, body_height=0.07)
-        == "DAMPING"
-    )
+    assert normalized_mode(0, error_code=1001, body_height=0.07) == "DAMPING"
     assert normalized_mode(0, error_code=100, body_height=0.31) == "WALK"
 
 
@@ -115,3 +110,33 @@ def test_api_control_is_acquired_lazily_and_released_after_zero():
     ]
     assert client.sent == [(0.0, 0.0, 0.0)]
     assert client.errors == []
+
+
+def test_release_timeout_invalidates_cached_ownership_before_next_episode():
+    client = _control_client()
+    assert client._enable_api_control()
+    original = client._obstacles.UseRemoteCommandFromApi
+    client._obstacles.UseRemoteCommandFromApi = lambda enabled: (
+        original(enabled) if enabled else 3104
+    )
+    client._release_api_control()
+    assert client._api_enabled is False
+    assert client.events[-1]["success"] is False
+    assert "3104" in client.errors[-1]
+    assert client._enable_api_control()
+    assert client._obstacles.calls.count(("api", True)) == 2
+
+
+def test_release_exception_also_invalidates_cached_ownership():
+    import pytest
+
+    client = _control_client()
+    assert client._enable_api_control()
+
+    def fail(*args):
+        raise RuntimeError("transport unavailable")
+
+    client._obstacles.Move = fail
+    with pytest.raises(RuntimeError):
+        client._release_api_control()
+    assert client._api_enabled is False

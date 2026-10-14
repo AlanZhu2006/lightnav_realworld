@@ -39,13 +39,8 @@ class VlnClientNode(Node):
         self.declare_parameter("image_transport", IMAGE_TRANSPORT)
 
         self.image_topic = str(self.get_parameter("image_topic").value).strip()
-        self.image_transport = str(
-            self.get_parameter("image_transport").value
-        ).strip().lower()
-        if (
-            not self.image_topic
-            or self.image_transport not in {"raw", "compressed"}
-        ):
+        self.image_transport = str(self.get_parameter("image_transport").value).strip().lower()
+        if not self.image_topic or self.image_transport not in {"raw", "compressed"}:
             raise ValueError("invalid VLN client image parameter")
 
         sensor_qos = QoSProfile(
@@ -100,6 +95,7 @@ class VlnClientNode(Node):
             self._on_server_url,
             status_qos,
         )
+        self.trace_pub = self.create_publisher(String, "vln/trace", status_qos)
         self.response_pub = self.create_publisher(
             String,
             RESPONSE_TOPIC,
@@ -150,12 +146,22 @@ class VlnClientNode(Node):
         if instruction:
             try:
                 episode = self._client.start(instruction)
+                self.trace_pub.publish(
+                    String(
+                        data=json.dumps(
+                            dict(
+                                event="start",
+                                trace_id=self._client.snapshot().trace_id,
+                                episode=episode,
+                                wall_ns=time.time_ns(),
+                            )
+                        )
+                    )
+                )
             except ValueError as exc:
                 self.get_logger().warning(str(exc))
             else:
-                self.get_logger().info(
-                    f"VLN episode {episode} started: {instruction!r}"
-                )
+                self.get_logger().info(f"VLN episode {episode} started: {instruction!r}")
         else:
             self._client.stop()
             self.get_logger().info("VLN stopped by empty instruction")
@@ -168,10 +174,7 @@ class VlnClientNode(Node):
             self.get_logger().warning(str(exc))
         else:
             if changed:
-                self.get_logger().info(
-                    "VLN server changed: "
-                    f"{self._client.snapshot().server_url}"
-                )
+                self.get_logger().info(f"VLN server changed: {self._client.snapshot().server_url}")
         self._publish_server_url()
         self._publish_status()
 
@@ -180,9 +183,7 @@ class VlnClientNode(Node):
         if encoding != "rgb8":
             if encoding != self._last_invalid_encoding:
                 self._last_invalid_encoding = encoding
-                self.get_logger().error(
-                    f"camera encoding must be rgb8, got {message.encoding!r}"
-                )
+                self.get_logger().error(f"camera encoding must be rgb8, got {message.encoding!r}")
             return
         self._last_invalid_encoding = ""
         if not message.data:
@@ -211,12 +212,17 @@ class VlnClientNode(Node):
 
     def _publish_result(self, result: InferenceResult) -> None:
         waypoints = list(result.waypoints)
+        timing = dict(result.timings)
+        timing["ros_publish_wall_ns"] = time.time_ns()
+        timing["capture_to_ros_publish_ms"] = (
+            time.time_ns() - result.frame.stamp_sec * 1000000000 - result.frame.stamp_nanosec
+        ) / 1e6
         response = {
             "episode": result.episode,
+            "timings": timing,
             "seq": result.sequence,
             "capture_stamp_ns": (
-                result.frame.stamp_sec * 1_000_000_000
-                + result.frame.stamp_nanosec
+                result.frame.stamp_sec * 1_000_000_000 + result.frame.stamp_nanosec
             ),
             "frame_id": BASE_FRAME,
             "waypoints": [list(point) for point in waypoints],
@@ -254,9 +260,7 @@ class VlnClientNode(Node):
     def _publish_server_url(self) -> None:
         if not rclpy.ok():
             return
-        self.server_url_pub.publish(
-            String(data=self._client.snapshot().server_url)
-        )
+        self.server_url_pub.publish(String(data=self._client.snapshot().server_url))
 
     @staticmethod
     def _make_path(

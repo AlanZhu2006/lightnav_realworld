@@ -83,9 +83,7 @@ def normalized_mode(
     """Map Unitree's numeric sport mode onto the shared web interface."""
     # On the tested Go2, mode remains 0 both while upright and while lying
     # down.  The latter is identified by error_code 1001 and a low body.
-    if error_code == 1001 or (
-        body_height is not None and body_height < 0.2
-    ):
+    if error_code == 1001 or (body_height is not None and body_height < 0.2):
         return "DAMPING"
     # This Go2 keeps reporting mode 0 after the physical START button has
     # unlocked locomotion.  Upright mode 0 is therefore the robot's
@@ -122,9 +120,7 @@ def state_from_message(
     """Copy a DDS SportModeState into a transport-independent value."""
     position = _finite_vector(message.position, 3, "position")
     velocity = _finite_vector(message.velocity, 3, "velocity")
-    quaternion_wxyz = _finite_vector(
-        message.imu_state.quaternion, 4, "quaternion"
-    )
+    quaternion_wxyz = _finite_vector(message.imu_state.quaternion, 4, "quaternion")
     norm = math.sqrt(sum(value * value for value in quaternion_wxyz))
     if norm <= 1e-6:
         raise ValueError("invalid zero Go2 quaternion")
@@ -147,9 +143,7 @@ def state_from_message(
     )
 
 
-def battery_from_message(
-    message: Any, *, received_s: float | None = None
-) -> Go2Battery:
+def battery_from_message(message: Any, *, received_s: float | None = None) -> Go2Battery:
     bms_state = message.bms_state
     percentage = float(bms_state.soc)
     voltage = float(message.power_v)
@@ -166,18 +160,13 @@ def battery_from_message(
     )
     motor_states = tuple(message.motor_state[:12])
     motors_ok = (
-        all(
-            int(state.mode) != 0 and int(state.temperature) > 0
-            for state in motor_states
-        )
+        all(int(state.mode) != 0 and int(state.temperature) > 0 for state in motor_states)
         if len(motor_states) == 12
         else None
     )
     return Go2Battery(
         received_s=time.monotonic() if received_s is None else float(received_s),
-        percentage=(
-            max(0.0, min(100.0, percentage)) if bms_populated else None
-        ),
+        percentage=(max(0.0, min(100.0, percentage)) if bms_populated else None),
         voltage=voltage,
         motors_ok=motors_ok,
     )
@@ -207,9 +196,7 @@ class UnitreeClient:
         error_callback: Callable[[str], None],
     ) -> None:
         if SDK_IMPORT_ERROR is not None:
-            raise RuntimeError(
-                "unitree_sdk2py is required by go2_adapter"
-            ) from SDK_IMPORT_ERROR
+            raise RuntimeError("unitree_sdk2py is required by go2_adapter") from SDK_IMPORT_ERROR
         if not network_interface:
             raise ValueError("network_interface must not be empty")
         self._state_callback = state_callback
@@ -233,9 +220,7 @@ class UnitreeClient:
         self._obstacles.SetTimeout(self._timeout_s)
         self._obstacles.Init()
 
-        self._state_subscriber = ChannelSubscriber(
-            "rt/lf/sportmodestate", SportModeState_
-        )
+        self._state_subscriber = ChannelSubscriber("rt/lf/sportmodestate", SportModeState_)
         self._state_subscriber.Init(self._on_state, 10)
         self._battery_subscriber = ChannelSubscriber("rt/lowstate", LowState_)
         self._battery_subscriber.Init(self._on_battery, 1)
@@ -273,9 +258,7 @@ class UnitreeClient:
             return
         self._last_battery_s = now_s
         try:
-            self._battery_callback(
-                battery_from_message(message, received_s=now_s)
-            )
+            self._battery_callback(battery_from_message(message, received_s=now_s))
         except (TypeError, ValueError, OverflowError) as exc:
             self._error_callback(str(exc))
 
@@ -311,20 +294,25 @@ class UnitreeClient:
     def _enable_api_control(self) -> bool:
         if self._api_enabled:
             return True
+        started = time.monotonic()
         result = self._obstacles.UseRemoteCommandFromApi(True)
         code = self._result_code(result)
         if code != 0:
-            self._error_callback(f"Go2 API control acquisition failed: {code}")
+            self._error_callback(
+                f"Go2 API control acquisition failed: {code} after {time.monotonic() - started:.3f}s"
+            )
             return False
         self._api_enabled = True
-        self._event_callback(
-            {"action": "acquire_control", "result": 0, "success": True}
-        )
+        self._event_callback({"action": "acquire_control", "result": 0, "success": True})
         return True
 
     def _release_api_control(self) -> None:
         if not self._api_enabled:
             return
+        # A timed-out release may still have reached the robot. Never reuse
+        # this ownership assumption in a later navigation episode.
+        self._api_enabled = False
+        started = time.monotonic()
         zero_code = self._result_code(self._obstacles.Move(0.0, 0.0, 0.0))
         result = self._obstacles.UseRemoteCommandFromApi(False)
         code = self._result_code(result)
@@ -340,7 +328,9 @@ class UnitreeClient:
         if zero_code != 0:
             self._error_callback(f"Go2 zero command failed: {zero_code}")
         if code != 0:
-            self._error_callback(f"Go2 API control release failed: {code}")
+            self._error_callback(
+                f"Go2 API control release failed: {code} after {time.monotonic() - started:.3f}s"
+            )
             return
         self._api_enabled = False
 
@@ -348,9 +338,7 @@ class UnitreeClient:
         while True:
             with self._condition:
                 self._condition.wait_for(
-                    lambda: self._closed
-                    or bool(self._actions)
-                    or self._latest_move is not None
+                    lambda: self._closed or bool(self._actions) or self._latest_move is not None
                 )
                 if self._actions:
                     action = self._actions.popleft()
@@ -378,13 +366,9 @@ class UnitreeClient:
                 method = getattr(self._sport, self.ACTION_METHODS[action])
                 result = method()
                 code = self._result_code(result)
-                self._event_callback(
-                    {"action": action, "result": code, "success": code == 0}
-                )
+                self._event_callback({"action": action, "result": code, "success": code == 0})
                 if code != 0:
-                    self._error_callback(
-                        f"Go2 {self.ACTION_METHODS[action]} failed: {code}"
-                    )
+                    self._error_callback(f"Go2 {self.ACTION_METHODS[action]} failed: {code}")
             except Exception as exc:  # pragma: no cover - hardware error path
                 self._error_callback(f"Go2 SDK call failed: {exc}")
 

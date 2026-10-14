@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import queue
 import threading
 import time
@@ -22,10 +23,14 @@ from rclpy.executors import ExternalShutdownException, SingleThreadedExecutor
 from rclpy.node import Node
 from rclpy.parameter import Parameter, parameter_value_to_python
 from rclpy.qos import DurabilityPolicy, QoSProfile, ReliabilityPolicy
+from rclpy.qos_event import SubscriptionEventCallbacks
+from rosidl_runtime_py.utilities import get_message
 from sensor_msgs.msg import CompressedImage, Image
 from std_msgs.msg import Bool, String
 from std_srvs.srv import SetBool, Trigger
 
+from .recorder import ExperimentRecorder
+from .recording_archive import TOPICS
 from .web_server import (
     MANUAL_LIMIT_NAMES,
     MPC_CONFIG_NAMES,
@@ -59,6 +64,7 @@ def _diagnostic_level(value: Any) -> int:
 class VlnWebNode(Node):
     def __init__(self) -> None:
         super().__init__("vln_web")
+        cv2.setNumThreads(1)
         self.declare_parameter("host", "0.0.0.0")
         self.declare_parameter("port", 8088)
         self.declare_parameter("image_topic", "camera/color/image_raw")
@@ -66,9 +72,7 @@ class VlnWebNode(Node):
         self.declare_parameter("response_topic", "vln/response")
         self.declare_parameter("status_topic", "vln/status")
         self.declare_parameter("server_url_topic", "vln/server_url")
-        self.declare_parameter(
-            "server_url_status_topic", "vln/server_url_status"
-        )
+        self.declare_parameter("server_url_status_topic", "vln/server_url_status")
         self.declare_parameter("mpc_status_topic", "mpc/status")
         self.declare_parameter("diagnostics_topic", "diagnostics")
         self.declare_parameter("instruction_topic", "vln/instruction")
@@ -84,62 +88,43 @@ class VlnWebNode(Node):
         self.declare_parameter("stand_service", "robot/stand")
         self.declare_parameter("walk_service", "robot/walk")
         self.declare_parameter("sit_service", "robot/sit")
-        self.declare_parameter(
-            "toggle_policy_service", "robot/toggle_policy"
-        )
+        self.declare_parameter("toggle_policy_service", "robot/toggle_policy")
         self.declare_parameter("image_width", 480)
         self.declare_parameter("image_height", 270)
-        self.declare_parameter("image_fps", 10.0)
+        self.declare_parameter("image_fps", 20.0)
         self.declare_parameter("jpeg_quality", 80)
         self.declare_parameter("manual_linear_limit", 1.5)
         self.declare_parameter("manual_angular_limit", 3.0)
         self.declare_parameter("manual_linear_accel", 1.0)
         self.declare_parameter("manual_angular_accel", 2.0)
         self.declare_parameter("wifi_interface", "")
+        self.declare_parameter(
+            "recording_directory",
+            os.environ.get(
+                "LIGHTNAV_RECORDINGS_DIR",
+                str(Path.home() / ".local/share/lightnav_realworld/recordings"),
+            ),
+        )
 
         self.host = str(self.get_parameter("host").value).strip()
         self.port = int(self.get_parameter("port").value)
         self.image_topic = str(self.get_parameter("image_topic").value)
-        self.image_transport = str(
-            self.get_parameter("image_transport").value
-        ).strip().lower()
+        self.image_transport = str(self.get_parameter("image_transport").value).strip().lower()
         self.response_topic = str(self.get_parameter("response_topic").value)
         self.status_topic = str(self.get_parameter("status_topic").value)
-        self.server_url_topic = str(
-            self.get_parameter("server_url_topic").value
-        )
-        self.server_url_status_topic = str(
-            self.get_parameter("server_url_status_topic").value
-        )
-        self.mpc_status_topic = str(
-            self.get_parameter("mpc_status_topic").value
-        )
-        self.diagnostics_topic = str(
-            self.get_parameter("diagnostics_topic").value
-        )
-        self.instruction_topic = str(
-            self.get_parameter("instruction_topic").value
-        )
+        self.server_url_topic = str(self.get_parameter("server_url_topic").value)
+        self.server_url_status_topic = str(self.get_parameter("server_url_status_topic").value)
+        self.mpc_status_topic = str(self.get_parameter("mpc_status_topic").value)
+        self.diagnostics_topic = str(self.get_parameter("diagnostics_topic").value)
+        self.instruction_topic = str(self.get_parameter("instruction_topic").value)
         self.mode_topic = str(self.get_parameter("mode_topic").value)
-        self.mpc_enable_topic = str(
-            self.get_parameter("mpc_enable_topic").value
-        )
+        self.mpc_enable_topic = str(self.get_parameter("mpc_enable_topic").value)
         self.odom_topic = str(self.get_parameter("odom_topic").value)
-        self.manual_command_topic = str(
-            self.get_parameter("manual_command_topic").value
-        )
-        self.sent_command_topic = str(
-            self.get_parameter("sent_command_topic").value
-        )
-        self.control_source_topic = str(
-            self.get_parameter("control_source_topic").value
-        )
-        self.manual_control_service = str(
-            self.get_parameter("manual_control_service").value
-        )
-        self.auto_control_service = str(
-            self.get_parameter("auto_control_service").value
-        )
+        self.manual_command_topic = str(self.get_parameter("manual_command_topic").value)
+        self.sent_command_topic = str(self.get_parameter("sent_command_topic").value)
+        self.control_source_topic = str(self.get_parameter("control_source_topic").value)
+        self.manual_control_service = str(self.get_parameter("manual_control_service").value)
+        self.auto_control_service = str(self.get_parameter("auto_control_service").value)
         self.stop_service = str(self.get_parameter("stop_service").value)
         self.mode_services = {
             action: str(self.get_parameter(f"{action}_service").value)
@@ -149,21 +134,11 @@ class VlnWebNode(Node):
         self.image_height = int(self.get_parameter("image_height").value)
         self.image_fps = float(self.get_parameter("image_fps").value)
         self.jpeg_quality = int(self.get_parameter("jpeg_quality").value)
-        self.manual_linear_limit = float(
-            self.get_parameter("manual_linear_limit").value
-        )
-        self.manual_angular_limit = float(
-            self.get_parameter("manual_angular_limit").value
-        )
-        self.manual_linear_accel = float(
-            self.get_parameter("manual_linear_accel").value
-        )
-        self.manual_angular_accel = float(
-            self.get_parameter("manual_angular_accel").value
-        )
-        self.wifi_interface = str(
-            self.get_parameter("wifi_interface").value
-        ).strip()
+        self.manual_linear_limit = float(self.get_parameter("manual_linear_limit").value)
+        self.manual_angular_limit = float(self.get_parameter("manual_angular_limit").value)
+        self.manual_linear_accel = float(self.get_parameter("manual_linear_accel").value)
+        self.manual_angular_accel = float(self.get_parameter("manual_angular_accel").value)
+        self.wifi_interface = str(self.get_parameter("wifi_interface").value).strip()
         required_names = (
             self.image_topic,
             self.response_topic,
@@ -215,6 +190,18 @@ class VlnWebNode(Node):
             logger=self.get_logger(),
         )
 
+        self.recorder = ExperimentRecorder(
+            Path(str(self.get_parameter("recording_directory").value)).expanduser(),
+            self.get_logger(),
+            image_topic=self.image_topic,
+            image_transport=self.image_transport,
+        )
+        self.web_server.recorder = self.recorder
+        self._recording_image = None
+        self._next_preview_s = 0.0
+        self._archive_subscriptions = {}
+        self.create_timer(1.0, self._discover_archive_topics)
+
         sensor_qos = QoSProfile(
             depth=1,
             reliability=ReliabilityPolicy.BEST_EFFORT,
@@ -254,21 +241,16 @@ class VlnWebNode(Node):
                 self._on_image,
                 sensor_qos,
             )
-        self.create_subscription(
-            String, self.response_topic, self._on_vln_response, response_qos
-        )
-        self.create_subscription(
-            String, self.status_topic, self._on_vln_status, latched
-        )
+        self.create_subscription(String, "vln/trace", self._on_trace, latched)
+        self.create_subscription(String, self.response_topic, self._on_vln_response, response_qos)
+        self.create_subscription(String, self.status_topic, self._on_vln_status, latched)
         self.create_subscription(
             String,
             self.server_url_status_topic,
             self._on_server_url,
             latched,
         )
-        self.create_subscription(
-            String, self.mpc_status_topic, self._on_mpc_status, latched
-        )
+        self.create_subscription(String, self.mpc_status_topic, self._on_mpc_status, latched)
         self.create_subscription(
             DiagnosticArray,
             self.diagnostics_topic,
@@ -288,27 +270,13 @@ class VlnWebNode(Node):
             self._on_control_source,
             latched,
         )
-        self.instruction_pub = self.create_publisher(
-            String, self.instruction_topic, command_qos
-        )
-        self.server_url_pub = self.create_publisher(
-            String, self.server_url_topic, latched
-        )
-        self.mode_pub = self.create_publisher(
-            String, self.mode_topic, latched
-        )
-        self.manual_command_pub = self.create_publisher(
-            TwistStamped, self.manual_command_topic, 10
-        )
-        self.mpc_enable_pub = self.create_publisher(
-            Bool, self.mpc_enable_topic, enable_qos
-        )
-        self.manual_control_client = self.create_client(
-            SetBool, self.manual_control_service
-        )
-        self.auto_control_client = self.create_client(
-            SetBool, self.auto_control_service
-        )
+        self.instruction_pub = self.create_publisher(String, self.instruction_topic, command_qos)
+        self.server_url_pub = self.create_publisher(String, self.server_url_topic, latched)
+        self.mode_pub = self.create_publisher(String, self.mode_topic, latched)
+        self.manual_command_pub = self.create_publisher(TwistStamped, self.manual_command_topic, 10)
+        self.mpc_enable_pub = self.create_publisher(Bool, self.mpc_enable_topic, enable_qos)
+        self.manual_control_client = self.create_client(SetBool, self.manual_control_service)
+        self.auto_control_client = self.create_client(SetBool, self.auto_control_service)
         self.stop_client = self.create_client(Trigger, self.stop_service)
         self.mode_clients = {
             action: self.create_client(Trigger, service)
@@ -324,9 +292,7 @@ class VlnWebNode(Node):
 
         self._last_encode_s = 0.0
         self._wifi_manager = WifiManager(self.wifi_interface)
-        self._wifi_jobs: queue.Queue[tuple[str, Any, str]] = queue.Queue(
-            maxsize=1
-        )
+        self._wifi_jobs: queue.Queue[tuple[str, Any, str]] = queue.Queue(maxsize=1)
         self._wifi_busy_lock = threading.Lock()
         self._wifi_busy = False
         self._wifi_stop = threading.Event()
@@ -339,16 +305,53 @@ class VlnWebNode(Node):
         self._queue_wifi_job("scan", None, "")
         self._mpc_request_generation = 0
         self._mpc_desired_enabled = False
+        self._observed_control_source = "disabled"
         self._mpc_config_generation = 0
         self._mpc_config_future = None
         self._closed = False
+        self._navigation_deadline = 0.0
+        self.create_timer(0.5, self._check_navigation_start)
         self.create_timer(0.02, self._flush_commands)
         self.create_timer(0.5, self.web_server.broadcast_runtime)
         self.create_timer(1.0, self._refresh_mpc_config)
 
+    def _discover_archive_topics(self):
+        for name, types in self.get_topic_names_and_types():
+            if (
+                name not in set(TOPICS) | {self.image_topic}
+                or name in self._archive_subscriptions
+                or not types
+            ):
+                continue
+            try:
+                cls = get_message(types[0])
+                qos = QoSProfile(depth=30, reliability=ReliabilityPolicy.BEST_EFFORT)
+                if name == "/tf_static" or "/extrinsics/" in name:
+                    qos = QoSProfile(
+                        depth=1,
+                        reliability=ReliabilityPolicy.RELIABLE,
+                        durability=DurabilityPolicy.TRANSIENT_LOCAL,
+                    )
+                self._archive_subscriptions[name] = self.create_subscription(
+                    cls,
+                    name,
+                    lambda payload, topic=name, type_name=types[0]: self.recorder.raw(
+                        topic, type_name, payload, time.time_ns()
+                    ),
+                    qos,
+                    raw=True,
+                    event_callbacks=SubscriptionEventCallbacks(
+                        message_lost=lambda event, topic=name: self.recorder.transport_loss(
+                            topic, event.total_count_change
+                        )
+                    ),
+                )
+            except (ImportError, AttributeError, RuntimeError) as exc:
+                self.get_logger().warning(f"Raw archive topic unavailable {name}: {exc}")
+
     def _on_image(self, message: Image) -> None:
         now = time.monotonic()
-        if now - self._last_encode_s < 1.0 / self.image_fps:
+        if now < self._next_preview_s:
             return
         encoding = str(message.encoding).lower()
         channels = {
@@ -379,14 +382,21 @@ class VlnWebNode(Node):
             image = cv2.cvtColor(image, cv2.COLOR_RGBA2BGR)
         elif encoding == "bgra8":
             image = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
-        self._update_image(image, now)
+        self._update_image(
+            image,
+            now,
+            {
+                "stamp_ns": message.header.stamp.sec * 1000000000 + message.header.stamp.nanosec,
+                "frame_id": message.header.frame_id,
+                "encoding": message.encoding,
+                "width": width,
+                "height": height,
+            },
+        )
 
     def _on_compressed_image(self, message: CompressedImage) -> None:
         now = time.monotonic()
-        if (
-            now - self._last_encode_s < 1.0 / self.image_fps
-            or not message.data
-        ):
+        if (now < self._next_preview_s) or not message.data:
             return
         image = cv2.imdecode(
             np.frombuffer(message.data, dtype=np.uint8),
@@ -396,11 +406,22 @@ class VlnWebNode(Node):
             return
         self._update_image(image, now)
 
-    def _update_image(self, image: np.ndarray, now: float) -> None:
-        if (
-            image.shape[1] != self.image_width
-            or image.shape[0] != self.image_height
-        ):
+    def _update_image(self, image: np.ndarray, now: float, capture=None) -> None:
+        if image.ndim == 2:
+            image = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+        self._recording_image = image
+        if self.recorder.active:
+            snapshot = self.web_server._snapshot()
+            snapshot.pop("wifi", None)
+            snapshot["capture"] = capture
+            self.recorder.frame(image, snapshot)
+        if now < self._next_preview_s:
+            return
+        period = 1.0 / self.image_fps
+        self._next_preview_s += (
+            max(1, math.floor((now - self._next_preview_s) / period) + 1) * period
+        )
+        if image.shape[1] != self.image_width or image.shape[0] != self.image_height:
             image = cv2.resize(
                 image,
                 (self.image_width, self.image_height),
@@ -414,11 +435,24 @@ class VlnWebNode(Node):
         self._last_encode_s = now
         self.web_server.update_frame(encoded.tobytes(), now)
 
+    def _on_trace(self, message: String):
+        try:
+            data = json.loads(message.data)
+            if isinstance(data, dict) and isinstance(data.get("trace_id"), str):
+                self.recorder.event("inference_trace", data)
+        except (ValueError, TypeError):
+            pass
+
     def _on_vln_status(self, message: String) -> None:
         state = message.data.strip()
         if state not in {"IDLE", "RUNNING", "ERROR"}:
             self.get_logger().warning(f"invalid VLN status {state!r}")
             return
+        self.recorder.event("vln_status", {"state": state})
+        if state == "ERROR":
+            self.recorder.stop("VLN error")
+            self._request_mpc(False, "")
+            self.web_server.clear_auto_controller("VLN error")
         self.web_server.update_vln_status(state)
 
     def _on_server_url(self, message: String) -> None:
@@ -458,18 +492,13 @@ class VlnWebNode(Node):
         opos_px = response.get("opos_px")
         if (
             any(
-                isinstance(value, bool)
-                or not isinstance(value, int)
-                or value <= 0
+                isinstance(value, bool) or not isinstance(value, int) or value <= 0
                 for value in (episode, sequence, stamp_ns)
             )
             or not isinstance(frame_id, str)
             or not frame_id
             or not isinstance(waypoints, list)
-            or any(
-                value is not None and not isinstance(value, bool)
-                for value in (stop, visible)
-            )
+            or any(value is not None and not isinstance(value, bool) for value in (stop, visible))
             or any(
                 value is not None and not isinstance(value, str)
                 for value in (apos_state, opos_state)
@@ -506,9 +535,7 @@ class VlnWebNode(Node):
                 self.get_logger().warning("invalid VLN response waypoint")
                 return
             body_waypoints.append([float(value) for value in waypoint])
-        latency_ms = (
-            self.get_clock().now().nanoseconds - stamp_ns
-        ) / 1_000_000.0
+        latency_ms = (self.get_clock().now().nanoseconds - stamp_ns) / 1_000_000.0
         data = {
             "episode": episode,
             "last_sequence": sequence,
@@ -518,16 +545,8 @@ class VlnWebNode(Node):
             "stop": stop,
             "apos_state": apos_state,
             "opos_state": opos_state,
-            "apos_px": (
-                [float(value) for value in apos_px]
-                if apos_px is not None
-                else None
-            ),
-            "opos_px": (
-                [float(value) for value in opos_px]
-                if opos_px is not None
-                else None
-            ),
+            "apos_px": ([float(value) for value in apos_px] if apos_px is not None else None),
+            "opos_px": ([float(value) for value in opos_px] if opos_px is not None else None),
         }
         path = {
             "frame_id": frame_id,
@@ -535,6 +554,8 @@ class VlnWebNode(Node):
             "body_waypoints": body_waypoints,
         }
         self.web_server.update_vln_response(data, path, time.monotonic())
+        self.recorder.event("prediction", response)
+
         if stop is True and self.web_server.vln_mode() == "objnav":
             self._complete_objnav()
 
@@ -544,15 +565,14 @@ class VlnWebNode(Node):
             values = {str(item.key): str(item.value) for item in status.values}
             if name == "robot_adapter":
                 data = self._parse_robot_diagnostics(status, values)
+                self.recorder.event("robot_diagnostics", values)
                 self.web_server.update_robot_diagnostics(
                     data,
                     values.get("control_source", ""),
                 )
 
     @staticmethod
-    def _parse_robot_diagnostics(
-        status, values: dict[str, str]
-    ) -> dict[str, Any]:
+    def _parse_robot_diagnostics(status, values: dict[str, str]) -> dict[str, Any]:
         return {
             "available": True,
             "level": _diagnostic_level(status.level),
@@ -598,7 +618,16 @@ class VlnWebNode(Node):
 
     def _on_control_source(self, message: String) -> None:
         source = str(message.data).strip().lower() or "disabled"
+        previous = self._observed_control_source
+        self._observed_control_source = source
         self.web_server.update_control_source(source)
+        if previous == "auto" and source != "auto" and self._mpc_desired_enabled:
+            reason = f"Robot control interrupted: auto -> {source}; navigation stopped"
+            self.get_logger().warning(reason)
+            self.recorder.stop(reason)
+            self._request_mpc(False, "")
+            self._request_vln(False, "", self.web_server.vln_mode(), "")
+            self.web_server.clear_auto_controller(reason)
 
     def _flush_commands(self) -> None:
         for _ in range(100):
@@ -606,7 +635,10 @@ class VlnWebNode(Node):
                 kind, payload, client_id = self._commands.get_nowait()
             except queue.Empty:
                 return
-            if kind == "set_vln":
+            if kind == "start_navigation":
+                if self._request_vln(True, str(payload[0]), str(payload[1]), client_id):
+                    self._request_mpc(True, client_id)
+            elif kind == "set_vln":
                 self._request_vln(
                     bool(payload[0]),
                     str(payload[1]),
@@ -634,29 +666,23 @@ class VlnWebNode(Node):
                         client_id,
                         f"service {self.manual_control_service} is unavailable",
                     )
-                    self.web_server.revoke_controller(
-                        "robot adapter unavailable"
-                    )
+                    self.web_server.revoke_controller("robot adapter unavailable")
                     continue
                 request = SetBool.Request()
                 request.data = bool(payload)
                 future = self.manual_control_client.call_async(request)
                 future.add_done_callback(
-                    lambda done, cid=client_id, enabled=request.data: (
-                        self._manual_control_result(done, cid, enabled)
+                    lambda done, cid=client_id, enabled=request.data: self._manual_control_result(
+                        done, cid, enabled
                     )
                 )
             elif kind == "stop":
                 if not self.stop_client.service_is_ready():
-                    self._service_error(
-                        client_id, f"service {self.stop_service} is unavailable"
-                    )
+                    self._service_error(client_id, f"service {self.stop_service} is unavailable")
                     continue
                 future = self.stop_client.call_async(Trigger.Request())
                 future.add_done_callback(
-                    lambda done, cid=client_id: self._trigger_result(
-                        done, cid, "stop"
-                    )
+                    lambda done, cid=client_id: self._trigger_result(done, cid, "stop")
                 )
             elif kind == "mode":
                 action = str(payload)
@@ -669,9 +695,7 @@ class VlnWebNode(Node):
                     continue
                 future = client.call_async(Trigger.Request())
                 future.add_done_callback(
-                    lambda done, cid=client_id, name=action: self._trigger_result(
-                        done, cid, name
-                    )
+                    lambda done, cid=client_id, name=action: self._trigger_result(done, cid, name)
                 )
             elif kind == "wifi_scan":
                 self._queue_wifi_job("scan", None, client_id)
@@ -682,18 +706,14 @@ class VlnWebNode(Node):
         if self._mpc_config_future is not None:
             return
         if not self.mpc_get_parameters_client.service_is_ready():
-            self.web_server.set_mpc_config_error(
-                "vln_mpc parameter service is unavailable"
-            )
+            self.web_server.set_mpc_config_error("vln_mpc parameter service is unavailable")
             return
         request = GetParameters.Request()
         request.names = list(MPC_CONFIG_NAMES)
         generation = self._mpc_config_generation
         future = self.mpc_get_parameters_client.call_async(request)
         self._mpc_config_future = future
-        future.add_done_callback(
-            lambda done, gen=generation: self._mpc_config_result(done, gen)
-        )
+        future.add_done_callback(lambda done, gen=generation: self._mpc_config_result(done, gen))
 
     def _mpc_config_result(self, future, generation: int) -> None:
         if self._mpc_config_future is future:
@@ -729,8 +749,7 @@ class VlnWebNode(Node):
         generation = self._mpc_config_generation
         request = SetParametersAtomically.Request()
         request.parameters = [
-            Parameter(name=name, value=config[name]).to_parameter_msg()
-            for name in MPC_CONFIG_NAMES
+            Parameter(name=name, value=config[name]).to_parameter_msg() for name in MPC_CONFIG_NAMES
         ]
         future = self.mpc_set_parameters_client.call_async(request)
         future.add_done_callback(
@@ -807,9 +826,7 @@ class VlnWebNode(Node):
     def _queue_wifi_job(self, kind: str, payload: Any, client_id: str) -> None:
         with self._wifi_busy_lock:
             if self._wifi_busy:
-                self._service_error(
-                    client_id, "Wi-Fi operation already in progress"
-                )
+                self._service_error(client_id, "Wi-Fi operation already in progress")
                 return
             self._wifi_busy = True
         try:
@@ -875,8 +892,8 @@ class VlnWebNode(Node):
         request.data = enabled
         source_future = self.auto_control_client.call_async(request)
         source_future.add_done_callback(
-            lambda done, cid=client_id, gen=generation, active=enabled: (
-                self._auto_control_result(done, cid, gen, active)
+            lambda done, cid=client_id, gen=generation, active=enabled: self._auto_control_result(
+                done, cid, gen, active
             )
         )
 
@@ -918,17 +935,11 @@ class VlnWebNode(Node):
                 "command": "mpc",
                 "ok": True,
                 "enabled": enabled,
-                "message": (
-                    "MPC auto control enabled"
-                    if enabled
-                    else "MPC auto control disabled"
-                ),
+                "message": ("MPC auto control enabled" if enabled else "MPC auto control disabled"),
             },
         )
 
-    def _mpc_start_failed(
-        self, client_id: str, message: str, generation: int
-    ) -> None:
+    def _mpc_start_failed(self, client_id: str, message: str, generation: int) -> None:
         if generation != self._mpc_request_generation:
             return
         self._mpc_desired_enabled = False
@@ -937,6 +948,24 @@ class VlnWebNode(Node):
         self._request_vln(False, "", self.web_server.vln_mode(), "")
         self._service_error(client_id, message)
 
+    def _check_navigation_start(self) -> None:
+        if not self._mpc_desired_enabled:
+            return
+        reason = ""
+        if self.recorder.error and not self.recorder.active:
+            reason = "Recording failed: " + self.recorder.error
+        elif self._navigation_deadline:
+            vln = self.web_server._snapshot()["vln"]
+            if vln.get("waypoint_count", 0) > 0:
+                self._navigation_deadline = 0.0
+            elif time.monotonic() >= self._navigation_deadline:
+                reason = "Navigation start timed out without a model result"
+        if reason:
+            self._request_mpc(False, "")
+            self._request_vln(False, "", self.web_server.vln_mode(), "")
+            self.web_server.clear_auto_controller(reason)
+            self.get_logger().error(reason)
+
     def _request_vln(
         self,
         enabled: bool,
@@ -944,6 +973,17 @@ class VlnWebNode(Node):
         mode: str,
         client_id: str,
     ) -> None:
+        if enabled:
+            try:
+                self.recorder.start(instruction, mode)
+            except RuntimeError as exc:
+                self._request_mpc(False, client_id)
+                self.web_server.clear_auto_controller(str(exc))
+                self._service_error(client_id, str(exc), "vln")
+                return False
+        else:
+            self.recorder.stop("navigation stopped")
+        self._navigation_deadline = time.monotonic() + 15.0 if enabled else 0.0
         command = instruction if enabled else ""
         self.mode_pub.publish(String(data=mode))
         self.instruction_pub.publish(String(data=command))
@@ -955,13 +995,11 @@ class VlnWebNode(Node):
                 "command": "vln",
                 "ok": True,
                 "enabled": enabled,
-                "message": (
-                    "VLN instruction published"
-                    if enabled
-                    else "VLN stop published"
-                ),
+                "message": ("VLN instruction published" if enabled else "VLN stop published"),
             },
         )
+
+        return True
 
     def _request_server_url(self, server_url: str, client_id: str) -> None:
         self.server_url_pub.publish(String(data=server_url))
@@ -980,13 +1018,12 @@ class VlnWebNode(Node):
     def _complete_objnav(self) -> None:
         mode = self.web_server.vln_mode()
         self.get_logger().info("ObjNav goal reached; stopping VLN and MPC")
+        self.recorder.stop("ObjNav goal reached")
         self.web_server.clear_auto_controller("ObjNav goal reached")
         self._request_mpc(False, "")
         self._request_vln(False, "", mode, "")
 
-    def _manual_control_result(
-        self, future, client_id: str, enabled: bool
-    ) -> None:
+    def _manual_control_result(self, future, client_id: str, enabled: bool) -> None:
         try:
             result = future.result()
             success = bool(result.success)
@@ -1041,6 +1078,7 @@ class VlnWebNode(Node):
             return
         self._closed = True
         self._wifi_stop.set()
+        self.recorder.close()
         self.web_server.close()
 
     def destroy_node(self):
@@ -1063,9 +1101,7 @@ def main(args=None) -> None:
             if rclpy.ok():
                 raise
 
-    ros_thread = threading.Thread(
-        target=spin_ros, name="vln-web-ros", daemon=True
-    )
+    ros_thread = threading.Thread(target=spin_ros, name="vln-web-ros", daemon=True)
     ros_thread.start()
     try:
         node.web_server.run()

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 import math
 import time
 from collections import deque
@@ -28,46 +27,21 @@ from .geometry import (
     project_odom_to_local,
 )
 from .mpc import MPCController, build_pose_aligned_reference
-
-OBJNAV_MODE = "objnav"
-TRACK_MODE = "track"
-VALID_TASK_MODES = {OBJNAV_MODE, TRACK_MODE}
-CONTROL_RATE_HZ = 10.0
-HORIZON = 5
-MPC_DT_S = 0.1
-WAYPOINT_DT_S = 0.1
-MPC_CONFIG_NAMES = (
-    "track_v_max",
-    "objnav_v_max",
-    "w_max",
-    "a_max_v",
-    "a_max_w",
-    "q_x",
-    "q_y",
-    "q_yaw",
-    "r_v",
-    "r_w",
-    "v_output_scale",
-    "w_output_scale",
+from .protocol import (
+    CONTROL_RATE_HZ,
+    CONTROLLER_CONFIG_NAMES,
+    HORIZON,
+    MPC_DT_S,
+    OBJNAV_MODE,
+    TRACK_MODE,
+    VALID_TASK_MODES,
+    WAYPOINT_DT_S,
+    parse_vln_response,
+    scale_command,
+    should_complete_task,
+    validate_mpc_config,
+    yaw_from_quaternion,
 )
-POSITIVE_MPC_CONFIG_NAMES = {
-    "track_v_max",
-    "objnav_v_max",
-    "w_max",
-    "a_max_v",
-    "a_max_w",
-}
-NONNEGATIVE_MPC_CONFIG_NAMES = set(MPC_CONFIG_NAMES) - POSITIVE_MPC_CONFIG_NAMES
-CONTROLLER_CONFIG_NAMES = {
-    "w_max",
-    "a_max_v",
-    "a_max_w",
-    "q_x",
-    "q_y",
-    "q_yaw",
-    "r_v",
-    "r_w",
-}
 
 
 @dataclass(frozen=True)
@@ -94,90 +68,6 @@ class SolveResult:
     reference: np.ndarray
     prediction: np.ndarray
     solve_ms: float
-
-
-def yaw_from_quaternion(x: float, y: float, z: float, w: float) -> float:
-    return math.atan2(
-        2.0 * (w * z + x * y),
-        1.0 - 2.0 * (y * y + z * z),
-    )
-
-
-def parse_vln_response(
-    raw: str,
-    expected_frame: str,
-) -> tuple[int, int, int, bool | None, list[tuple[float, float, float]]]:
-    try:
-        response = json.loads(raw)
-    except json.JSONDecodeError as exc:
-        raise ValueError(f"invalid VLN response JSON: {exc}") from exc
-    if not isinstance(response, dict):
-        raise ValueError("VLN response must be a JSON object")
-
-    episode = response.get("episode")
-    sequence = response.get("seq")
-    stamp_ns = response.get("capture_stamp_ns")
-    for name, value in (
-        ("episode", episode),
-        ("seq", sequence),
-        ("capture_stamp_ns", stamp_ns),
-    ):
-        if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
-            raise ValueError(f"VLN response {name} must be a positive integer")
-    if response.get("frame_id") != expected_frame:
-        raise ValueError(
-            f"VLN response frame is {response.get('frame_id')!r}, "
-            f"expected {expected_frame!r}"
-        )
-    stop = response.get("stop")
-    for name in ("stop", "visible"):
-        value = response.get(name)
-        if value is not None and not isinstance(value, bool):
-            raise ValueError(f"VLN response {name} must be boolean or null")
-
-    raw_waypoints = response.get("waypoints")
-    if not isinstance(raw_waypoints, list):
-        raise ValueError("VLN response waypoints must be an array")
-    waypoints = []
-    for point in raw_waypoints:
-        if not isinstance(point, list) or len(point) != 3:
-            raise ValueError("each VLN waypoint must be [x, y, yaw]")
-        if any(
-            isinstance(value, bool) or not isinstance(value, (int, float))
-            for value in point
-        ):
-            raise ValueError("VLN waypoint values must be numbers")
-        values = tuple(float(value) for value in point)
-        if not all(math.isfinite(value) for value in values):
-            raise ValueError("VLN waypoint contains non-finite values")
-        waypoints.append(values)
-    return episode, sequence, stamp_ns, stop, waypoints
-
-
-def should_complete_task(mode: str, stop: bool | None) -> bool:
-    return mode == OBJNAV_MODE and stop is True
-
-
-def validate_mpc_config(config: dict[str, float]) -> str:
-    if set(config) != set(MPC_CONFIG_NAMES):
-        return "MPC configuration fields are incomplete"
-    if not all(math.isfinite(value) for value in config.values()):
-        return "MPC configuration values must be finite"
-    if any(config[name] <= 0.0 for name in POSITIVE_MPC_CONFIG_NAMES):
-        return "MPC limits must be positive"
-    if any(config[name] < 0.0 for name in NONNEGATIVE_MPC_CONFIG_NAMES):
-        return "MPC weights and output scales must be nonnegative"
-    if not any(config[name] > 0.0 for name in ("q_x", "q_y", "q_yaw")):
-        return "at least one MPC state weight must be positive"
-    return ""
-
-
-def scale_command(
-    command: tuple[float, float],
-    v_scale: float,
-    w_scale: float,
-) -> tuple[float, float]:
-    return command[0] * v_scale, command[1] * w_scale
 
 
 class MpcNode(Node):
@@ -229,13 +119,9 @@ class MpcNode(Node):
         self.w_max = float(self.get_parameter("w_max").value)
         self.a_max_v = float(self.get_parameter("a_max_v").value)
         self.a_max_w = float(self.get_parameter("a_max_w").value)
-        self.odom_match_max_gap_s = float(
-            self.get_parameter("odom_match_max_gap_s").value
-        )
+        self.odom_match_max_gap_s = float(self.get_parameter("odom_match_max_gap_s").value)
         self.odom_timeout_s = float(self.get_parameter("odom_timeout_s").value)
-        self.metrics_log_period_s = float(
-            self.get_parameter("metrics_log_period_s").value
-        )
+        self.metrics_log_period_s = float(self.get_parameter("metrics_log_period_s").value)
         self.q_weights = (
             float(self.get_parameter("q_x").value),
             float(self.get_parameter("q_y").value),
@@ -245,12 +131,8 @@ class MpcNode(Node):
             float(self.get_parameter("r_v").value),
             float(self.get_parameter("r_w").value),
         )
-        self.v_output_scale = float(
-            self.get_parameter("v_output_scale").value
-        )
-        self.w_output_scale = float(
-            self.get_parameter("w_output_scale").value
-        )
+        self.v_output_scale = float(self.get_parameter("v_output_scale").value)
+        self.w_output_scale = float(self.get_parameter("w_output_scale").value)
         required_names = (
             self.response_topic,
             self.status_topic,
@@ -311,9 +193,7 @@ class MpcNode(Node):
             q_weights=self.q_weights,
             r_weights=self.r_weights,
         )
-        self._solver_pool = ThreadPoolExecutor(
-            max_workers=1, thread_name_prefix="vln-mpc"
-        )
+        self._solver_pool = ThreadPoolExecutor(max_workers=1, thread_name_prefix="vln-mpc")
         self._solve_future: Optional[Future[SolveResult]] = None
         self.add_on_set_parameters_callback(self._on_set_parameters)
 
@@ -332,12 +212,8 @@ class MpcNode(Node):
             reliability=ReliabilityPolicy.RELIABLE,
             durability=DurabilityPolicy.VOLATILE,
         )
-        self.create_subscription(
-            String, self.response_topic, self._on_vln_response, response_qos
-        )
-        self.create_subscription(
-            String, self.status_topic, self._on_vln_status, latched
-        )
+        self.create_subscription(String, self.response_topic, self._on_vln_response, response_qos)
+        self.create_subscription(String, self.status_topic, self._on_vln_status, latched)
         self.create_subscription(String, self.mode_topic, self._on_mode, latched)
         self.create_subscription(Bool, self.enable_topic, self._on_enable, enable_qos)
         self.create_subscription(Odometry, self.odom_topic, self._on_odom, 50)
@@ -345,9 +221,7 @@ class MpcNode(Node):
         self.odom_path_pub = self.create_publisher(Path, self.odom_path_topic, latched)
         self.reference_pub = self.create_publisher(Path, "mpc/reference", 10)
         self.prediction_pub = self.create_publisher(Path, "mpc/prediction", 10)
-        self.mpc_status_pub = self.create_publisher(
-            String, self.mpc_status_topic, latched
-        )
+        self.mpc_status_pub = self.create_publisher(String, self.mpc_status_topic, latched)
         self.create_timer(1.0 / self.control_rate_hz, self._control_tick)
         self.create_timer(0.01, self._consume_solution)
         self.create_timer(self.metrics_log_period_s, self._log_metrics)
@@ -385,9 +259,7 @@ class MpcNode(Node):
         for parameter in parameters:
             if parameter.name not in proposed:
                 continue
-            if isinstance(parameter.value, bool) or not isinstance(
-                parameter.value, (int, float)
-            ):
+            if isinstance(parameter.value, bool) or not isinstance(parameter.value, (int, float)):
                 return SetParametersResult(
                     successful=False,
                     reason=f"{parameter.name} must be numeric",
@@ -443,17 +315,12 @@ class MpcNode(Node):
         self._tracking_controller = controller
         self.get_logger().info(
             "MPC parameters updated: "
-            + " ".join(
-                f"{name}={proposed[name]:g}" for name in sorted(changed)
-            )
+            + " ".join(f"{name}={proposed[name]:g}" for name in sorted(changed))
         )
         return SetParametersResult(successful=True)
 
     def _on_odom(self, message: Odometry) -> None:
-        if (
-            message.header.frame_id != self.odom_frame
-            or message.child_frame_id != self.base_frame
-        ):
+        if message.header.frame_id != self.odom_frame or message.child_frame_id != self.base_frame:
             self._last_error = (
                 f"odom frames are {message.header.frame_id!r} -> "
                 f"{message.child_frame_id!r}, expected {self.odom_frame!r} -> "
@@ -476,9 +343,7 @@ class MpcNode(Node):
             ],
             dtype=np.float64,
         )
-        stamp_ns = int(message.header.stamp.sec) * 1_000_000_000 + int(
-            message.header.stamp.nanosec
-        )
+        stamp_ns = int(message.header.stamp.sec) * 1_000_000_000 + int(message.header.stamp.nanosec)
         if stamp_ns <= 0 or not np.all(np.isfinite(values)):
             return
         sample = TimedPose(
@@ -520,13 +385,9 @@ class MpcNode(Node):
             self._complete_task(episode, sequence)
             return
 
-        matched = pose_at_stamp(
-            list(self._odom_history), stamp_ns, self.odom_match_max_gap_s
-        )
+        matched = pose_at_stamp(list(self._odom_history), stamp_ns, self.odom_match_max_gap_s)
         if matched is None:
-            self._last_error = (
-                "no odom pose close enough to the image capture timestamp"
-            )
+            self._last_error = "no odom pose close enough to the image capture timestamp"
             return
         capture_pose, gap_s = matched
         raw_odom_waypoints = project_body_to_odom(body_waypoints, capture_pose)
@@ -671,9 +532,7 @@ class MpcNode(Node):
             y=float(pose[1]),
             yaw=float(pose[2]),
         )
-        local_reference = np.asarray(
-            project_odom_to_local(reference, origin), dtype=np.float64
-        )
+        local_reference = np.asarray(project_odom_to_local(reference, origin), dtype=np.float64)
         local_pose = np.zeros(3, dtype=np.float64)
         command, local_prediction = self._tracking_controller.solve(
             local_pose,
@@ -794,11 +653,7 @@ class MpcNode(Node):
         count = self._metrics_solve_count
         if self._enabled or count:
             average_ms = self._metrics_solve_sum_ms / count if count else 0.0
-            latest_text = (
-                f"{self._last_solve_ms:.2f}"
-                if self._last_solve_ms is not None
-                else "n/a"
-            )
+            latest_text = f"{self._last_solve_ms:.2f}" if self._last_solve_ms is not None else "n/a"
             self.get_logger().info(
                 "MPC metrics: "
                 f"solve_hz={count / elapsed_s:.2f} "

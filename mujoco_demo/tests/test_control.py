@@ -1,7 +1,6 @@
 import math
 
 import pytest
-
 from vln_mujoco.control import waypoint_command
 
 
@@ -25,4 +24,3 @@ def test_waypoint_behind_rotates_without_forward_motion() -> None:
 
 def test_empty_path_stops() -> None:
     assert waypoint_command([]) == (0.0, 0.0)
-

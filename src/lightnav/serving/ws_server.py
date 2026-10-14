@@ -299,12 +299,20 @@ def make_handler(service, recorder=None):
             except Exception as exc:
                 logger.warning(
                     "[%s] recorder begin_episode failed: %s: %s",
-                    SERVER_LOG_TAG, type(exc).__name__, exc,
+                    SERVER_LOG_TAG,
+                    type(exc).__name__,
+                    exc,
                 )
 
         def record_step(
-            *, current_session, seq: int, image: bytes, instruction: str, pred,
-            latency_ms: float, response: Mapping[str, object],
+            *,
+            current_session,
+            seq: int,
+            image: bytes,
+            instruction: str,
+            pred,
+            latency_ms: float,
+            response: Mapping[str, object],
         ) -> None:
             """Append one predicted step; a no-op when recording is off."""
             if recorder is None:
@@ -322,21 +330,39 @@ def make_handler(service, recorder=None):
                     instruction=instruction,
                     waypoints=None if waypoints is None else np.asarray(waypoints).tolist(),
                     stop=bool(getattr(pred, "stop", False)),
-                    visible=response_data.get("visible") if isinstance(response_data, Mapping) else None,
+                    visible=response_data.get("visible")
+                    if isinstance(response_data, Mapping)
+                    else None,
                     raw_text=str(getattr(pred, "raw_text", "") or ""),
                     latency_ms=float(latency_ms),
-                    pointing=response_data.get("pointing") if isinstance(response_data, Mapping) else None,
+                    extra={
+                        "request_received_wall_ns": received_ns,
+                        "response": dict(response),
+                        "client_telemetry": dict(data.get("telemetry", {}))
+                        if isinstance(data.get("telemetry"), Mapping)
+                        else {},
+                        "server_timing": response_data.get("server_timing", {}),
+                        "timings_ms": response_data.get("timings_ms", {}),
+                    },
+                    pointing=response_data.get("pointing")
+                    if isinstance(response_data, Mapping)
+                    else None,
                 )
             except Exception as exc:
                 logger.warning(
                     "[%s] recorder record_step failed (seq=%s): %s: %s",
-                    SERVER_LOG_TAG, seq, type(exc).__name__, exc,
+                    SERVER_LOG_TAG,
+                    seq,
+                    type(exc).__name__,
+                    exc,
                 )
 
         try:
             while True:
                 try:
                     msg = await websocket.recv()
+                    received_ns = time.time_ns()
+                    received_mono = time.monotonic()
                 except ConnectionClosed:
                     break
 
@@ -371,7 +397,10 @@ def make_handler(service, recorder=None):
                             client_id = maybe_client_id
                         ensure_session()
                         logger.info(
-                            "[%s] client login: %s client_id=%s", SERVER_LOG_TAG, addr, client_id or "-"
+                            "[%s] client login: %s client_id=%s",
+                            SERVER_LOG_TAG,
+                            addr,
+                            client_id or "-",
                         )
                         await send_response({"action": "login", "data": {"rc": 0, "msg": "ok"}})
 
@@ -401,27 +430,55 @@ def make_handler(service, recorder=None):
                         current_session.observe(rgb)
                         if not instruction:
                             await send_response(
-                                {"action": "next", "data": {"rc": 0, "seq": seq, "msg": "image received"}}
+                                {
+                                    "action": "next",
+                                    "data": {"rc": 0, "seq": seq, "msg": "image received"},
+                                }
                             )
                             continue
                         current_session.instruction = instruction
+                        preprocess_ms = (time.monotonic() - received_mono) * 1000
                         t0 = time.monotonic()
                         try:
                             pred = await service.predict(current_session)
                         except Exception as exc:
                             logger.warning(
                                 "[%s] predict failed (seq=%s): %s: %s",
-                                SERVER_LOG_TAG, seq, type(exc).__name__, exc,
+                                SERVER_LOG_TAG,
+                                seq,
+                                type(exc).__name__,
+                                exc,
                             )
-                            await send_response(
-                                {"action": "next", "data": {"rc": 500, "seq": seq, "msg": str(exc)}}
+                            error_response = {
+                                "action": "next",
+                                "data": {"rc": 500, "seq": seq, "msg": str(exc)},
+                            }
+                            await send_response(error_response)
+                            record_step(
+                                current_session=current_session,
+                                seq=seq,
+                                image=image_bytes,
+                                instruction=instruction,
+                                pred=None,
+                                latency_ms=(time.monotonic() - t0) * 1000,
+                                response=error_response,
                             )
                             continue
                         latency_ms = (time.monotonic() - t0) * 1000.0
                         # A prediction that cannot be serialised or delivered ends the
                         # connection; it is never retried and never answered twice.
                         try:
-                            response = _success_response(pred, seq, latency_ms, current_session, rgb)
+                            response = _success_response(
+                                pred, seq, latency_ms, current_session, rgb
+                            )
+                            response["data"]["server_timing"] = {
+                                "received_wall_ns": received_ns,
+                                "reply_prepared_wall_ns": time.time_ns(),
+                                "preprocess_ms": preprocess_ms,
+                                "predict_ms": latency_ms,
+                                "runtime_snapshot": os.environ.get("LIGHTNAV_RUNTIME_SNAPSHOT", ""),
+                                "timing_note": "Engine stage wall times; not isolated GPU kernel times. Cross-host clocks may differ.",
+                            }
                             await send_response(response)
                         except ConnectionClosed:
                             break
@@ -461,7 +518,11 @@ def make_handler(service, recorder=None):
                     logger.log(
                         logging.WARNING if rc == 400 else logging.ERROR,
                         "[%s] request error rc=%d action=%s seq=%s: %s",
-                        SERVER_LOG_TAG, rc, action, seq, exc,
+                        SERVER_LOG_TAG,
+                        rc,
+                        action,
+                        seq,
+                        exc,
                     )
                     response_data: dict[str, object] = {"rc": rc, "msg": str(exc)}
                     if seq is not None:
@@ -479,7 +540,10 @@ def make_handler(service, recorder=None):
                     conn_recorder.close()
                 except Exception as exc:
                     logger.warning(
-                        "[%s] recorder close failed: %s: %s", SERVER_LOG_TAG, type(exc).__name__, exc
+                        "[%s] recorder close failed: %s: %s",
+                        SERVER_LOG_TAG,
+                        type(exc).__name__,
+                        exc,
                     )
             logger.info(
                 "[%s] client disconnected: %s client_id=%s", SERVER_LOG_TAG, addr, client_id or "-"
@@ -535,9 +599,7 @@ async def _warmup(service: BatchedTrackingService, bundle) -> None:
     try:
         await service.predict(session)
     except ValueError as exc:
-        logger.warning(
-            "[%s] warmup decode raised ValueError: %s (continuing)", SERVER_LOG_TAG, exc
-        )
+        logger.warning("[%s] warmup decode raised ValueError: %s (continuing)", SERVER_LOG_TAG, exc)
         return
     logger.info("[%s] warmup done in %.0f ms", SERVER_LOG_TAG, (time.monotonic() - t0) * 1000.0)
 
@@ -829,7 +891,9 @@ def resolve_decoder_args(args: argparse.Namespace) -> argparse.Namespace:
     Raises ``ValueError`` when both flags are given or nothing can be resolved.
     """
     if args.traj_vocab_path and args.action_tokenizer_bundle:
-        raise ValueError("pass only one of --traj_vocab_path (flat) or --action_tokenizer_bundle (rvq)")
+        raise ValueError(
+            "pass only one of --traj_vocab_path (flat) or --action_tokenizer_bundle (rvq)"
+        )
     if args.traj_vocab_path or args.action_tokenizer_bundle:
         return args
     from lightnav.tracking import resolve_action_decoder_from_config

@@ -1,0 +1,11 @@
+# Python 3.10 on ROS 2 Humble. Model/Torch dependencies stay on the server.
+numpy==1.26.4
+opencv-python-headless==4.11.0.86
+aiohttp>=3.9,<4
+casadi==3.7.2
+colcon-common-extensions==0.3.0
+# Humble's ament templates use the EmPy 3 API.
+empy==3.3.4
+setuptools==68.2.2
+pytest>=8,<10
+pytest-asyncio>=0.24

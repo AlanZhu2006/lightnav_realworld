@@ -109,7 +109,10 @@ def _jpeg_b64(size=(4, 4)) -> str:
 
 def _next(seq, instruction="go", size=(4, 4)) -> str:
     return json.dumps(
-        {"action": "next", "data": {"seq": seq, "image": _jpeg_b64(size), "instruction": instruction}}
+        {
+            "action": "next",
+            "data": {"seq": seq, "image": _jpeg_b64(size), "instruction": instruction},
+        }
     )
 
 
@@ -187,9 +190,7 @@ def test_build_engine_plumbs_quantization_and_vit_cache(monkeypatch):
         return object(), object()
 
     monkeypatch.setattr(ws_server, "build_engine", fake_build_engine)
-    ws_server._build_engine(
-        _engine_args(quantization="fp8_llm_only", vit_cache_entries=1024)
-    )
+    ws_server._build_engine(_engine_args(quantization="fp8_llm_only", vit_cache_entries=1024))
     assert seen["cfg"].quantization == "fp8_llm_only"
     assert seen["cfg"].vit_cache_entries == 1024
 
@@ -203,8 +204,7 @@ def test_quantization_flag_rejects_full_fp8(monkeypatch):
             ["--model_path", "/m", "--traj_vocab_path", "/v", "--quantization", "fp8"]
         )
     args = parser.parse_args(
-        ["--model_path", "/m", "--traj_vocab_path", "/v",
-         "--quantization", "fp8_llm_only"]
+        ["--model_path", "/m", "--traj_vocab_path", "/v", "--quantization", "fp8_llm_only"]
     )
     assert args.quantization == "fp8_llm_only"
 
@@ -212,17 +212,13 @@ def test_quantization_flag_rejects_full_fp8(monkeypatch):
 def test_quantization_and_cache_env_defaults(monkeypatch):
     monkeypatch.setenv("VLLM_QUANT", "fp8_llm_only")
     monkeypatch.setenv("VLN_VIT_CACHE_ENTRIES", "1024")
-    args = ws_server._build_parser().parse_args(
-        ["--model_path", "/m", "--traj_vocab_path", "/v"]
-    )
+    args = ws_server._build_parser().parse_args(["--model_path", "/m", "--traj_vocab_path", "/v"])
     assert args.quantization == "fp8_llm_only"
     assert args.vit_cache_entries == 1024
 
     monkeypatch.setenv("VLN_VIT_CACHE_ENTRIES", "not-an-int")
     with pytest.raises(SystemExit):
-        ws_server._build_parser().parse_args(
-            ["--model_path", "/m", "--traj_vocab_path", "/v"]
-        )
+        ws_server._build_parser().parse_args(["--model_path", "/m", "--traj_vocab_path", "/v"])
 
 
 def test_engine_task_mapping_rejects_unknown_tasks():
@@ -292,7 +288,9 @@ def test_main_requires_exactly_one_action_decoder(monkeypatch, argv):
 
 async def test_login_client_id_is_passed_to_session_creation():
     service = FakeService()
-    ws = await _run([json.dumps({"action": "login", "data": {"clientId": "robot-client-7"}})], service)
+    ws = await _run(
+        [json.dumps({"action": "login", "data": {"clientId": "robot-client-7"}})], service
+    )
 
     assert service.client_ids == ["robot-client-7"]
     assert ws.sent == [{"action": "login", "data": {"rc": 0, "msg": "ok"}}]
@@ -378,7 +376,17 @@ async def test_success_response_matches_wire_contract():
     assert data["latency_ms"] >= 0.0
     assert data["timings_ms"] == {"llm_ms": 3.0}
     assert "pointing" not in data
-    assert set(data) == {"rc", "seq", "actions", "latency_ms", "stop", "visible", "timings_ms", "raw_text"}
+    assert set(data) == {
+        "rc",
+        "seq",
+        "actions",
+        "latency_ms",
+        "stop",
+        "visible",
+        "timings_ms",
+        "raw_text",
+        "server_timing",
+    }
     assert service.sessions[0].instruction == "go to the chair"
 
 
@@ -483,31 +491,56 @@ async def test_observe_exception_is_nonfatal_and_sends_one_500():
         (json.dumps({"action": "next", "data": []}), "next", "data must be an object"),
         (json.dumps({"action": "next", "data": 1}), "next", "data must be an object"),
         (json.dumps({"action": "next", "data": "data"}), "next", "data must be an object"),
-        (json.dumps({"action": "next", "data": {"image": _jpeg_b64(), "instruction": "go"}}), "next", "missing seq"),
         (
-            json.dumps({"action": "next", "data": {"seq": "bad", "image": _jpeg_b64(), "instruction": "go"}}),
+            json.dumps({"action": "next", "data": {"image": _jpeg_b64(), "instruction": "go"}}),
+            "next",
+            "missing seq",
+        ),
+        (
+            json.dumps(
+                {
+                    "action": "next",
+                    "data": {"seq": "bad", "image": _jpeg_b64(), "instruction": "go"},
+                }
+            ),
             "next",
             "seq must be an integer",
         ),
         (
-            json.dumps({"action": "next", "data": {"seq": True, "image": _jpeg_b64(), "instruction": "go"}}),
+            json.dumps(
+                {"action": "next", "data": {"seq": True, "image": _jpeg_b64(), "instruction": "go"}}
+            ),
             "next",
             "seq must be an integer",
         ),
         (
-            json.dumps({"action": "next", "data": {"seq": 1.5, "image": _jpeg_b64(), "instruction": "go"}}),
+            json.dumps(
+                {"action": "next", "data": {"seq": 1.5, "image": _jpeg_b64(), "instruction": "go"}}
+            ),
             "next",
             "seq must be an integer",
         ),
-        (json.dumps({"action": "next", "data": {"seq": 1, "instruction": "go"}}), "next", "missing image"),
-        (json.dumps({"action": "next", "data": {"seq": 1, "image": "", "instruction": "go"}}), "next", "missing image"),
         (
-            json.dumps({"action": "next", "data": {"seq": 1, "image": _jpeg_b64(), "instruction": 5}}),
+            json.dumps({"action": "next", "data": {"seq": 1, "instruction": "go"}}),
+            "next",
+            "missing image",
+        ),
+        (
+            json.dumps({"action": "next", "data": {"seq": 1, "image": "", "instruction": "go"}}),
+            "next",
+            "missing image",
+        ),
+        (
+            json.dumps(
+                {"action": "next", "data": {"seq": 1, "image": _jpeg_b64(), "instruction": 5}}
+            ),
             "next",
             "instruction must be a string",
         ),
         (
-            json.dumps({"action": "next", "data": {"seq": 1, "image": "not-base64!", "instruction": "go"}}),
+            json.dumps(
+                {"action": "next", "data": {"seq": 1, "image": "not-base64!", "instruction": "go"}}
+            ),
             "next",
             "bad image",
         ),
@@ -529,7 +562,9 @@ async def test_observe_exception_is_nonfatal_and_sends_one_500():
         (json.dumps({"data": {}}), "error", "unknown action"),
     ],
 )
-async def test_malformed_request_is_nonfatal_and_sends_one_400(message, expected_action, expected_msg):
+async def test_malformed_request_is_nonfatal_and_sends_one_400(
+    message, expected_action, expected_msg
+):
     service = FakeService([_pred()])
     ws = await _run([message, _next(9)], service)
 
@@ -557,13 +592,19 @@ async def test_400_echoes_seq_only_when_it_was_parsed():
 async def test_bad_image_is_rejected_before_it_reaches_the_buffer():
     service = FakeService()
     await _run(
-        [json.dumps({"action": "next", "data": {"seq": 1, "image": "not-base64!", "instruction": "go"}})],
+        [
+            json.dumps(
+                {"action": "next", "data": {"seq": 1, "image": "not-base64!", "instruction": "go"}}
+            )
+        ],
         service,
     )
     assert service.sessions[0].observed == []
 
 
-@pytest.mark.parametrize("send_error", [RuntimeError("send exploded"), ConnectionClosedOK(None, None)])
+@pytest.mark.parametrize(
+    "send_error", [RuntimeError("send exploded"), ConnectionClosedOK(None, None)]
+)
 async def test_send_failure_ends_handler_without_retry(send_error):
     class SendBoomWebSocket(FakeWebSocket):
         def __init__(self):
@@ -664,7 +705,7 @@ _RESET = json.dumps({"action": "reset", "data": {}})
 def _without_latency(sent: list[dict]) -> list[dict]:
     out = []
     for msg in sent:
-        data = {k: v for k, v in msg["data"].items() if k != "latency_ms"}
+        data = {k: v for k, v in msg["data"].items() if k not in {"latency_ms", "server_timing"}}
         out.append({**msg, "data": data})
     return out
 
@@ -699,7 +740,15 @@ def test_recorder_label_accepts_only_plainly_safe_client_ids(client_id, expected
 async def test_predicted_next_is_recorded_with_the_raw_jpeg_bytes_step_seq_and_pointing():
     b64 = _jpeg_b64(size=(480, 270))
     predicted = json.dumps(
-        {"action": "next", "data": {"seq": 9, "image": b64, "instruction": "follow the man"}}
+        {
+            "action": "next",
+            "data": {
+                "seq": 9,
+                "image": b64,
+                "instruction": "follow the man",
+                "telemetry": {"trace_id": "test-trace", "capture_stamp_ns": 123},
+            },
+        }
     )
     pred = _pred(
         waypoints=np.array([[1.0, 0.25, 0.1], [2.0, -0.5, -0.2]], dtype=np.float32),
@@ -731,6 +780,9 @@ async def test_predicted_next_is_recorded_with_the_raw_jpeg_bytes_step_seq_and_p
     assert step["pointing"] == response["pointing"]
     assert step["pointing"]["frame_size"] == [480, 270]
     assert conn.closed is True
+    assert step["extra"]["response"]["data"]["seq"] == 9
+    assert step["extra"]["server_timing"]["preprocess_ms"] >= 0
+    assert step["extra"]["client_telemetry"] == {"trace_id": "test-trace", "capture_stamp_ns": 123}
 
 
 async def test_buffer_only_next_is_not_recorded():
@@ -763,22 +815,32 @@ async def test_unsafe_client_id_is_not_used_as_a_directory_name():
     assert recorder.conns[0].label is None
 
 
-async def test_failed_prediction_is_not_recorded():
+async def test_failed_prediction_keeps_input_and_error_for_diagnostics():
     recorder = FakeRecorder()
     ws = await _run_recorded(
         [_next(1, "go"), _next(2, "go")], FakeService([ValueError("boom"), _pred()]), recorder
     )
     assert ws.sent[0]["data"]["rc"] == 500
-    assert [s["seq"] for s in recorder.steps] == [2]
+    assert [s["seq"] for s in recorder.steps] == [1, 2]
+    assert recorder.steps[0]["extra"]["response"]["data"]["rc"] == 500
 
 
 @pytest.mark.parametrize("fail", ["begin_connection", "begin_episode", "record_step", "close"])
 async def test_a_raising_recorder_leaves_every_response_unchanged(fail):
-    messages = [_login("robot-7"), _RESET, _next(1, ""), _next(2, "go"), "{not json", _next(3, "go")]
+    messages = [
+        _login("robot-7"),
+        _RESET,
+        _next(1, ""),
+        _next(2, "go"),
+        "{not json",
+        _next(3, "go"),
+    ]
     predictions = [_pred(raw_text="<apos_650><opos_114>"), _pred(stop=True)]
 
     baseline = await _run(list(messages), FakeService(list(predictions)))
-    recorded = await _run_recorded(list(messages), FakeService(list(predictions)), FakeRecorder(fail=fail))
+    recorded = await _run_recorded(
+        list(messages), FakeService(list(predictions)), FakeRecorder(fail=fail)
+    )
 
     assert _without_latency(recorded.sent) == _without_latency(baseline.sent)
     assert [m["data"]["rc"] for m in recorded.sent] == [0, 0, 0, 0, 400, 0]
@@ -802,8 +864,16 @@ def _recording_args(tmp_path, **overrides) -> Namespace:
 
 
 def test_parser_recording_defaults(monkeypatch):
-    for key in ("RECORD_DIR", "RECORD_FPS", "RECORD_TIMELINE", "RECORD_IMAGES", "CAM_HFOV_DEG",
-                "CAM_HEIGHT", "TRAJ_FORWARD_OFFSET", "WAYPOINT_DT_S"):
+    for key in (
+        "RECORD_DIR",
+        "RECORD_FPS",
+        "RECORD_TIMELINE",
+        "RECORD_IMAGES",
+        "CAM_HFOV_DEG",
+        "CAM_HEIGHT",
+        "TRAJ_FORWARD_OFFSET",
+        "WAYPOINT_DT_S",
+    ):
         monkeypatch.delenv(key, raising=False)
 
     args = ws_server._build_parser().parse_args(
@@ -843,8 +913,17 @@ def test_parser_recording_flags_override_env(monkeypatch):
     monkeypatch.setenv("TRAJ_FORWARD_OFFSET", "   ")  # blank means unset
 
     args = ws_server._build_parser().parse_args(
-        ["--model_path", "/path/to/ckpt", "--record_dir", "/cli/records", "--no_record_images",
-         "--record_timeline", "per_step", "--traj_forward_offset", "0.6"]
+        [
+            "--model_path",
+            "/path/to/ckpt",
+            "--record_dir",
+            "/cli/records",
+            "--no_record_images",
+            "--record_timeline",
+            "per_step",
+            "--traj_forward_offset",
+            "0.6",
+        ]
     )
     assert args.record_dir == "/cli/records" and args.record_images is False
     assert args.record_timeline == "per_step" and args.traj_forward_offset == 0.6
@@ -857,8 +936,18 @@ def test_parser_recording_flags_override_env(monkeypatch):
 
 @pytest.mark.parametrize(
     ("value", "expected"),
-    [(None, True), ("", True), ("  ", True), ("0", False), ("false", False), ("No", False),
-     ("off", False), ("1", True), ("true", True), ("anything", True)],
+    [
+        (None, True),
+        ("", True),
+        ("  ", True),
+        ("0", False),
+        ("false", False),
+        ("No", False),
+        ("off", False),
+        ("1", True),
+        ("true", True),
+        ("anything", True),
+    ],
 )
 def test_env_flag(monkeypatch, value, expected):
     if value is None:
@@ -898,7 +987,9 @@ async def test_record_dir_end_to_end_writes_an_episode_lightnav_render_can_find(
     )
     pred = _pred(visible=True, raw_text="<apos_650><opos_114>")
 
-    ws = await _run_recorded([_login("robot-7"), _RESET, _next(1, ""), predicted], FakeService([pred]), recorder)
+    ws = await _run_recorded(
+        [_login("robot-7"), _RESET, _next(1, ""), predicted], FakeService([pred]), recorder
+    )
     recorder.close()
 
     assert ws.sent[-1]["data"]["rc"] == 0
