@@ -155,3 +155,26 @@ CasADi (LGPL-3.0-or-later) with Ipopt (EPL-2.0) used through it, aiohttp
 (Apache-2.0/MIT), and Pillow (MIT-CMU), plus ONNX Runtime (MIT) when the optional
 `microduck` extra is installed — all installed by the user, none redistributed
 here.
+# Go2 console import (2026-10-20)
+
+The added `deployment/lightnav/vendor/upstream` snapshot retains its upstream
+Apache-2.0 LICENSE, THIRD_PARTY_NOTICES and complete source manifest. Its mirror
+commit and the separately checked official release hashes are recorded in
+`deployment/go2-source-manifest.json` and `deployment/lightnav/policy.py`.
+`deployment/imagegoal/vendor/lightnav_official_client` and
+`deployment/nomad/vendor/lightnav` retain their original licenses and hashes.
+The operator stylesheet retains `deployment/operator/LICENSE.LightNav`.
+The optional VNC reference retains `deployment/nomad/ops/LICENSE.TinyNav` and
+its adaptation notice in `SOURCES.md`.
+
+The four unchanged GEM deployment files under `deployment/go2/vendor/gem`
+and `deployment/imagegoal/vendor/gem` originate from
+`AlanZhu2006/GEM-RealWorld@fd23b5d4006226e7a76b2c3f0bf03a8ec16e3436`.
+Their two `SOURCE.json` files identify each original path and SHA-256. That
+source snapshot did not provide a root LICENSE/COPYING grant for its custom
+deployment files; this import does not invent one or change their attribution.
+See `deployment/nomad/ops/SOURCES.md` for the recorded source-license scope.
+The DejaView integration snapshot itself contained no root LICENSE file and
+its Foxglove package retains its explicit `UNLICENSED` metadata. This repository's
+original Apache license must not be read as relicensing separately attributed
+imported material. No third-party environment, SDK binary or checkpoint is bundled.

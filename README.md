@@ -1,3 +1,5 @@
+> **Go2 console update (2026-10-20):** the portable HTTP / Foxglove integration and explicit experimental ImageGoal profile are documented in [REALWORLD_GO2_CONSOLE.md](docs/REALWORLD_GO2_CONSOLE.md). The original WebSocket / ROS stack below is preserved. Source migration does not replace the running robot workspace.
+
 # LightNav real-world deployment
 
 完整的 LightNav 双机部署仓库：GPU 上位机运行原版模型推理，Jetson 下位机负责相机、ROS 2、MPC、Go2 控制和实验录制。这里整合官方源码、实际部署快照中的改动、此前未提交的录制模块和两端配置。

@@ -1,0 +1,27 @@
+# NoMaD observation profile. See SOURCES.md for the mature-stack references.
+foxglove_bridge:
+  ros__parameters:
+    address: "127.0.0.1"
+    port: 8765
+    capabilities: [connectionGraph]
+    service_whitelist: ["(?!)"]
+    param_whitelist: ["(?!)"]
+    client_topic_whitelist: ["(?!)"]
+    topic_whitelist:
+      - "^/nomad/foxglove/(rgb|goal|depth_color)/compressed$"
+      - "^/nomad/(path|status|cmd_vel_shadow)$"
+      - "^/nomad/mpc/(reference|prediction)$"
+      - "^/nomad/shadow/(rgb/compressed|goal/compressed|path|path_sampled|mpc/reference|mpc/prediction|status)$"
+      - "^/nomad/go2/(odometry|battery)$"
+      - "^/camera/camera/(color|aligned_depth_to_color)/camera_info$"
+      - "^/tf(_static)?$"
+    best_effort_qos_topic_whitelist:
+      - "^/nomad/foxglove/(rgb|depth_color)/compressed$"
+      - "^/camera/camera/.*$"
+    include_hidden: false
+    min_qos_depth: 1
+    max_qos_depth: 2
+    num_threads: 2
+    message_backlog_size: 8
+    sysinfo: false
+    tls: false

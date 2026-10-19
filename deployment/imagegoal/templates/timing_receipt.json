@@ -1,0 +1,17 @@
+{
+  "schema_version": "imagegoal.time_alignment_receipt.v1",
+  "robot_id": "REPLACE_WITH_ACTUAL_GO2_ID",
+  "verified": false,
+  "verified_by": "",
+  "verified_at_timestamp_ns": 0,
+  "commissioning": false,
+  "host_boot_id": "REPLACE_AFTER_ACTUAL_MEASUREMENT_ON_THIS_BOOT",
+  "clock_domain": "unix_epoch_ns",
+  "max_alignment_error_s": null,
+  "sources": {
+    "rgb": {"frame_name": "camera_color_optical_frame", "timestamp_source": "realsense_ros_header_system_time", "stamp_correction_s": null},
+    "depth": {"frame_name": "camera_color_optical_frame", "timestamp_source": "realsense_ros_header_system_time", "stamp_correction_s": null},
+    "odom": {"frame_name": "go2_odom", "timestamp_source": "go2_dds_receive_host_system_time_not_sensor_source_time", "stamp_correction_s": null}
+  },
+  "evidence": []
+}

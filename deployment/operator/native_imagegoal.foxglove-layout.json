@@ -1,0 +1,17 @@
+{
+  "configById": {
+    "dejaview-imagegoal.ImageGoal!operator": {
+      "backend": "nomad",
+      "timeout_s": 60,
+      "foxglovePanelTitle": "Navigation Console"
+    }
+  },
+  "globalVariables": {},
+  "userNodes": {},
+  "linkedGlobalVariables": [],
+  "playbackConfig": {
+    "speed": 1,
+    "messageOrder": "receiveTime"
+  },
+  "layout": "dejaview-imagegoal.ImageGoal!operator"
+}

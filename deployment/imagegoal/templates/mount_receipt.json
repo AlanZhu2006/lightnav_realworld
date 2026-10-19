@@ -1,0 +1,14 @@
+{
+  "schema_version": "imagegoal.mount_receipt.v1",
+  "robot_id": "REPLACE_WITH_ACTUAL_GO2_ID",
+  "verified": false,
+  "verified_by": "",
+  "verified_at_timestamp_ns": 0,
+  "commissioning": false,
+  "body_frame": "base_link",
+  "rgb_frame": "camera_color_optical_frame",
+  "odom_frame": "go2_odom",
+  "camera_heading_aligned_to_body": false,
+  "T_body_rgb": null,
+  "evidence": []
+}

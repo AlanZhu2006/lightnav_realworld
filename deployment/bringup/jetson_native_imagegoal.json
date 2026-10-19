@@ -1,0 +1,139 @@
+{
+  "name": "jetson_native_imagegoal",
+  "runtime_url": "http://127.0.0.1:8093",
+  "components": [
+    {
+      "name": "go2_readonly_telemetry",
+      "command": [
+        "bash",
+        "deployment/go2/run_go2.sh",
+        "telemetry",
+        "--watch"
+      ],
+      "health_command": [
+        "python3",
+        "-c",
+        "import json,time,pathlib; s=json.loads(pathlib.Path('.runtime/go2/telemetry.json').read_text()); assert s['ready'] and s['read_only'] and not s['synthetic'] and not s['motion_api_imported']; assert s['boot_id']==pathlib.Path('/proc/sys/kernel/random/boot_id').read_text().strip(); assert all(0<=(time.monotonic_ns()-s[k])/1e9<.3 for k in ['sport_received_monotonic_ns','lowstate_received_monotonic_ns']); print('Live read-only Go2 feedback')"
+      ],
+      "startup_timeout_s": 20,
+      "adopt_existing": true
+    },
+    {
+      "name": "nomad",
+      "command": [
+        "bash",
+        "deployment/sensors/run_nomad_jetson.sh"
+      ],
+      "health_url": "http://127.0.0.1:18883/healthz",
+      "health_expect": {
+        "ok": true,
+        "model_loaded": true,
+        "contract.device": "cuda",
+        "contract.checkpoint.sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333"
+      },
+      "startup_timeout_s": 60,
+      "adopt_existing": true
+    },
+    {
+      "name": "runtime",
+      "command": [
+        ".venv-nomad-cpu/bin/python",
+        "-m",
+        "deployment.imagegoal",
+        "--profile",
+        "external",
+        "--execution-profile",
+        "supervised-native",
+        "--output",
+        "{run}/runtime",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8093",
+        "--nomad-url",
+        "http://127.0.0.1:18883",
+        "--lightnav-url",
+        "http://127.0.0.1:18884",
+        "--static-dir",
+        "deployment/operator/web",
+        "--operator-supervised",
+        "--max-v-mps",
+        "0.3",
+        "--max-w-rad-s",
+        "0.55",
+        "--min-effective-v-mps",
+        "0.1",
+        "--min-effective-w-rad-s",
+        "0.2",
+        "--max-plan-age-s",
+        "2",
+        "--max-rgb-age-s",
+        "2"
+      ],
+      "env": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1"
+      },
+      "health_url": "http://127.0.0.1:8093/status",
+      "health_expect": {
+        "schema_version": "imagegoal.runtime.v1",
+        "profile": "external",
+        "hardware_transport": "absent",
+        "execution_capability.operator_run_configured": false,
+        "execution_capability.supervised_native_configured": true,
+        "execution_capability.operator_supervised": true
+      },
+      "startup_timeout_s": 20,
+      "adopt_existing": false
+    },
+    {
+      "name": "go2_readonly_camera",
+      "command": [
+        "bash",
+        "deployment/go2/run_go2.sh",
+        "camera",
+        "--runtime-url",
+        "http://127.0.0.1:8093"
+      ],
+      "health_command": [
+        "python3",
+        "-c",
+        "import json,time,pathlib,urllib.request; c=json.loads(pathlib.Path('.runtime/go2/camera.json').read_text()); assert c['ready'] and 0<=(time.time_ns()-c['timestamp_ns'])/1e9<1; s=json.load(urllib.request.urlopen('http://127.0.0.1:8093/status',timeout=2)); r=s['sensors']['rgb']; assert r and 0<=r['age_s']<1 and not r['synthetic'] and r['timestamp_source']=='go2_video_rpc_receive_host_system_time_not_sensor_source_time'; print('Live native RGB; receive-time proxy, exposure time unavailable')"
+      ],
+      "startup_timeout_s": 20,
+      "adopt_existing": false
+    },
+    {
+      "name": "ros_observer",
+      "command": [
+        "bash",
+        "-c",
+        "source /opt/ros/humble/setup.bash && exec .venv-nomad-cpu/bin/python -m deployment.imagegoal.ros_bridge --runtime-url http://127.0.0.1:8093 --odom-topic /go2/odometry --preview-compressed-topic /go2/front_camera/image_raw/compressed --preview-timestamp-source go2_video_rpc_receive_host_system_time_not_sensor_source_time"
+      ],
+      "env": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1"
+      },
+      "health_command": [
+        "python3",
+        "-c",
+        "import json,urllib.request; s=json.load(urllib.request.urlopen('http://127.0.0.1:8093/status',timeout=2)); assert all(s['sensors'][k] and 0<=s['sensors'][k]['age_s']<1 for k in ['rgb','odom']); assert s['execution_capability']['supervised_native_configured'] and s['execution_capability']['operator_supervised']; print('Native RGB + measured odom; supervised Unitree avoidance, receive-time proxy')"
+      ],
+      "startup_timeout_s": 20,
+      "adopt_existing": false
+    },
+    {
+      "name": "foxglove",
+      "command": [
+        "bash",
+        "deployment/operator/run_foxglove.sh"
+      ],
+      "tcp": [
+        "127.0.0.1",
+        8766
+      ],
+      "startup_timeout_s": 15,
+      "adopt_existing": false
+    }
+  ]
+}

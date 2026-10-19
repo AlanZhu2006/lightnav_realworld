@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/AlanZhu2006/GEM-RealWorld",
+  "commit": "fd23b5d4006226e7a76b2c3f0bf03a8ec16e3436",
+  "unmodified": true,
+  "files": {
+    "go2_cmd_bridge.py": {
+      "source_path": "deployment/go2/go2_cmd_bridge.py",
+      "sha256": "1fbf0f15e29be8ef9cd28bf8c1ee6a5658e62739fbb5ac65f7f844be30d65924"
+    },
+    "go2_battery_monitor.py": {
+      "source_path": "deployment/go2/go2_battery_monitor.py",
+      "sha256": "66047dc9cf4c869910fa97b4f999c19cdcc30e5623d1a0396fef0315fb2c612e"
+    }
+  }
+}

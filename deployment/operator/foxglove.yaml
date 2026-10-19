@@ -1,0 +1,25 @@
+foxglove_bridge:
+  ros__parameters:
+    address: "127.0.0.1"
+    port: 8766
+    capabilities: [clientPublish, connectionGraph]
+    service_whitelist: ["(?!)"]
+    param_whitelist: ["(?!)"]
+    client_topic_whitelist: ["^/imagegoal/operator/command$"]
+    topic_whitelist:
+      - "^/imagegoal/shadow/(rgb/compressed|goal/compressed|path|reference|prediction|local_path|status|bridge_status)$"
+      - "^/imagegoal/operator/(command|result)$"
+      - "^/go2/(front_camera/(image_raw/compressed|status)|odometry|battery|telemetry/status)$"
+      - "^/camera/camera/(color|aligned_depth_to_color)/camera_info$"
+      - "^/tf(_static)?$"
+    best_effort_qos_topic_whitelist:
+      - "^/camera/camera/.*$"
+      - "^/imagegoal/shadow/rgb/compressed$"
+      - "^/go2/front_camera/image_raw/compressed$"
+    include_hidden: false
+    min_qos_depth: 1
+    max_qos_depth: 2
+    num_threads: 2
+    message_backlog_size: 8
+    sysinfo: false
+    tls: false

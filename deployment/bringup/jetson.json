@@ -1,0 +1,103 @@
+{
+  "name": "jetson_imagegoal",
+  "runtime_url": "http://127.0.0.1:8093",
+  "components": [
+    {
+      "name": "realsense",
+      "command": [
+        "bash",
+        "deployment/sensors/run_realsense.sh"
+      ],
+      "health_command": [
+        "bash",
+        "-c",
+        "source /opt/ros/humble/setup.bash && exec /usr/bin/python3 -m deployment.bringup.probe_rgbd --timeout-s 5"
+      ],
+      "probe_timeout_s": 8,
+      "startup_timeout_s": 40,
+      "adopt_existing": true
+    },
+    {
+      "name": "nomad",
+      "command": [
+        "bash",
+        "deployment/sensors/run_nomad_jetson.sh"
+      ],
+      "health_url": "http://127.0.0.1:18883/healthz",
+      "health_expect": {
+        "ok": true,
+        "model_loaded": true,
+        "contract.device": "cuda",
+        "contract.checkpoint.sha256": "70f79b8262527e20e56ced64a3e3d7ef91855bc9e7c3fa348d78edcb83c6a333"
+      },
+      "startup_timeout_s": 60,
+      "adopt_existing": true
+    },
+    {
+      "name": "runtime",
+      "command": [
+        ".venv-nomad-cpu/bin/python",
+        "-m",
+        "deployment.imagegoal",
+        "--profile",
+        "external",
+        "--output",
+        "{run}/runtime",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "8093",
+        "--nomad-url",
+        "http://127.0.0.1:18883",
+        "--lightnav-url",
+        "http://127.0.0.1:18884",
+        "--static-dir",
+        "deployment/operator/web"
+      ],
+      "env": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1"
+      },
+      "health_url": "http://127.0.0.1:8093/status",
+      "health_expect": {
+        "schema_version": "imagegoal.runtime.v1",
+        "profile": "external",
+        "hardware_transport": "absent"
+      },
+      "startup_timeout_s": 20,
+      "adopt_existing": false
+    },
+    {
+      "name": "ros_observer",
+      "command": [
+        "bash",
+        "-c",
+        "source /opt/ros/humble/setup.bash && exec .venv-nomad-cpu/bin/python -m deployment.imagegoal.ros_bridge --runtime-url http://127.0.0.1:8093 --odom-topic /go2/odometry"
+      ],
+      "env": {
+        "OPENBLAS_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1"
+      },
+      "health_command": [
+        "python3",
+        "-c",
+        "import json,urllib.request; s=json.load(urllib.request.urlopen('http://127.0.0.1:8093/status',timeout=2)); assert all(s['sensors'][k] and 0<=s['sensors'][k]['age_s']<1 for k in ['rgb','depth']); print('runtime RGB-D ingress fresh; Go2 odom independently gated')"
+      ],
+      "startup_timeout_s": 30,
+      "adopt_existing": false
+    },
+    {
+      "name": "foxglove",
+      "command": [
+        "bash",
+        "deployment/operator/run_foxglove.sh"
+      ],
+      "tcp": [
+        "127.0.0.1",
+        8766
+      ],
+      "startup_timeout_s": 15,
+      "adopt_existing": false
+    }
+  ]
+}

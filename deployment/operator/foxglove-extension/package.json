@@ -1,0 +1,45 @@
+{
+  "name": "dejaview-imagegoal",
+  "displayName": "DejaView Navigation Console",
+  "description": "English Foxglove console for NoMaD and LightNav image goals, language navigation, and tracking, with supervised robot execution.",
+  "publisher": "dejaview",
+  "homepage": "",
+  "version": "0.1.11",
+  "license": "UNLICENSED",
+  "main": "./dist/extension.js",
+  "keywords": [],
+  "scripts": {
+    "build": "foxglove-extension build",
+    "foxglove:prepublish": "foxglove-extension build --mode production",
+    "lint": "eslint .",
+    "lint:ci": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "local-install": "foxglove-extension install",
+    "package": "foxglove-extension package",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/model.test.mjs",
+    "demo:build": "python3 demo/generate_fixtures.py && esbuild demo/main.ts --bundle --format=iife --outfile=demo/dashboard.js",
+    "demo:serve": "python3 -m http.server 8098 --bind 127.0.0.1 -d demo",
+    "test:browser": "npm run demo:build && node --test tests/browser.test.mjs"
+  },
+  "devDependencies": {
+    "@foxglove/eslint-plugin": "2.1.2",
+    "@foxglove/extension": "2.59.0",
+    "@foxglove/rosmsg-msgs-common": "3.3.0",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "create-foxglove-extension": "1.3.2",
+    "esbuild": "0.28.2",
+    "eslint": "9.39.5",
+    "playwright": "1.64.1",
+    "prettier": "3.9.10",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "typescript": "5.9.3"
+  },
+  "overrides": {
+    "tar": "7.5.22",
+    "webpack": "5.112.0",
+    "ts-loader": "9.6.2"
+  }
+}

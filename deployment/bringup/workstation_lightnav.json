@@ -1,0 +1,29 @@
+{
+  "name": "workstation_lightnav",
+  "components": [
+    {
+      "name": "lightnav",
+      "command": [
+        "bash",
+        "deployment/lightnav/run_server.sh"
+      ],
+      "health_url": "http://127.0.0.1:18884/healthz",
+      "health_expect": {
+        "ok": true,
+        "model_loaded": true,
+        "contract.model": "LightOriginsHQ/LightNav-0",
+        "contract.model_revision": "826dc5fbfa37afa8293d2e336d329b6ffc0bfb64",
+        "contract.model_sha256": "ffc4a925378a881afa761865048eb8d07c55cacf5eaf66548b6641c39f67af18",
+        "contract.implementation": "official_core_with_deployment_adapters",
+        "contract.official_release_commit": "3015508b70fb6e30bbd66701e94c9b916dcb8df8",
+        "contract.goal_image_consumed": false,
+        "contract.official_core_sha256": "266934037b07ae62d5ee6b679114da5557b9bbe2112fbf506774c9f8512ed71c",
+        "contract.imagegoal_adaptation_support": true,
+        "contract.retirement_protocol.supported": true,
+        "contract.retirement_protocol.schema_version": "lightnav.owned_retirement.v1"
+      },
+      "startup_timeout_s": 180,
+      "adopt_existing": true
+    }
+  ]
+}

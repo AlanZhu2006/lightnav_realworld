@@ -1,0 +1,96 @@
+{
+  "configById": {
+    "Image!rgb": {
+      "imageMode": {
+        "imageTopic": "/nomad/foxglove/rgb/compressed",
+        "rectifyImage": false,
+        "publish": {"clickEnabled": false, "hoverEnabled": false}
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Live RGB"
+    },
+    "Image!goal": {
+      "imageMode": {
+        "imageTopic": "/nomad/foxglove/goal/compressed",
+        "rectifyImage": false,
+        "publish": {"clickEnabled": false, "hoverEnabled": false}
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Active goal RGB"
+    },
+    "Image!depth": {
+      "imageMode": {
+        "imageTopic": "/nomad/foxglove/depth_color/compressed",
+        "rectifyImage": false,
+        "publish": {"clickEnabled": false, "hoverEnabled": false}
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Depth preview (0.2-4 m default)"
+    },
+    "3D!paths": {
+      "fixedFrame": "go2_odom",
+      "followTf": "base_link",
+      "followMode": "follow-pose",
+      "cameraState": {
+        "distance": 5,
+        "perspective": false,
+        "phi": 0,
+        "thetaOffset": 0,
+        "target": [0, 0, 0],
+        "targetOffset": [0, 0, 0],
+        "targetOrientation": [0, 0, 0, 1]
+      },
+      "topics": {
+        "/nomad/path": {"visible": true, "color": "#23c483", "lineWidth": 0.04},
+        "/nomad/mpc/reference": {"visible": true, "color": "#f4cc45", "lineWidth": 0.025},
+        "/nomad/mpc/prediction": {"visible": true, "color": "#51a7fa", "lineWidth": 0.025},
+        "/nomad/go2/odometry": {"visible": true}
+      },
+      "foxglovePanelTitle": "NoMaD / MPC / measured odometry"
+    },
+    "Plot!shadow": {
+      "paths": [
+        {"value": "/nomad/cmd_vel_shadow.linear.x", "enabled": true, "label": "shadow vx [m/s]", "timestampMethod": "receiveTime"},
+        {"value": "/nomad/cmd_vel_shadow.angular.z", "enabled": true, "label": "shadow wz [rad/s]", "timestampMethod": "receiveTime"},
+        {"value": "/nomad/go2/odometry.twist.twist.linear.x", "enabled": true, "label": "measured vx [m/s]", "timestampMethod": "receiveTime"}
+      ],
+      "showLegend": true,
+      "xAxisVal": "timestamp",
+      "isSynced": true,
+      "foxglovePanelTitle": "Shadow command and robot feedback"
+    },
+    "RawMessages!status": {
+      "topicPath": "/nomad/status",
+      "foxglovePanelTitle": "Runtime status (read only)"
+    },
+    "Tab!observe": {
+      "activeTabIdx": 0,
+      "tabs": [
+        {
+          "title": "Observe",
+          "layout": {
+            "direction": "row",
+            "first": {
+              "direction": "column",
+              "first": "Image!rgb",
+              "second": {"direction": "row", "first": "Image!goal", "second": "Image!depth", "splitPercentage": 50},
+              "splitPercentage": 60
+            },
+            "second": {
+              "direction": "column",
+              "first": "3D!paths",
+              "second": {"direction": "column", "first": "Plot!shadow", "second": "RawMessages!status", "splitPercentage": 50},
+              "splitPercentage": 55
+            },
+            "splitPercentage": 55
+          }
+        }
+      ]
+    }
+  },
+  "globalVariables": {},
+  "userNodes": {},
+  "linkedGlobalVariables": [],
+  "playbackConfig": {"speed": 1, "messageOrder": "receiveTime"},
+  "layout": "Tab!observe"
+}

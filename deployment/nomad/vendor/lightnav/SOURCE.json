@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/AlanZhu2006/lightnav_realworld",
+  "commit": "ddfd37059c49e8090217e11c4ffa6f6b3ff9d554",
+  "unmodified": true,
+  "files": [
+    {
+      "file": "mpc.py",
+      "source_path": "robot_deploy/src/vln_mpc/vln_mpc/mpc.py",
+      "sha256": "fe97c24c6eb5ec443892ea8e6719493390a448ed036cebac1fcbd213c795c0a8"
+    },
+    {
+      "file": "geometry.py",
+      "source_path": "robot_deploy/src/vln_mpc/vln_mpc/geometry.py",
+      "sha256": "af72a6ebca4ff18b3d1a09b69583c431d6cbdd071c478945cbe9aa45690d3a14"
+    },
+    {
+      "file": "protocol.py",
+      "source_path": "robot_deploy/src/vln_mpc/vln_mpc/protocol.py",
+      "sha256": "20e0a018fb31f5f824132d1c4550b39d8eb8c2176680dabdef7387c54ac322fd"
+    },
+    {
+      "file": "LICENSE",
+      "source_path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "repository": "https://github.com/lightorigins/LightNav-0",
+  "commit": "3015508b70fb6e30bbd66701e94c9b916dcb8df8",
+  "source_path": "robot_deploy/src/vln_client/vln_client/vln_client.py",
+  "source_sha256": "3598531abd85327714c8607e56bf7412a1085b77b437ff7f8b7d86deb78ce278",
+  "unmodified": true,
+  "reused_symbols": [
+    "CameraFrame",
+    "VlnClient._encode_image",
+    "OUTPUT_WIDTH",
+    "OUTPUT_HEIGHT",
+    "JPEG_QUALITY"
+  ],
+  "constants": {
+    "OUTPUT_WIDTH": 480,
+    "OUTPUT_HEIGHT": 270,
+    "JPEG_QUALITY": 80
+  },
+  "loading": "Hash-verify the complete unmodified source; execute only the CameraFrame class and original _encode_image AST plus literal constants. No networking client instance or ROS/SDK import.",
+  "license": "Apache-2.0",
+  "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+}

@@ -9,7 +9,7 @@
 
 PYTHON ?= python3
 
-.PHONY: check lint test
+.PHONY: check lint test test-go2
 
 check:
 	@if command -v ruff >/dev/null 2>&1; then \
@@ -25,3 +25,6 @@ lint: check
 
 test:
 	PYTHON=$(PYTHON) bash deployment/test.sh
+
+test-go2:
+	PYTHON=$(PYTHON) bash deployment/test_go2.sh

@@ -79,6 +79,7 @@ where = ["src"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+extend-exclude = ["deployment/*/vendor/**"]
 
 [tool.ruff.per-file-target-version]
 "robot_deploy/**/*.py" = "py310"
@@ -87,6 +88,12 @@ target-version = "py311"
 [tool.ruff.lint]
 select = ["E", "F", "I"]   # pyflakes + pycodestyle + isort
 ignore = ["E501"]          # line length is advisory; the 100-col limit is not enforced
+
+# Imported deployment sources retain their original compact style. Keep all F
+# checks active; the hash-locked vendor copies are checked by verify_sources().
+[tool.ruff.lint.per-file-ignores]
+"deployment/{lightnav,imagegoal,go2,bringup,nomad,operator,sensors,maxwell}/**/*.py" = ["E701", "E702", "E731", "E402", "I001"]
+"checks/*.py" = ["E701", "E702", "E731", "E402", "I001"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

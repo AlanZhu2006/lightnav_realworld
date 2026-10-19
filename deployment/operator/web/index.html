@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DejaView · ImageGoal</title>
+  <link rel="stylesheet" href="/lightnav-base.css"><link rel="stylesheet" href="/imagegoal.css">
+  <script src="/imagegoal.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span></span><div><small>DEJAVIEW · GO2</small><h1>ImageGoal 导航工作台</h1></div></div>
+    <div class="pills"><a class="pill" href="/downloads/dejaview.dejaview-imagegoal-0.1.11.foxe" download>Foxglove 扩展 0.1.11</a><a class="pill" href="/downloads/native_imagegoal.foxglove-layout.json" download>真机控制台布局</a><b class="pill" id="connection">连接中</b><b class="pill" id="profile">—</b><b class="pill" id="task-state">待机</b></div>
+  </header>
+  <div class="mode-banner" id="mode-notice">正在读取运行模式和传感器状态…</div>
+  <main class="layout">
+    <section class="panel vision"><div class="heading"><div><small>OBSERVATION</small><h2>当前 RGB</h2></div><em id="camera-age">等待相机</em></div>
+      <div class="image-frame"><img id="rgb" alt="当前相机 RGB"><span id="rgb-empty">尚未收到 RGB</span></div>
+      <p class="path-note" id="sensor-note">源时间、odom、深度由运行时检查。</p>
+      <div class="metrics" id="sensor-metrics"></div>
+    </section>
+    <section class="panel"><div class="heading"><div><small>FULL IMAGE GOAL</small><h2 id="task-heading">目标图与任务</h2></div><em id="goal-version">尚未设置</em></div>
+      <div class="image-frame goal-frame" id="goal-preview"><img id="goal" alt="完整目标 RGB"><span id="goal-empty">上传或采集同相机目标图</span></div>
+      <div class="controls">
+        <div class="button-row" id="goal-controls"><label class="file-button">选择目标图<input type="file" id="goal-file" accept="image/jpeg,image/png,image/webp"></label><button id="capture">使用当前视图</button><button id="replace-goal" disabled>替换当前目标</button></div>
+        <label>策略后端<select id="backend"><option value="nomad">NoMaD · ImageGoal</option><option value="lightnav">LightNav</option></select></label>
+        <label id="navigation-mode-label" hidden>LightNav 任务<select id="navigation-mode"><option value="objnav">官方 ObjNav · 目标物体导航</option><option value="vln">官方 VLN · 路径指令导航</option><option value="imagegoal">ImageGoal · Go2 适配</option></select></label>
+        <label>任务模式<select id="execution-mode"><option value="shadow">影子运行</option><option id="operator-run-option" value="operator_run" disabled>真机执行 · 等待现场配置与反馈</option><option id="supervised-native-option" value="supervised_native" disabled>监督真机测试 · 宇树原生避障 · 手动停止</option></select></label>
+        <label id="instruction-label" hidden><span id="instruction-title">LightNav 导航指令（必填）</span><input id="instruction" maxlength="4096" placeholder="Go to the coat rack beside the windows."></label>
+        <p id="imagegoal-adaptation-note" hidden>Go2 ImageGoal 适配 · 非官方已验证能力</p>
+        <div class="button-row"><label>任务时限（秒）<input id="timeout" type="number" min="5" max="3600" value="120"></label><button class="primary" id="start" disabled>开始任务</button></div>
+        <div class="button-row"><button id="pause" disabled>暂停</button><button id="resume" disabled>继续</button><button id="complete" disabled>人工确认到达</button><button class="danger" id="cancel">停止任务</button></div>
+        <p id="action-status" role="status">选择完整目标图后开始。模型 STOP 与真实到达分别记录。</p>
+      </div>
+    </section>
+    <section class="panel"><div class="heading"><div><small>PATH + MPC</small><h2>轨迹与执行状态</h2></div><em id="path-frame">—</em></div>
+      <canvas id="path" width="700" height="400" aria-label="二维路径和MPC轨迹"></canvas>
+      <div class="legend"><span class="green">模型路径</span><span class="yellow">MPC 参考</span><span class="blue">MPC 预测</span></div>
+      <div class="metrics" id="control-metrics"></div><ul class="gate-list" id="gates"></ul>
+    </section>
+    <section class="panel"><div class="heading"><div><small>SESSION EVIDENCE</small><h2>事件与运行记录</h2></div><a class="download" href="/api/run.zip" download>下载本次记录</a></div>
+      <dl class="identity" id="identity"></dl><pre id="events">等待事件…</pre>
+      <details class="raw"><summary>完整运行状态</summary><pre id="raw-status"></pre></details>
+    </section>
+  </main>
+  <footer>控制与界面沿用已验证仓库的接口分工。当前模式以运行时状态为准；模拟反馈和真实传感器记录分别标识。</footer>
+</body>
+</html>

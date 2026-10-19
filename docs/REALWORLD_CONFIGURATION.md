@@ -49,3 +49,7 @@ ROS 的 Fast DDS 配置和 SDK 的 CycloneDDS 通道不同。robot-env.sh 设置
 go2_realsense.launch.py 声明 server_url、network_interface、image_topic、image_transport、linear_limit、angular_limit、web_host、web_port、recording_directory。统一启动器从环境变量构造；直接 ros2 launch 需要自行传参。
 
 vln_web 新增 recording_directory。单独节点默认 ~/.local/share/lightnav_realworld/recordings；统一启动器默认写仓库目录，不依赖旧名字 LightNav-0。
+
+## Go2 HTTP console additions
+
+The separate Go2 HTTP integration uses `LIGHTNAV_PYTHON`, `LIGHTNAV_MODEL_PATH`, `LIGHTNAV_RECORD_DIR`, `LIGHTNAV_HOST`, and `LIGHTNAV_PORT`. Operator SSH configuration uses `LIGHTNAV_ROBOT_SSH_HOST` / `--host` and `LIGHTNAV_ROBOT_PROJECT` / `--remote-root`. Optional shared-server configuration uses `DEJAVIEW_DATA_ROOT` (must remain under the current user `/local_data`), `MAXWELL_GPU_ID`, `MAXWELL_ALLOW_SHARED_GPU` (only after explicit sharing approval), and private `MAXWELL_SSH_DESTINATION`. These are separate from the original WebSocket role configuration. See [Go2 console deployment](REALWORLD_GO2_CONSOLE.md).

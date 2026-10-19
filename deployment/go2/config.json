@@ -1,0 +1,20 @@
+{
+  "schema_version": "dejaview.go2.config.v1",
+  "net_if": "enP8p1s0",
+  "robot_ip": "192.168.123.161",
+  "dds_domain_id": 0,
+  "sport_topic": "rt/sportmodestate",
+  "lowstate_topic": "rt/lowstate",
+  "odom_topic": "/go2/odometry",
+  "battery_topic": "/go2/battery",
+  "status_topic": "/go2/telemetry/status",
+  "odom_frame": "go2_odom",
+  "body_frame": "base_link",
+  "feedback_max_age_s": 0.3,
+  "max_vx_m_s": 0.2,
+  "max_vy_m_s": 0.0,
+  "max_wz_rad_s": 0.4,
+  "bridge_enabled": false,
+  "authorized_cmd_vel_topic": "/imagegoal/authorized_cmd_vel",
+  "sdk_commit": "814556d15970dd2ecf1c9984e845ca02ab07e206"
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "lightnav.go2.portable_validation.v1",
+  "date": "2026-10-20",
+  "base_commit": "ddfd37059c49e8090217e11c4ffa6f6b3ff9d554",
+  "source_snapshot": "go2-console-0.1.11",
+  "checks": {
+    "make_check": {
+      "passed": true,
+      "ruff": "0.16.1",
+      "immutable_vendor_files_checked_by_sha256": true
+    },
+    "original_make_test": {
+      "passed": 674,
+      "skipped": 12,
+      "failed": 0,
+      "skip_reasons": {
+        "zmq_missing": 1,
+        "public_qwen_processor_config_not_cached": 1,
+        "imageio_ffmpeg_missing": 6,
+        "rclpy_missing": 2,
+        "rosbag2_py_missing": 2
+      }
+    },
+    "portable_make_test_go2": {
+      "run": 229,
+      "passed": 228,
+      "skipped": 1,
+      "failed": 0,
+      "skip_reason": "Optional private real-camera JPEG fixture is intentionally absent; synthetic JPEG equality tests pass."
+    },
+    "operator": {
+      "typescript": "passed",
+      "eslint": "passed",
+      "node_model_tests_passed": 23,
+      "chromium_browser_tests_passed": 35
+    }
+  },
+  "execution": {
+    "gpu_models_loaded": false,
+    "robot_sdk_initialized": false,
+    "camera_devices_opened": false,
+    "motion_commands_sent": false,
+    "production_services_changed": false
+  },
+  "limits": [
+    "This validation establishes CPU/software contracts, not physical navigation success.",
+    "Temporary CPU verification dependencies and borrowed node_modules are ignored and not bundled.",
+    "NoMaD model and DejaView route supervisor are not required or claimed by this LightNav import."
+  ],
+  "foxglove_release": {
+    "version": "0.1.11",
+    "sha256": "f5703fd1f46974e848e4630bc660018298d0d46f04331694e0cba5d35317a7b8"
+  },
+  "source_concurrent_changed_files_excluded": 16
+}

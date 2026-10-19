@@ -46,3 +46,16 @@ logs/
 *.safetensors
 *.pth
 *.pt
+
+# Portable Go2 deployment: source and tests belong in Git; runtime data does not.
+.runtime/
+runs/
+node_modules
+*.foxe
+/assets/nomad/
+/third_party/
+/deployment/operator/foxglove-extension/demo/dashboard.js
+/deployment/operator/foxglove-extension/demo/preview-*.png
+!/deployment/operator/dist/
+!/deployment/operator/dist/dejaview.dejaview-imagegoal-0.1.11.foxe
+!/deployment/operator/web/downloads/dejaview.dejaview-imagegoal-0.1.11.foxe

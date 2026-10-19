@@ -1,0 +1,2313 @@
+{
+  "schema": "lightnav.go2.source_snapshot.v1",
+  "date": "2026-10-20",
+  "source_repository": "https://github.com/ai4ce/DejaView",
+  "source_base_commit": "ef29a7c7ae0370775ba976d4ca12c48071cb14e3",
+  "source_worktree_dirty": true,
+  "destination_base_commit": "ddfd37059c49e8090217e11c4ffa6f6b3ff9d554",
+  "note": "Exact per-file source hashes identify unpublished deployment work; the base commit alone does not identify it.",
+  "excluded": [
+    ".runtime",
+    ".venv",
+    "__pycache__",
+    "dashboard.js",
+    "dist",
+    "downloads",
+    "fixture-status.json",
+    "live-goal.jpg",
+    "live-rgb.jpg",
+    "node_modules"
+  ],
+  "files": [
+    {
+      "path": "checks/test_lightnav_launcher.py",
+      "source_sha256": "8ca388a95c292d393c2cc5678ed78d47b461fc7d37dc7044a9cfc033cf648917",
+      "sha256": "ed0b997335563ef2d91c929ee2dbd6455b014f04bb925def31e97508d293d017",
+      "bytes": 16459,
+      "transformations": [
+        "deployment identity/path replaced with portable example"
+      ],
+      "imported_sha256": "45184941e3a976b1eb5749975496d5676355f52ec963da39e5f7e2e73a14c206",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "checks/test_open_console_launch.py",
+      "source_sha256": "77a6a89addf193c53e2fb4e5fb099628d055fc86b7be5fe0ebac42cf0434d7d4",
+      "sha256": "ab07484256d71d85c5bb67fae964d9ca0ce6891a75bd773437f41a86a5796879",
+      "bytes": 10744,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example"
+      ],
+      "imported_sha256": "2c33e5093fca247cfa97e888a71a8be6ae6d83b94beb3181b85b6841b0ec86a9",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/bringup/README.md",
+      "source_sha256": "924879fa8760a6bd5d6d9c49c46057d1088f7bedce4d3e93cc20fa1077c0fe31",
+      "sha256": "086cd5be86ca1cf6d5ca31b3b29f5e3d7c3a46b079e3fa1629384b9aaff1aa72",
+      "bytes": 7152,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "f38a8ba496a958d994996ae0f7b36f7f601031374d1c856157bfc366634ff2a8",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/bringup/__init__.py",
+      "source_sha256": "cdefcbdcb81b4c8836512b184732732f519fcaf78744ae799c88806550897e56",
+      "sha256": "cdefcbdcb81b4c8836512b184732732f519fcaf78744ae799c88806550897e56",
+      "bytes": 68,
+      "transformations": [],
+      "imported_sha256": "cdefcbdcb81b4c8836512b184732732f519fcaf78744ae799c88806550897e56"
+    },
+    {
+      "path": "deployment/bringup/__main__.py",
+      "source_sha256": "8e7186d5a4b768ffb793d0abe73f32e9008d831d3e2b84275ea4bab93c0c8721",
+      "sha256": "8e7186d5a4b768ffb793d0abe73f32e9008d831d3e2b84275ea4bab93c0c8721",
+      "bytes": 9144,
+      "transformations": [],
+      "imported_sha256": "8e7186d5a4b768ffb793d0abe73f32e9008d831d3e2b84275ea4bab93c0c8721"
+    },
+    {
+      "path": "deployment/bringup/ensure_observation.py",
+      "source_sha256": "41f635e3a580974fea678f1b79ca6e93c04c69d58711b5b05157adfce99a0833",
+      "sha256": "3ddf02e941fe3b850b3fce68ed4ea1441ffacc2dac38db5448c45f585ed0a6a0",
+      "bytes": 11811,
+      "transformations": [],
+      "imported_sha256": "41f635e3a580974fea678f1b79ca6e93c04c69d58711b5b05157adfce99a0833",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/bringup/jetson.json",
+      "source_sha256": "54dc085bff672f20e8fdfc1b1863b8b6acbd4a1b084cc6bab7817817bb042a31",
+      "sha256": "54dc085bff672f20e8fdfc1b1863b8b6acbd4a1b084cc6bab7817817bb042a31",
+      "bytes": 2825,
+      "transformations": [],
+      "imported_sha256": "54dc085bff672f20e8fdfc1b1863b8b6acbd4a1b084cc6bab7817817bb042a31"
+    },
+    {
+      "path": "deployment/bringup/jetson_native_imagegoal.json",
+      "source_sha256": "811851641b243e18156ba4921702ccebc737160633cb4b4850059c314c6c7d99",
+      "sha256": "811851641b243e18156ba4921702ccebc737160633cb4b4850059c314c6c7d99",
+      "bytes": 4856,
+      "transformations": [],
+      "imported_sha256": "811851641b243e18156ba4921702ccebc737160633cb4b4850059c314c6c7d99"
+    },
+    {
+      "path": "deployment/bringup/jetson_unitree_camera.json",
+      "source_sha256": "a2de239535cdd13ea72b603e3d5680ebb9b3f44c8e0864b3743388b852697cc4",
+      "sha256": "a2de239535cdd13ea72b603e3d5680ebb9b3f44c8e0864b3743388b852697cc4",
+      "bytes": 4034,
+      "transformations": [],
+      "imported_sha256": "a2de239535cdd13ea72b603e3d5680ebb9b3f44c8e0864b3743388b852697cc4"
+    },
+    {
+      "path": "deployment/bringup/probe_rgbd.py",
+      "source_sha256": "6984862bfb0de80324c121e199792a4bae313da0c32789b5cb2420c69a0291a4",
+      "sha256": "6984862bfb0de80324c121e199792a4bae313da0c32789b5cb2420c69a0291a4",
+      "bytes": 1809,
+      "transformations": [],
+      "imported_sha256": "6984862bfb0de80324c121e199792a4bae313da0c32789b5cb2420c69a0291a4"
+    },
+    {
+      "path": "deployment/bringup/workstation_lightnav.json",
+      "source_sha256": "ac62e04b072bab9a988e7618ce3f5de7e4b42b822ff96ff6162eca22e0af069e",
+      "sha256": "ac62e04b072bab9a988e7618ce3f5de7e4b42b822ff96ff6162eca22e0af069e",
+      "bytes": 1138,
+      "transformations": [],
+      "imported_sha256": "ac62e04b072bab9a988e7618ce3f5de7e4b42b822ff96ff6162eca22e0af069e"
+    },
+    {
+      "path": "deployment/go2/NATIVE_IMAGEGOAL.md",
+      "source_sha256": "f00b5136be0a7770e18717f9cf0d1112d0c5e37b51c56935be43689ae032e5ae",
+      "sha256": "03e342a704dc5a9c8bd14a63081bb7779aa8dc1684defa30ce20b28ded193037",
+      "bytes": 3335,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "65cfbdf086a6e01c5e154a67e34580ae622b5dca8796cc0e9dadb95c11526b71",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/go2/README.md",
+      "source_sha256": "eb7a93c3ede568d43ee7eba946e8eef9e3e354cff8ec572a6892f70c92984e5e",
+      "sha256": "43755a42470ba4c2259995726a435c01fe3120b6b3a3bfb825621ba35c7bbbe0",
+      "bytes": 9599,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "2c6071d4f717b201cb9677ded3d6b124b60f3232d1491807f4db19c59c497190",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/go2/__init__.py",
+      "source_sha256": "f3284f302a3dafa3243bf1a96bd3e61451fa8b17c3d7d75b16f629fd042d73d3",
+      "sha256": "f3284f302a3dafa3243bf1a96bd3e61451fa8b17c3d7d75b16f629fd042d73d3",
+      "bytes": 76,
+      "transformations": [],
+      "imported_sha256": "f3284f302a3dafa3243bf1a96bd3e61451fa8b17c3d7d75b16f629fd042d73d3"
+    },
+    {
+      "path": "deployment/go2/audit_adapter.py",
+      "source_sha256": "c499935e2c9155709ede928fb133d225ffed1ea80c43ce4f2aebe812704e4e4c",
+      "sha256": "c499935e2c9155709ede928fb133d225ffed1ea80c43ce4f2aebe812704e4e4c",
+      "bytes": 13877,
+      "transformations": [],
+      "imported_sha256": "c499935e2c9155709ede928fb133d225ffed1ea80c43ce4f2aebe812704e4e4c"
+    },
+    {
+      "path": "deployment/go2/audit_camera.py",
+      "source_sha256": "2d88c8765c4bfd1533dbde96278617af51e2861913d5302919952abb1a64a049",
+      "sha256": "2d88c8765c4bfd1533dbde96278617af51e2861913d5302919952abb1a64a049",
+      "bytes": 8920,
+      "transformations": [],
+      "imported_sha256": "2d88c8765c4bfd1533dbde96278617af51e2861913d5302919952abb1a64a049"
+    },
+    {
+      "path": "deployment/go2/audit_native_imagegoal.py",
+      "source_sha256": "2b5e194aebfb73b859230a342847befa98a5a4bef6667630d86b4d7eef59ec50",
+      "sha256": "2b5e194aebfb73b859230a342847befa98a5a4bef6667630d86b4d7eef59ec50",
+      "bytes": 21532,
+      "transformations": [],
+      "imported_sha256": "2b5e194aebfb73b859230a342847befa98a5a4bef6667630d86b4d7eef59ec50"
+    },
+    {
+      "path": "deployment/go2/authority.py",
+      "source_sha256": "221ae7f7df332d6062006e2b9f216d023b0527e6077f3c82867dbb3b68b7c19f",
+      "sha256": "221ae7f7df332d6062006e2b9f216d023b0527e6077f3c82867dbb3b68b7c19f",
+      "bytes": 13361,
+      "transformations": [],
+      "imported_sha256": "221ae7f7df332d6062006e2b9f216d023b0527e6077f3c82867dbb3b68b7c19f"
+    },
+    {
+      "path": "deployment/go2/bridge.py",
+      "source_sha256": "ed13bdfa521eb77336b5a8d5cf38b4c7c85f2d7eed04e198ba6bb34a77e14c28",
+      "sha256": "ed13bdfa521eb77336b5a8d5cf38b4c7c85f2d7eed04e198ba6bb34a77e14c28",
+      "bytes": 7012,
+      "transformations": [],
+      "imported_sha256": "ed13bdfa521eb77336b5a8d5cf38b4c7c85f2d7eed04e198ba6bb34a77e14c28"
+    },
+    {
+      "path": "deployment/go2/camera.py",
+      "source_sha256": "9a759f36d76997787837e13993ece840129fe554c1b86dd240ab9c5486b80f82",
+      "sha256": "9a759f36d76997787837e13993ece840129fe554c1b86dd240ab9c5486b80f82",
+      "bytes": 21097,
+      "transformations": [],
+      "imported_sha256": "9a759f36d76997787837e13993ece840129fe554c1b86dd240ab9c5486b80f82"
+    },
+    {
+      "path": "deployment/go2/config.json",
+      "source_sha256": "08a38546e38cc8e6472a515d514de45699c7465b112fea83cb18dc0f78a43aa7",
+      "sha256": "08a38546e38cc8e6472a515d514de45699c7465b112fea83cb18dc0f78a43aa7",
+      "bytes": 613,
+      "transformations": [],
+      "imported_sha256": "08a38546e38cc8e6472a515d514de45699c7465b112fea83cb18dc0f78a43aa7"
+    },
+    {
+      "path": "deployment/go2/execution_envelope.py",
+      "source_sha256": "7b3df653e48fec4c1b496dbed68ff274af3bd5142d9130b1314188e0fad03167",
+      "sha256": "7b3df653e48fec4c1b496dbed68ff274af3bd5142d9130b1314188e0fad03167",
+      "bytes": 7352,
+      "transformations": [],
+      "imported_sha256": "7b3df653e48fec4c1b496dbed68ff274af3bd5142d9130b1314188e0fad03167"
+    },
+    {
+      "path": "deployment/go2/gem_bridge.yaml",
+      "source_sha256": "293c6bcb91c8b824b381dde1fe296f1da40be6e003f5772753a5076696208d2d",
+      "sha256": "293c6bcb91c8b824b381dde1fe296f1da40be6e003f5772753a5076696208d2d",
+      "bytes": 481,
+      "transformations": [],
+      "imported_sha256": "293c6bcb91c8b824b381dde1fe296f1da40be6e003f5772753a5076696208d2d"
+    },
+    {
+      "path": "deployment/go2/native_avoidance.py",
+      "source_sha256": "bdebe79a55f8080ec5d8ad7c2484d63b539d67b6f817d748b02bdbdffee7dc88",
+      "sha256": "bdebe79a55f8080ec5d8ad7c2484d63b539d67b6f817d748b02bdbdffee7dc88",
+      "bytes": 12643,
+      "transformations": [],
+      "imported_sha256": "bdebe79a55f8080ec5d8ad7c2484d63b539d67b6f817d748b02bdbdffee7dc88"
+    },
+    {
+      "path": "deployment/go2/native_imagegoal.py",
+      "source_sha256": "7d51fedafb08df8bbe336b1f9a159d3b059b722dd36b19cc3e9bf8d3933c2544",
+      "sha256": "7d51fedafb08df8bbe336b1f9a159d3b059b722dd36b19cc3e9bf8d3933c2544",
+      "bytes": 35915,
+      "transformations": [],
+      "imported_sha256": "7d51fedafb08df8bbe336b1f9a159d3b059b722dd36b19cc3e9bf8d3933c2544"
+    },
+    {
+      "path": "deployment/go2/preflight.py",
+      "source_sha256": "39bf63c0738e9d09839e1b93036f2308199f53a919a47968b902c556e275265d",
+      "sha256": "39bf63c0738e9d09839e1b93036f2308199f53a919a47968b902c556e275265d",
+      "bytes": 5790,
+      "transformations": [],
+      "imported_sha256": "39bf63c0738e9d09839e1b93036f2308199f53a919a47968b902c556e275265d"
+    },
+    {
+      "path": "deployment/go2/prepare_sdk.sh",
+      "source_sha256": "ee23184d0f8caf8e1ef2a358ba76c717ebb259dca5e6a013bcc45ccfe555b22a",
+      "sha256": "ee23184d0f8caf8e1ef2a358ba76c717ebb259dca5e6a013bcc45ccfe555b22a",
+      "bytes": 2140,
+      "transformations": [],
+      "imported_sha256": "ee23184d0f8caf8e1ef2a358ba76c717ebb259dca5e6a013bcc45ccfe555b22a"
+    },
+    {
+      "path": "deployment/go2/run_go2.sh",
+      "source_sha256": "3731543556600365fa3dbc87c472e9640dbcebcdffd97e1cd6bea7de2fbdf95b",
+      "sha256": "3731543556600365fa3dbc87c472e9640dbcebcdffd97e1cd6bea7de2fbdf95b",
+      "bytes": 1375,
+      "transformations": [],
+      "imported_sha256": "3731543556600365fa3dbc87c472e9640dbcebcdffd97e1cd6bea7de2fbdf95b"
+    },
+    {
+      "path": "deployment/go2/start_native_imagegoal.py",
+      "source_sha256": "2d480f4d4aff342a0a120e6f8aaea29c4dcff8a095e517a18d47313510cf7058",
+      "sha256": "1713ef418036e318a71d2bcc6e084c3626e7285c2ec0b32d9b50a1d7a5c1d334",
+      "bytes": 16499,
+      "transformations": [],
+      "imported_sha256": "2d480f4d4aff342a0a120e6f8aaea29c4dcff8a095e517a18d47313510cf7058",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/go2/telemetry.py",
+      "source_sha256": "8fef899bce127183cc741bd48e10d57b1513f037225eb0bb7fe70232f47481ce",
+      "sha256": "8fef899bce127183cc741bd48e10d57b1513f037225eb0bb7fe70232f47481ce",
+      "bytes": 13028,
+      "transformations": [],
+      "imported_sha256": "8fef899bce127183cc741bd48e10d57b1513f037225eb0bb7fe70232f47481ce"
+    },
+    {
+      "path": "deployment/go2/vendor/gem/SOURCE.json",
+      "source_sha256": "93c30f56b74ffd91b414f0102d460db0c7cff8277f543d07f2a34f89ded898ac",
+      "sha256": "93c30f56b74ffd91b414f0102d460db0c7cff8277f543d07f2a34f89ded898ac",
+      "bytes": 520,
+      "transformations": [],
+      "imported_sha256": "93c30f56b74ffd91b414f0102d460db0c7cff8277f543d07f2a34f89ded898ac"
+    },
+    {
+      "path": "deployment/go2/vendor/gem/go2_battery_monitor.py",
+      "source_sha256": "66047dc9cf4c869910fa97b4f999c19cdcc30e5623d1a0396fef0315fb2c612e",
+      "sha256": "66047dc9cf4c869910fa97b4f999c19cdcc30e5623d1a0396fef0315fb2c612e",
+      "bytes": 9407,
+      "transformations": [],
+      "imported_sha256": "66047dc9cf4c869910fa97b4f999c19cdcc30e5623d1a0396fef0315fb2c612e"
+    },
+    {
+      "path": "deployment/go2/vendor/gem/go2_cmd_bridge.py",
+      "source_sha256": "1fbf0f15e29be8ef9cd28bf8c1ee6a5658e62739fbb5ac65f7f844be30d65924",
+      "sha256": "1fbf0f15e29be8ef9cd28bf8c1ee6a5658e62739fbb5ac65f7f844be30d65924",
+      "bytes": 18859,
+      "transformations": [],
+      "imported_sha256": "1fbf0f15e29be8ef9cd28bf8c1ee6a5658e62739fbb5ac65f7f844be30d65924"
+    },
+    {
+      "path": "deployment/imagegoal/CONTRACT.md",
+      "source_sha256": "d7587cf74b6f1749921e095f4a335f6694f8809a11a108208d6651ff83e7a295",
+      "sha256": "d7587cf74b6f1749921e095f4a335f6694f8809a11a108208d6651ff83e7a295",
+      "bytes": 10123,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "d7587cf74b6f1749921e095f4a335f6694f8809a11a108208d6651ff83e7a295"
+    },
+    {
+      "path": "deployment/imagegoal/GO2_IMAGEGOAL_ADAPTATION.md",
+      "source_sha256": "86230bc0dc6d57bcc5799ca56cfe28ce168da7bf3d5b5386ce909c0d17334dfb",
+      "sha256": "86230bc0dc6d57bcc5799ca56cfe28ce168da7bf3d5b5386ce909c0d17334dfb",
+      "bytes": 3761,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "86230bc0dc6d57bcc5799ca56cfe28ce168da7bf3d5b5386ce909c0d17334dfb"
+    },
+    {
+      "path": "deployment/imagegoal/LIGHTNAV_TRANSPORT.md",
+      "source_sha256": "a5ae9b1b4c5be4463a4274e72caf4c692ed442ffca90c9514a3a3f4bd847e741",
+      "sha256": "a5ae9b1b4c5be4463a4274e72caf4c692ed442ffca90c9514a3a3f4bd847e741",
+      "bytes": 4264,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "a5ae9b1b4c5be4463a4274e72caf4c692ed442ffca90c9514a3a3f4bd847e741"
+    },
+    {
+      "path": "deployment/imagegoal/OFFICIAL_LIGHTNAV.md",
+      "source_sha256": "6bd96ccdb27a5ce4316ecf9b85881728078705f2ee05fa48f2b79e10b3c4ca22",
+      "sha256": "6bd96ccdb27a5ce4316ecf9b85881728078705f2ee05fa48f2b79e10b3c4ca22",
+      "bytes": 3658,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "6bd96ccdb27a5ce4316ecf9b85881728078705f2ee05fa48f2b79e10b3c4ca22"
+    },
+    {
+      "path": "deployment/imagegoal/README.md",
+      "source_sha256": "5d1765881bceebdc21e114b5bec45461a148223cf1b7ef4d463ae75b409cf5c4",
+      "sha256": "5d1765881bceebdc21e114b5bec45461a148223cf1b7ef4d463ae75b409cf5c4",
+      "bytes": 13675,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "5d1765881bceebdc21e114b5bec45461a148223cf1b7ef4d463ae75b409cf5c4"
+    },
+    {
+      "path": "deployment/imagegoal/TRACKING.md",
+      "source_sha256": "1ed98c98ed9d8291538fa659da8b01780ae07056bd7f0320956d6dbca32f3a22",
+      "sha256": "1ed98c98ed9d8291538fa659da8b01780ae07056bd7f0320956d6dbca32f3a22",
+      "bytes": 4217,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "1ed98c98ed9d8291538fa659da8b01780ae07056bd7f0320956d6dbca32f3a22"
+    },
+    {
+      "path": "deployment/imagegoal/__init__.py",
+      "source_sha256": "0ba8c77717b6abdbbfe51115610d55e59f762cbb6ce88419965eadba0bff8d0f",
+      "sha256": "0a87374e8426696166db5ed2cd96f1a069eb32b7dfa70d7476852a7f4fca1d56",
+      "bytes": 84,
+      "transformations": [],
+      "imported_sha256": "0ba8c77717b6abdbbfe51115610d55e59f762cbb6ce88419965eadba0bff8d0f",
+      "local_changes_after_import": [
+        "Normalize trailing blank line for git diff --check."
+      ]
+    },
+    {
+      "path": "deployment/imagegoal/__main__.py",
+      "source_sha256": "c7807e582d6623d9835cfc390a46748abd3ffad7e1f5cb3372ab671c86627acb",
+      "sha256": "cbf325b25142f65e592501748e52ccc5bf5411191c918ddf9570b76978789462",
+      "bytes": 9121,
+      "transformations": [],
+      "imported_sha256": "c7807e582d6623d9835cfc390a46748abd3ffad7e1f5cb3372ab671c86627acb",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_backlog.py",
+      "source_sha256": "12c249c7130221bbeb36c33bc02ea6752f6abed5c6beb51dcf52a5073034aea4",
+      "sha256": "12c249c7130221bbeb36c33bc02ea6752f6abed5c6beb51dcf52a5073034aea4",
+      "bytes": 17663,
+      "transformations": [],
+      "imported_sha256": "12c249c7130221bbeb36c33bc02ea6752f6abed5c6beb51dcf52a5073034aea4"
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_cleanup.py",
+      "source_sha256": "69c989d34fa487e8349e87d953ee7a957e236987bfd1be6473650fbcf6b52b78",
+      "sha256": "69c989d34fa487e8349e87d953ee7a957e236987bfd1be6473650fbcf6b52b78",
+      "bytes": 4068,
+      "transformations": [],
+      "imported_sha256": "69c989d34fa487e8349e87d953ee7a957e236987bfd1be6473650fbcf6b52b78"
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_dispatch.py",
+      "source_sha256": "4d3ae4565043101a307717be708c46cc1bea41a5dc343cc76ff7e634dfa84249",
+      "sha256": "4d3ae4565043101a307717be708c46cc1bea41a5dc343cc76ff7e634dfa84249",
+      "bytes": 11380,
+      "transformations": [],
+      "imported_sha256": "4d3ae4565043101a307717be708c46cc1bea41a5dc343cc76ff7e634dfa84249"
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_http.py",
+      "source_sha256": "a5c20e79d2e6b9f66ec417a1f90d0c0c134b87976c449764589bb6d2b9c933fb",
+      "sha256": "a5c20e79d2e6b9f66ec417a1f90d0c0c134b87976c449764589bb6d2b9c933fb",
+      "bytes": 20372,
+      "transformations": [],
+      "imported_sha256": "a5c20e79d2e6b9f66ec417a1f90d0c0c134b87976c449764589bb6d2b9c933fb"
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_imagegoal_runtime.py",
+      "source_sha256": "a3b523b220566cc82fb72bac4d77696e71ce564ec2dd54c4f1c4e480e2b83748",
+      "sha256": "a3b523b220566cc82fb72bac4d77696e71ce564ec2dd54c4f1c4e480e2b83748",
+      "bytes": 10173,
+      "transformations": [],
+      "imported_sha256": "a3b523b220566cc82fb72bac4d77696e71ce564ec2dd54c4f1c4e480e2b83748"
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_native.py",
+      "source_sha256": "ff6b1daf618cef27db2594d186b429a3a13596d18410f7298fccf9b0d7ecb6f2",
+      "sha256": "ff6b1daf618cef27db2594d186b429a3a13596d18410f7298fccf9b0d7ecb6f2",
+      "bytes": 13926,
+      "transformations": [],
+      "imported_sha256": "ff6b1daf618cef27db2594d186b429a3a13596d18410f7298fccf9b0d7ecb6f2"
+    },
+    {
+      "path": "deployment/imagegoal/audit_lightnav_transport.py",
+      "source_sha256": "9b4c7496090b1b11a945136aa285ba0ba94bad581c6e4dd18e3bff27b3bef75e",
+      "sha256": "9b4c7496090b1b11a945136aa285ba0ba94bad581c6e4dd18e3bff27b3bef75e",
+      "bytes": 18467,
+      "transformations": [],
+      "imported_sha256": "9b4c7496090b1b11a945136aa285ba0ba94bad581c6e4dd18e3bff27b3bef75e"
+    },
+    {
+      "path": "deployment/imagegoal/audit_native_controls.py",
+      "source_sha256": "27a1a2991cdf4cddce4b41892fba3ee817288422f4de1d7ffcc7e3fecdf9f880",
+      "sha256": "27a1a2991cdf4cddce4b41892fba3ee817288422f4de1d7ffcc7e3fecdf9f880",
+      "bytes": 15157,
+      "transformations": [],
+      "imported_sha256": "27a1a2991cdf4cddce4b41892fba3ee817288422f4de1d7ffcc7e3fecdf9f880"
+    },
+    {
+      "path": "deployment/imagegoal/audit_native_runtime.py",
+      "source_sha256": "4adbf5d4e7bd3a1117b3d347ecac301d914e33a07dcc8b45cb9e365b6ef77977",
+      "sha256": "4adbf5d4e7bd3a1117b3d347ecac301d914e33a07dcc8b45cb9e365b6ef77977",
+      "bytes": 18000,
+      "transformations": [],
+      "imported_sha256": "4adbf5d4e7bd3a1117b3d347ecac301d914e33a07dcc8b45cb9e365b6ef77977"
+    },
+    {
+      "path": "deployment/imagegoal/audit_official_lightnav.py",
+      "source_sha256": "ef2c420166b58fbc8ae730d0feec1aa97cdde0613900efb011eea09c9b7aed4f",
+      "sha256": "1b6445f7f91330e7f3de21d4f1272800ed7e93bcad7bd399729c84938c1c371c",
+      "bytes": 6981,
+      "transformations": [],
+      "imported_sha256": "ef2c420166b58fbc8ae730d0feec1aa97cdde0613900efb011eea09c9b7aed4f",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/imagegoal/audit_post_solver_failure.py",
+      "source_sha256": "4846baec3812f7043e1eb6b70f09debbad0058e7b74ad6699f01f586264da3d6",
+      "sha256": "4846baec3812f7043e1eb6b70f09debbad0058e7b74ad6699f01f586264da3d6",
+      "bytes": 9457,
+      "transformations": [],
+      "imported_sha256": "4846baec3812f7043e1eb6b70f09debbad0058e7b74ad6699f01f586264da3d6"
+    },
+    {
+      "path": "deployment/imagegoal/audit_run.py",
+      "source_sha256": "4d680027a061964f15ed69c98169d600e591039bb04cfbaede095d928bdff03c",
+      "sha256": "4d680027a061964f15ed69c98169d600e591039bb04cfbaede095d928bdff03c",
+      "bytes": 5406,
+      "transformations": [],
+      "imported_sha256": "4d680027a061964f15ed69c98169d600e591039bb04cfbaede095d928bdff03c"
+    },
+    {
+      "path": "deployment/imagegoal/audit_tracking.py",
+      "source_sha256": "1e5a9f7ead322281d0c08e00675809f7684789866112382543b017216b5da52c",
+      "sha256": "1e5a9f7ead322281d0c08e00675809f7684789866112382543b017216b5da52c",
+      "bytes": 19253,
+      "transformations": [],
+      "imported_sha256": "1e5a9f7ead322281d0c08e00675809f7684789866112382543b017216b5da52c"
+    },
+    {
+      "path": "deployment/imagegoal/calibration.py",
+      "source_sha256": "9f2493f80d0f58eb854d3f4bf7161e5ea4fde2efcb7b4467d502d4208d39c68e",
+      "sha256": "9f2493f80d0f58eb854d3f4bf7161e5ea4fde2efcb7b4467d502d4208d39c68e",
+      "bytes": 9007,
+      "transformations": [],
+      "imported_sha256": "9f2493f80d0f58eb854d3f4bf7161e5ea4fde2efcb7b4467d502d4208d39c68e"
+    },
+    {
+      "path": "deployment/imagegoal/commission_cancel_barrier.py",
+      "source_sha256": "af686d4a360f71eab7696fc2aaed6f7a592d7a9492f9f7eb054040d84f3bc82f",
+      "sha256": "af686d4a360f71eab7696fc2aaed6f7a592d7a9492f9f7eb054040d84f3bc82f",
+      "bytes": 3539,
+      "transformations": [],
+      "imported_sha256": "af686d4a360f71eab7696fc2aaed6f7a592d7a9492f9f7eb054040d84f3bc82f"
+    },
+    {
+      "path": "deployment/imagegoal/commission_execution.py",
+      "source_sha256": "cbb9c6ec4cb4a9f89a48480abfaf12eca1361c5450583d1607ae3675a158e8ca",
+      "sha256": "cbb9c6ec4cb4a9f89a48480abfaf12eca1361c5450583d1607ae3675a158e8ca",
+      "bytes": 12452,
+      "transformations": [],
+      "imported_sha256": "cbb9c6ec4cb4a9f89a48480abfaf12eca1361c5450583d1607ae3675a158e8ca"
+    },
+    {
+      "path": "deployment/imagegoal/commission_goal_selection.py",
+      "source_sha256": "64a64c1792e506b7efb52e992d693148790fef5698a3a69323e0ef9173939a80",
+      "sha256": "64a64c1792e506b7efb52e992d693148790fef5698a3a69323e0ef9173939a80",
+      "bytes": 14470,
+      "transformations": [],
+      "imported_sha256": "64a64c1792e506b7efb52e992d693148790fef5698a3a69323e0ef9173939a80"
+    },
+    {
+      "path": "deployment/imagegoal/commission_nomad_stop.py",
+      "source_sha256": "f5fe066e229c34c594e8f2ad8c567c0a4c66d5b05cd6bcb72bfb004130564ce7",
+      "sha256": "f5fe066e229c34c594e8f2ad8c567c0a4c66d5b05cd6bcb72bfb004130564ce7",
+      "bytes": 4323,
+      "transformations": [],
+      "imported_sha256": "f5fe066e229c34c594e8f2ad8c567c0a4c66d5b05cd6bcb72bfb004130564ce7"
+    },
+    {
+      "path": "deployment/imagegoal/foxglove_control.py",
+      "source_sha256": "5591b01168897243cac7b493661dfd70c1b9763a27b76ddd9ec351a51128feed",
+      "sha256": "5591b01168897243cac7b493661dfd70c1b9763a27b76ddd9ec351a51128feed",
+      "bytes": 14174,
+      "transformations": [],
+      "imported_sha256": "5591b01168897243cac7b493661dfd70c1b9763a27b76ddd9ec351a51128feed"
+    },
+    {
+      "path": "deployment/imagegoal/guards.py",
+      "source_sha256": "f57fb6fae31892ae7a4bbb699954fbc509d5af13fcb66c694236bccd4440ad49",
+      "sha256": "f57fb6fae31892ae7a4bbb699954fbc509d5af13fcb66c694236bccd4440ad49",
+      "bytes": 1395,
+      "transformations": [],
+      "imported_sha256": "f57fb6fae31892ae7a4bbb699954fbc509d5af13fcb66c694236bccd4440ad49"
+    },
+    {
+      "path": "deployment/imagegoal/http_api.py",
+      "source_sha256": "c793afc3e8b9cd77357a7926faf40f33b374d0128bc4ce9c393323f5323fec9c",
+      "sha256": "c793afc3e8b9cd77357a7926faf40f33b374d0128bc4ce9c393323f5323fec9c",
+      "bytes": 8281,
+      "transformations": [],
+      "imported_sha256": "c793afc3e8b9cd77357a7926faf40f33b374d0128bc4ce9c393323f5323fec9c"
+    },
+    {
+      "path": "deployment/imagegoal/lightnav_http.py",
+      "source_sha256": "8eff88e4523b84023142df1be2f34fa23a765f766c9c9af887f40a151e6c4826",
+      "sha256": "8eff88e4523b84023142df1be2f34fa23a765f766c9c9af887f40a151e6c4826",
+      "bytes": 15721,
+      "transformations": [],
+      "imported_sha256": "8eff88e4523b84023142df1be2f34fa23a765f766c9c9af887f40a151e6c4826"
+    },
+    {
+      "path": "deployment/imagegoal/lightnav_transport.py",
+      "source_sha256": "736dcb55dc3eee8fd37f186c2afa35d5929bf9bab12be04f27b7278e1a580850",
+      "sha256": "736dcb55dc3eee8fd37f186c2afa35d5929bf9bab12be04f27b7278e1a580850",
+      "bytes": 15417,
+      "transformations": [],
+      "imported_sha256": "736dcb55dc3eee8fd37f186c2afa35d5929bf9bab12be04f27b7278e1a580850"
+    },
+    {
+      "path": "deployment/imagegoal/native_control.py",
+      "source_sha256": "7d45e29e2671e108529412c26b9c11543a87c04334e7a2233c539dfd771dde17",
+      "sha256": "7d45e29e2671e108529412c26b9c11543a87c04334e7a2233c539dfd771dde17",
+      "bytes": 4966,
+      "transformations": [],
+      "imported_sha256": "7d45e29e2671e108529412c26b9c11543a87c04334e7a2233c539dfd771dde17"
+    },
+    {
+      "path": "deployment/imagegoal/preview.py",
+      "source_sha256": "e48ddaad13deb0632b6f5810a28254039b314a1663a54e97104d74a5500612e0",
+      "sha256": "e48ddaad13deb0632b6f5810a28254039b314a1663a54e97104d74a5500612e0",
+      "bytes": 4110,
+      "transformations": [],
+      "imported_sha256": "e48ddaad13deb0632b6f5810a28254039b314a1663a54e97104d74a5500612e0"
+    },
+    {
+      "path": "deployment/imagegoal/ros_bridge.py",
+      "source_sha256": "f2a20e7f218c6b00b19a1775283691cf22baeeee2695227861ae2f8318d7c739",
+      "sha256": "f2a20e7f218c6b00b19a1775283691cf22baeeee2695227861ae2f8318d7c739",
+      "bytes": 22160,
+      "transformations": [],
+      "imported_sha256": "f2a20e7f218c6b00b19a1775283691cf22baeeee2695227861ae2f8318d7c739"
+    },
+    {
+      "path": "deployment/imagegoal/runtime.py",
+      "source_sha256": "8b75630048efcf193067f0a432613a05f2ec33ba0edd593e966b1654805f91a5",
+      "sha256": "d988566d3465318c225dc08ad85eec277fe05a7d9d8faac844c72c1789e54e29",
+      "bytes": 109402,
+      "transformations": [],
+      "imported_sha256": "8b75630048efcf193067f0a432613a05f2ec33ba0edd593e966b1654805f91a5",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/imagegoal/se2_adapter.py",
+      "source_sha256": "8892aa74ada7455035a1111598ac4fff29960b81940ed241e2560bbaa5ca9c2d",
+      "sha256": "8892aa74ada7455035a1111598ac4fff29960b81940ed241e2560bbaa5ca9c2d",
+      "bytes": 2306,
+      "transformations": [],
+      "imported_sha256": "8892aa74ada7455035a1111598ac4fff29960b81940ed241e2560bbaa5ca9c2d"
+    },
+    {
+      "path": "deployment/imagegoal/sources.py",
+      "source_sha256": "ad1a970eb7e51e7e531f7c4f853dddcdd06cb4fca97afcd02285e59941aeafff",
+      "sha256": "ad1a970eb7e51e7e531f7c4f853dddcdd06cb4fca97afcd02285e59941aeafff",
+      "bytes": 5131,
+      "transformations": [],
+      "imported_sha256": "ad1a970eb7e51e7e531f7c4f853dddcdd06cb4fca97afcd02285e59941aeafff"
+    },
+    {
+      "path": "deployment/imagegoal/templates/mount_receipt.json",
+      "source_sha256": "25e3e43772f18f1ef897f17ba6a1ab3b0b5ea6f0c875b17d09844ed8056e36a2",
+      "sha256": "25e3e43772f18f1ef897f17ba6a1ab3b0b5ea6f0c875b17d09844ed8056e36a2",
+      "bytes": 383,
+      "transformations": [],
+      "imported_sha256": "25e3e43772f18f1ef897f17ba6a1ab3b0b5ea6f0c875b17d09844ed8056e36a2"
+    },
+    {
+      "path": "deployment/imagegoal/templates/timing_receipt.json",
+      "source_sha256": "a5b81b91ee6926af0b4fb5cabe2365f31721556ef370eb96e83d0faad19972d5",
+      "sha256": "a5b81b91ee6926af0b4fb5cabe2365f31721556ef370eb96e83d0faad19972d5",
+      "bytes": 810,
+      "transformations": [],
+      "imported_sha256": "a5b81b91ee6926af0b4fb5cabe2365f31721556ef370eb96e83d0faad19972d5"
+    },
+    {
+      "path": "deployment/imagegoal/vendor/gem/SOURCE.json",
+      "source_sha256": "b50659352a432ee133b17fffe73322ad865670f54ce9bc7f15495301a005c946",
+      "sha256": "b50659352a432ee133b17fffe73322ad865670f54ce9bc7f15495301a005c946",
+      "bytes": 581,
+      "transformations": [],
+      "imported_sha256": "b50659352a432ee133b17fffe73322ad865670f54ce9bc7f15495301a005c946"
+    },
+    {
+      "path": "deployment/imagegoal/vendor/gem/latency_motion_guard.py",
+      "source_sha256": "10d706cab31f91d3685363cd27b556aeb2f5264c0b876a7d50d8cf7d1c4a5462",
+      "sha256": "10d706cab31f91d3685363cd27b556aeb2f5264c0b876a7d50d8cf7d1c4a5462",
+      "bytes": 2789,
+      "transformations": [],
+      "imported_sha256": "10d706cab31f91d3685363cd27b556aeb2f5264c0b876a7d50d8cf7d1c4a5462"
+    },
+    {
+      "path": "deployment/imagegoal/vendor/gem/trajectory_control.py",
+      "source_sha256": "761031926ab6b0a34938cf5a752f644870e117725aeaefb77bb320754fc8550e",
+      "sha256": "761031926ab6b0a34938cf5a752f644870e117725aeaefb77bb320754fc8550e",
+      "bytes": 8699,
+      "transformations": [],
+      "imported_sha256": "761031926ab6b0a34938cf5a752f644870e117725aeaefb77bb320754fc8550e"
+    },
+    {
+      "path": "deployment/imagegoal/vendor/lightnav_official_client/LICENSE",
+      "source_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357,
+      "transformations": [],
+      "imported_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "deployment/imagegoal/vendor/lightnav_official_client/SOURCE.json",
+      "source_sha256": "d200f115081f87f023e7aae6cc17c6f9d7adee076cb8fcdeaf5de88a332144b3",
+      "sha256": "d200f115081f87f023e7aae6cc17c6f9d7adee076cb8fcdeaf5de88a332144b3",
+      "bytes": 850,
+      "transformations": [],
+      "imported_sha256": "d200f115081f87f023e7aae6cc17c6f9d7adee076cb8fcdeaf5de88a332144b3"
+    },
+    {
+      "path": "deployment/imagegoal/vendor/lightnav_official_client/vln_client.py",
+      "source_sha256": "3598531abd85327714c8607e56bf7412a1085b77b437ff7f8b7d86deb78ce278",
+      "sha256": "3598531abd85327714c8607e56bf7412a1085b77b437ff7f8b7d86deb78ce278",
+      "bytes": 24935,
+      "transformations": [],
+      "imported_sha256": "3598531abd85327714c8607e56bf7412a1085b77b437ff7f8b7d86deb78ce278"
+    },
+    {
+      "path": "deployment/lightnav/.gitignore",
+      "source_sha256": "b58dbb7569abadcf741f3939c736a225a74817a83640e3785f9e87400bc2432b",
+      "sha256": "b58dbb7569abadcf741f3939c736a225a74817a83640e3785f9e87400bc2432b",
+      "bytes": 36,
+      "transformations": [],
+      "imported_sha256": "b58dbb7569abadcf741f3939c736a225a74817a83640e3785f9e87400bc2432b"
+    },
+    {
+      "path": "deployment/lightnav/README.md",
+      "source_sha256": "9c1d934895350538089881db356531102b9ef278840d9a83e56c1ccfc094474e",
+      "sha256": "9f7206dc19a36ed04c60f61caad1901f1a906134ce6cd2f412754f8ae8e10956",
+      "bytes": 15459,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "9f7206dc19a36ed04c60f61caad1901f1a906134ce6cd2f412754f8ae8e10956"
+    },
+    {
+      "path": "deployment/lightnav/__init__.py",
+      "source_sha256": "61dd26c2395c28a0d1951330ef1cbd57a8837e3d01629139690a8e7b4bbdb758",
+      "sha256": "61dd26c2395c28a0d1951330ef1cbd57a8837e3d01629139690a8e7b4bbdb758",
+      "bytes": 87,
+      "transformations": [],
+      "imported_sha256": "61dd26c2395c28a0d1951330ef1cbd57a8837e3d01629139690a8e7b4bbdb758"
+    },
+    {
+      "path": "deployment/lightnav/audit_http_keepalive.py",
+      "source_sha256": "e49296db42c8301444ae54cef1bd28bc3d36949aec33313b4fc5bd6ba6c61f55",
+      "sha256": "e49296db42c8301444ae54cef1bd28bc3d36949aec33313b4fc5bd6ba6c61f55",
+      "bytes": 13896,
+      "transformations": [],
+      "imported_sha256": "e49296db42c8301444ae54cef1bd28bc3d36949aec33313b4fc5bd6ba6c61f55"
+    },
+    {
+      "path": "deployment/lightnav/audit_imagegoal_adaptation.py",
+      "source_sha256": "bb9098d8bd548eb80f922d1c2c73e015eba17270fa05b6dbff81d8cb7bd7df8c",
+      "sha256": "f648d243f2a9a21b3e6da5f0d988c38d80d2c732454915cfef79b0c31eb7b5de",
+      "bytes": 10274,
+      "transformations": [],
+      "imported_sha256": "bb9098d8bd548eb80f922d1c2c73e015eba17270fa05b6dbff81d8cb7bd7df8c",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/lightnav/check.py",
+      "source_sha256": "05391f1b85277b3d67ed24eda9582ea38a315435840377ed66087345747c9b9c",
+      "sha256": "05391f1b85277b3d67ed24eda9582ea38a315435840377ed66087345747c9b9c",
+      "bytes": 3362,
+      "transformations": [],
+      "imported_sha256": "05391f1b85277b3d67ed24eda9582ea38a315435840377ed66087345747c9b9c"
+    },
+    {
+      "path": "deployment/lightnav/cleanup.py",
+      "source_sha256": "ab6f3ce3b9c06c599c5fe965a429c37fd857685c9f5ac7737f762838ae81827d",
+      "sha256": "ab6f3ce3b9c06c599c5fe965a429c37fd857685c9f5ac7737f762838ae81827d",
+      "bytes": 2261,
+      "transformations": [],
+      "imported_sha256": "ab6f3ce3b9c06c599c5fe965a429c37fd857685c9f5ac7737f762838ae81827d"
+    },
+    {
+      "path": "deployment/lightnav/client.py",
+      "source_sha256": "83ef7bc9c7e1a9b5b69a89808fe1d1865e6a2d7c4c88a17f10295aabc31881dc",
+      "sha256": "83ef7bc9c7e1a9b5b69a89808fe1d1865e6a2d7c4c88a17f10295aabc31881dc",
+      "bytes": 9274,
+      "transformations": [],
+      "imported_sha256": "83ef7bc9c7e1a9b5b69a89808fe1d1865e6a2d7c4c88a17f10295aabc31881dc"
+    },
+    {
+      "path": "deployment/lightnav/commission.py",
+      "source_sha256": "8c59f82e5d3d249269f39565e0492b64b0ef02eb90359708e12dc166a7b67e51",
+      "sha256": "8c59f82e5d3d249269f39565e0492b64b0ef02eb90359708e12dc166a7b67e51",
+      "bytes": 12884,
+      "transformations": [],
+      "imported_sha256": "8c59f82e5d3d249269f39565e0492b64b0ef02eb90359708e12dc166a7b67e51"
+    },
+    {
+      "path": "deployment/lightnav/download_model.py",
+      "source_sha256": "28442e859e4430d3624e75c559b263442e305e349a4e10e3f3556936d92b7a5b",
+      "sha256": "466f8fa0955b5707f751b8c1813a19f9b2174c97ce53731be53aa6d0491e1b55",
+      "bytes": 9495,
+      "transformations": [],
+      "imported_sha256": "28442e859e4430d3624e75c559b263442e305e349a4e10e3f3556936d92b7a5b",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/lightnav/go2_adaptation.py",
+      "source_sha256": "8b1f7fed7c2698e69246bd541dfb92decdbfd8b2f9e63e897c2f4947a3d8ba01",
+      "sha256": "8b1f7fed7c2698e69246bd541dfb92decdbfd8b2f9e63e897c2f4947a3d8ba01",
+      "bytes": 8623,
+      "transformations": [],
+      "imported_sha256": "8b1f7fed7c2698e69246bd541dfb92decdbfd8b2f9e63e897c2f4947a3d8ba01"
+    },
+    {
+      "path": "deployment/lightnav/launcher.py",
+      "source_sha256": "eccc8ac86e4182821fd0c7336b01dcb1b14d1548111925e96497402045b4fe6e",
+      "sha256": "2fe1d0d195140a21dd46d38fef10d0289f37e0564d1fa992b0b93ddf627244fc",
+      "bytes": 11404,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "shared-server cold-start protection covers every /local_data user"
+      ],
+      "imported_sha256": "2fe1d0d195140a21dd46d38fef10d0289f37e0564d1fa992b0b93ddf627244fc"
+    },
+    {
+      "path": "deployment/lightnav/official_control.py",
+      "source_sha256": "39fdc76cd36fb4e50cdd099f0a40f8a7dedcd58eee3d68e5bb2fa7c997ed073b",
+      "sha256": "39fdc76cd36fb4e50cdd099f0a40f8a7dedcd58eee3d68e5bb2fa7c997ed073b",
+      "bytes": 4107,
+      "transformations": [],
+      "imported_sha256": "39fdc76cd36fb4e50cdd099f0a40f8a7dedcd58eee3d68e5bb2fa7c997ed073b"
+    },
+    {
+      "path": "deployment/lightnav/packed_transfer.py",
+      "source_sha256": "9f93850efc1cf097498400c7efb40774d52e12b5fd252706076216478559622c",
+      "sha256": "9f93850efc1cf097498400c7efb40774d52e12b5fd252706076216478559622c",
+      "bytes": 12206,
+      "transformations": [],
+      "imported_sha256": "9f93850efc1cf097498400c7efb40774d52e12b5fd252706076216478559622c"
+    },
+    {
+      "path": "deployment/lightnav/policy.py",
+      "source_sha256": "8a89c24e25552a2cca9aaf4689fef27560e1757215fdf1a86f789db6fe1deb77",
+      "sha256": "7e1a9c176852bac78fe6a5acf7a71b23778cd06e66cd88b1a0be462da30f1427",
+      "bytes": 35644,
+      "transformations": [],
+      "imported_sha256": "8a89c24e25552a2cca9aaf4689fef27560e1757215fdf1a86f789db6fe1deb77",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/lightnav/requirements-server.lock.txt",
+      "source_sha256": "894f9138527f4c5c848ce31dee44db54c93ccdd3ab091d13651de4b13e943a90",
+      "sha256": "894f9138527f4c5c848ce31dee44db54c93ccdd3ab091d13651de4b13e943a90",
+      "bytes": 1213,
+      "transformations": [],
+      "imported_sha256": "894f9138527f4c5c848ce31dee44db54c93ccdd3ab091d13651de4b13e943a90"
+    },
+    {
+      "path": "deployment/lightnav/requirements-server.txt",
+      "source_sha256": "022a95ae64342f8a66fc8eb22af1a04f7fea707ea5f4abb001fcd4892e94a3c6",
+      "sha256": "022a95ae64342f8a66fc8eb22af1a04f7fea707ea5f4abb001fcd4892e94a3c6",
+      "bytes": 259,
+      "transformations": [],
+      "imported_sha256": "022a95ae64342f8a66fc8eb22af1a04f7fea707ea5f4abb001fcd4892e94a3c6"
+    },
+    {
+      "path": "deployment/lightnav/run_server.sh",
+      "source_sha256": "f6dadfdc831d2f0f2768f90b74070350944b55b0c4dfd0d87f7b8163e2a45678",
+      "sha256": "f6dadfdc831d2f0f2768f90b74070350944b55b0c4dfd0d87f7b8163e2a45678",
+      "bytes": 493,
+      "transformations": [],
+      "imported_sha256": "f6dadfdc831d2f0f2768f90b74070350944b55b0c4dfd0d87f7b8163e2a45678"
+    },
+    {
+      "path": "deployment/lightnav/serve_asset.py",
+      "source_sha256": "241cba6b3256473a58f6e0415428ecccc3f537aaf751af1681ebeff238e0ff9c",
+      "sha256": "241cba6b3256473a58f6e0415428ecccc3f537aaf751af1681ebeff238e0ff9c",
+      "bytes": 3763,
+      "transformations": [],
+      "imported_sha256": "241cba6b3256473a58f6e0415428ecccc3f537aaf751af1681ebeff238e0ff9c"
+    },
+    {
+      "path": "deployment/lightnav/server.py",
+      "source_sha256": "3c6b7c6b5cc74a33c43e4477b3a1e81a5009e2c285344565d6f2c58c5d7bf942",
+      "sha256": "3c6b7c6b5cc74a33c43e4477b3a1e81a5009e2c285344565d6f2c58c5d7bf942",
+      "bytes": 20092,
+      "transformations": [],
+      "imported_sha256": "3c6b7c6b5cc74a33c43e4477b3a1e81a5009e2c285344565d6f2c58c5d7bf942"
+    },
+    {
+      "path": "deployment/lightnav/tests/test_http_lifecycle.py",
+      "source_sha256": "fdb4cdf95cba8c77bebbdba0b026b7243a87b13907c154791a30061d394f6268",
+      "sha256": "fdb4cdf95cba8c77bebbdba0b026b7243a87b13907c154791a30061d394f6268",
+      "bytes": 13506,
+      "transformations": [],
+      "imported_sha256": "fdb4cdf95cba8c77bebbdba0b026b7243a87b13907c154791a30061d394f6268"
+    },
+    {
+      "path": "deployment/lightnav/tests/test_official_lightnav_policy.py",
+      "source_sha256": "f2626e48a7afaf299a6f229a3e4b5b667d31594f1c65819c4f5d98aca43baa44",
+      "sha256": "f2626e48a7afaf299a6f229a3e4b5b667d31594f1c65819c4f5d98aca43baa44",
+      "bytes": 6320,
+      "transformations": [],
+      "imported_sha256": "f2626e48a7afaf299a6f229a3e4b5b667d31594f1c65819c4f5d98aca43baa44"
+    },
+    {
+      "path": "deployment/lightnav/tests/test_reference_image_policy.py",
+      "source_sha256": "9323d1c9a993800645726b51995db7d07a2074f6bed58950939ef6ca8d6fccd4",
+      "sha256": "9323d1c9a993800645726b51995db7d07a2074f6bed58950939ef6ca8d6fccd4",
+      "bytes": 11050,
+      "transformations": [],
+      "imported_sha256": "9323d1c9a993800645726b51995db7d07a2074f6bed58950939ef6ca8d6fccd4"
+    },
+    {
+      "path": "deployment/lightnav/tests/test_session_cleanup.py",
+      "source_sha256": "3fa269a2756d482ad795ff8841658fb0a75d20d22034fecc16fcf433ff0224a9",
+      "sha256": "f3d97586ce0bee56e0e17acc4ab8a0769a18d79dfbb3771df9af2f1bb739199f",
+      "bytes": 14577,
+      "transformations": [],
+      "imported_sha256": "3fa269a2756d482ad795ff8841658fb0a75d20d22034fecc16fcf433ff0224a9",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/lightnav/tests/test_tracking.py",
+      "source_sha256": "a70cda95c73e089470252bfd341da275e82d70ddf5d844831872e1701f66a1cf",
+      "sha256": "a70cda95c73e089470252bfd341da275e82d70ddf5d844831872e1701f66a1cf",
+      "bytes": 11436,
+      "transformations": [],
+      "imported_sha256": "a70cda95c73e089470252bfd341da275e82d70ddf5d844831872e1701f66a1cf"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/AGENTS.md",
+      "source_sha256": "fa9d25f50f04d007c5a9e9a29b95cdf1478eb0439f83e45d8f37ef189874f94e",
+      "sha256": "fa9d25f50f04d007c5a9e9a29b95cdf1478eb0439f83e45d8f37ef189874f94e",
+      "bytes": 3074,
+      "transformations": [],
+      "imported_sha256": "fa9d25f50f04d007c5a9e9a29b95cdf1478eb0439f83e45d8f37ef189874f94e"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/LICENSE",
+      "source_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357,
+      "transformations": [],
+      "imported_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/SOURCE_MANIFEST.json",
+      "source_sha256": "e3e6982f10a3ba45c7537a218d5a4f940925f007120addd669e1ef4cbe760fc5",
+      "sha256": "e3e6982f10a3ba45c7537a218d5a4f940925f007120addd669e1ef4cbe760fc5",
+      "bytes": 7007,
+      "transformations": [],
+      "imported_sha256": "e3e6982f10a3ba45c7537a218d5a4f940925f007120addd669e1ef4cbe760fc5"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/THIRD_PARTY_NOTICES.md",
+      "source_sha256": "662e9d098ac9c63b0b6b121683c6e07227a9441e6eb5facebd46c9f363de4c35",
+      "sha256": "662e9d098ac9c63b0b6b121683c6e07227a9441e6eb5facebd46c9f363de4c35",
+      "bytes": 8076,
+      "transformations": [],
+      "imported_sha256": "662e9d098ac9c63b0b6b121683c6e07227a9441e6eb5facebd46c9f363de4c35"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/UPSTREAM_README.md",
+      "source_sha256": "8fec7f7816fcb8c96125a355cbd62e775da2d532ac3b9100603cfdb0351329c9",
+      "sha256": "8fec7f7816fcb8c96125a355cbd62e775da2d532ac3b9100603cfdb0351329c9",
+      "bytes": 16481,
+      "transformations": [],
+      "imported_sha256": "8fec7f7816fcb8c96125a355cbd62e775da2d532ac3b9100603cfdb0351329c9"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/pyproject.toml",
+      "source_sha256": "95331bd5f9f2daa15affff2cfcb32ac7abac8fbd6be7d30b309d47393ed88d76",
+      "sha256": "95331bd5f9f2daa15affff2cfcb32ac7abac8fbd6be7d30b309d47393ed88d76",
+      "bytes": 4413,
+      "transformations": [],
+      "imported_sha256": "95331bd5f9f2daa15affff2cfcb32ac7abac8fbd6be7d30b309d47393ed88d76"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/__init__.py",
+      "source_sha256": "79b2b0b1e64902dd441bc76dd6160e95e7710d0269bf5aa48b5de609f36fa236",
+      "sha256": "79b2b0b1e64902dd441bc76dd6160e95e7710d0269bf5aa48b5de609f36fa236",
+      "bytes": 526,
+      "transformations": [],
+      "imported_sha256": "79b2b0b1e64902dd441bc76dd6160e95e7710d0269bf5aa48b5de609f36fa236"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/cli/__init__.py",
+      "source_sha256": "a059a7ecea60a694a609144db2e6be7b2f5129bf25a8d1eba170f46a772d0128",
+      "sha256": "a059a7ecea60a694a609144db2e6be7b2f5129bf25a8d1eba170f46a772d0128",
+      "bytes": 46,
+      "transformations": [],
+      "imported_sha256": "a059a7ecea60a694a609144db2e6be7b2f5129bf25a8d1eba170f46a772d0128"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/cli/eval_habitat.py",
+      "source_sha256": "dce3727aed9946b6d816af8807f4609cf2a80a57336dedc637bfa1e1a0d4cf09",
+      "sha256": "dce3727aed9946b6d816af8807f4609cf2a80a57336dedc637bfa1e1a0d4cf09",
+      "bytes": 6639,
+      "transformations": [],
+      "imported_sha256": "dce3727aed9946b6d816af8807f4609cf2a80a57336dedc637bfa1e1a0d4cf09"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/cli/eval_merge.py",
+      "source_sha256": "229999f6313fd8e3a59c2a43e1fe118459897037a61855dca8fdbc0679802167",
+      "sha256": "229999f6313fd8e3a59c2a43e1fe118459897037a61855dca8fdbc0679802167",
+      "bytes": 1785,
+      "transformations": [],
+      "imported_sha256": "229999f6313fd8e3a59c2a43e1fe118459897037a61855dca8fdbc0679802167"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/cli/predict.py",
+      "source_sha256": "824103b62da7f1a16d248a37f019be16fe224b8e9e14b51636b679c63ca02c94",
+      "sha256": "824103b62da7f1a16d248a37f019be16fe224b8e9e14b51636b679c63ca02c94",
+      "bytes": 8084,
+      "transformations": [],
+      "imported_sha256": "824103b62da7f1a16d248a37f019be16fe224b8e9e14b51636b679c63ca02c94"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/cli/render.py",
+      "source_sha256": "576ad54cd21ce1047b2eeb6e6fc294ee0b8c61da2a4802627f9c02772b32f412",
+      "sha256": "576ad54cd21ce1047b2eeb6e6fc294ee0b8c61da2a4802627f9c02772b32f412",
+      "bytes": 4716,
+      "transformations": [],
+      "imported_sha256": "576ad54cd21ce1047b2eeb6e6fc294ee0b8c61da2a4802627f9c02772b32f412"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/cli/ws_client.py",
+      "source_sha256": "878c05ba2278807420d58b8a0f424cd00d39a245116995c6c56d587815466a60",
+      "sha256": "878c05ba2278807420d58b8a0f424cd00d39a245116995c6c56d587815466a60",
+      "bytes": 6594,
+      "transformations": [],
+      "imported_sha256": "878c05ba2278807420d58b8a0f424cd00d39a245116995c6c56d587815466a60"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/data_processor.py",
+      "source_sha256": "3feb92fa0b0e02d1de0ec12446cf769efd3000cfece83a410250e403fa1f551a",
+      "sha256": "3feb92fa0b0e02d1de0ec12446cf769efd3000cfece83a410250e403fa1f551a",
+      "bytes": 23817,
+      "transformations": [],
+      "imported_sha256": "3feb92fa0b0e02d1de0ec12446cf769efd3000cfece83a410250e403fa1f551a"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/eval_config.py",
+      "source_sha256": "5cd23cd9f8040c90e7e572c706cb0b5778750f1b68d1a6e03ed65a2f58a98318",
+      "sha256": "5cd23cd9f8040c90e7e572c706cb0b5778750f1b68d1a6e03ed65a2f58a98318",
+      "bytes": 7136,
+      "transformations": [],
+      "imported_sha256": "5cd23cd9f8040c90e7e572c706cb0b5778750f1b68d1a6e03ed65a2f58a98318"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/habitat/__init__.py",
+      "source_sha256": "cf56d36f6014741d9e1a2e636bdb4e1061741e40b74e71a3a47991c393aa3cf9",
+      "sha256": "cf56d36f6014741d9e1a2e636bdb4e1061741e40b74e71a3a47991c393aa3cf9",
+      "bytes": 1119,
+      "transformations": [],
+      "imported_sha256": "cf56d36f6014741d9e1a2e636bdb4e1061741e40b74e71a3a47991c393aa3cf9"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/habitat/merge.py",
+      "source_sha256": "e492b7ef6f6cded65b366444f463145c550a25dd7ec1aae1aad1ba55d17acbfb",
+      "sha256": "e492b7ef6f6cded65b366444f463145c550a25dd7ec1aae1aad1ba55d17acbfb",
+      "bytes": 4566,
+      "transformations": [],
+      "imported_sha256": "e492b7ef6f6cded65b366444f463145c550a25dd7ec1aae1aad1ba55d17acbfb"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/habitat/policy.py",
+      "source_sha256": "1e7231de07a61f11719116d12c715df9f55e83ffcece88498f087b68f8edd3db",
+      "sha256": "1e7231de07a61f11719116d12c715df9f55e83ffcece88498f087b68f8edd3db",
+      "bytes": 9383,
+      "transformations": [],
+      "imported_sha256": "1e7231de07a61f11719116d12c715df9f55e83ffcece88498f087b68f8edd3db"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/habitat/remote_env.py",
+      "source_sha256": "a89d79d4d0c8ad89d58b8ab2ea079bdc04ba2238e4cd2fb8320ef8b3ae9bd1fe",
+      "sha256": "a89d79d4d0c8ad89d58b8ab2ea079bdc04ba2238e4cd2fb8320ef8b3ae9bd1fe",
+      "bytes": 5359,
+      "transformations": [],
+      "imported_sha256": "a89d79d4d0c8ad89d58b8ab2ea079bdc04ba2238e4cd2fb8320ef8b3ae9bd1fe"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/habitat/results.py",
+      "source_sha256": "cf7ba49a16c29d1c11977f49f59e58d480bd705d0c71fc06deb8e62ef58b6c47",
+      "sha256": "cf7ba49a16c29d1c11977f49f59e58d480bd705d0c71fc06deb8e62ef58b6c47",
+      "bytes": 8208,
+      "transformations": [],
+      "imported_sha256": "cf7ba49a16c29d1c11977f49f59e58d480bd705d0c71fc06deb8e62ef58b6c47"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/habitat/runner.py",
+      "source_sha256": "6c9a7816af291128495cf3f7fa75d27162a8cf8dde8306bdd6816a8c13e08957",
+      "sha256": "6c9a7816af291128495cf3f7fa75d27162a8cf8dde8306bdd6816a8c13e08957",
+      "bytes": 32294,
+      "transformations": [],
+      "imported_sha256": "6c9a7816af291128495cf3f7fa75d27162a8cf8dde8306bdd6816a8c13e08957"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/__init__.py",
+      "source_sha256": "2b040be9a48bdcb0398c3343b2246224e4f6040e8b9e974c815dc0e79c31d2fd",
+      "sha256": "2b040be9a48bdcb0398c3343b2246224e4f6040e8b9e974c815dc0e79c31d2fd",
+      "bytes": 1195,
+      "transformations": [],
+      "imported_sha256": "2b040be9a48bdcb0398c3343b2246224e4f6040e8b9e974c815dc0e79c31d2fd"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/config.py",
+      "source_sha256": "3683ccd42037ded602764c2b1962a9b3e80f1f3841497a9c22dac1f540df70f1",
+      "sha256": "3683ccd42037ded602764c2b1962a9b3e80f1f3841497a9c22dac1f540df70f1",
+      "bytes": 2301,
+      "transformations": [],
+      "imported_sha256": "3683ccd42037ded602764c2b1962a9b3e80f1f3841497a9c22dac1f540df70f1"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/engine.py",
+      "source_sha256": "0c955a7bee0df7363165c64f5e4b20bd065c1f132c36c50967fe9b2530c67ec0",
+      "sha256": "0c955a7bee0df7363165c64f5e4b20bd065c1f132c36c50967fe9b2530c67ec0",
+      "bytes": 31993,
+      "transformations": [],
+      "imported_sha256": "0c955a7bee0df7363165c64f5e4b20bd065c1f132c36c50967fe9b2530c67ec0"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/frame_preprocessing.py",
+      "source_sha256": "e339b9b9038dd17af27e1addb357ea12f509da0cb34f742f05ba935455a4ebfa",
+      "sha256": "e339b9b9038dd17af27e1addb357ea12f509da0cb34f742f05ba935455a4ebfa",
+      "bytes": 3468,
+      "transformations": [],
+      "imported_sha256": "e339b9b9038dd17af27e1addb357ea12f509da0cb34f742f05ba935455a4ebfa"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/model.py",
+      "source_sha256": "e745d3f7755eba62834168ec5e1676b611d5cf47e866a256d44f13accdbe44c1",
+      "sha256": "e745d3f7755eba62834168ec5e1676b611d5cf47e866a256d44f13accdbe44c1",
+      "bytes": 14456,
+      "transformations": [],
+      "imported_sha256": "e745d3f7755eba62834168ec5e1676b611d5cf47e866a256d44f13accdbe44c1"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/policies.py",
+      "source_sha256": "05c6a37b11911498d25812a2320084994a0fefd965ca883c7f55c8dbf8b57c03",
+      "sha256": "05c6a37b11911498d25812a2320084994a0fefd965ca883c7f55c8dbf8b57c03",
+      "bytes": 7347,
+      "transformations": [],
+      "imported_sha256": "05c6a37b11911498d25812a2320084994a0fefd965ca883c7f55c8dbf8b57c03"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/samples.py",
+      "source_sha256": "6e9c24fc70526f7dd910d4a2601d14c856e698850eba5c50c71f2bea7d0ced69",
+      "sha256": "6e9c24fc70526f7dd910d4a2601d14c856e698850eba5c50c71f2bea7d0ced69",
+      "bytes": 5721,
+      "transformations": [],
+      "imported_sha256": "6e9c24fc70526f7dd910d4a2601d14c856e698850eba5c50c71f2bea7d0ced69"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/vit_cache.py",
+      "source_sha256": "267fd3c1df605a869a0f8eaddd72b3d9645a7f8a9db78630122f2792c37bd797",
+      "sha256": "267fd3c1df605a869a0f8eaddd72b3d9645a7f8a9db78630122f2792c37bd797",
+      "bytes": 11408,
+      "transformations": [],
+      "imported_sha256": "267fd3c1df605a869a0f8eaddd72b3d9645a7f8a9db78630122f2792c37bd797"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/inference/vllm_utils.py",
+      "source_sha256": "869d7ec0eff457239efede1c6e164f2766f50a553ef5113906e72d0fe442506c",
+      "sha256": "869d7ec0eff457239efede1c6e164f2766f50a553ef5113906e72d0fe442506c",
+      "bytes": 18840,
+      "transformations": [],
+      "imported_sha256": "869d7ec0eff457239efede1c6e164f2766f50a553ef5113906e72d0fe442506c"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/processing.py",
+      "source_sha256": "470c1bc84bce40648105492e5b1b657bfe5cc49fec1c192bed27649add18684c",
+      "sha256": "470c1bc84bce40648105492e5b1b657bfe5cc49fec1c192bed27649add18684c",
+      "bytes": 32455,
+      "transformations": [],
+      "imported_sha256": "470c1bc84bce40648105492e5b1b657bfe5cc49fec1c192bed27649add18684c"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/prompts.py",
+      "source_sha256": "9968adadffeed91327edbe2c04bd355171c32d51b2abad63755e24009aa0fd41",
+      "sha256": "9968adadffeed91327edbe2c04bd355171c32d51b2abad63755e24009aa0fd41",
+      "bytes": 6311,
+      "transformations": [],
+      "imported_sha256": "9968adadffeed91327edbe2c04bd355171c32d51b2abad63755e24009aa0fd41"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/serving/__init__.py",
+      "source_sha256": "f83c9be3b60e5c6798fee78ac2ed6d60151caa010261c69f4d518f93ca1f64ae",
+      "sha256": "f83c9be3b60e5c6798fee78ac2ed6d60151caa010261c69f4d518f93ca1f64ae",
+      "bytes": 88,
+      "transformations": [],
+      "imported_sha256": "f83c9be3b60e5c6798fee78ac2ed6d60151caa010261c69f4d518f93ca1f64ae"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/serving/batcher.py",
+      "source_sha256": "b8505fc35ad5e3959dba22f3e0fc6a2e303f422492d454ccff29d5db106d308a",
+      "sha256": "b8505fc35ad5e3959dba22f3e0fc6a2e303f422492d454ccff29d5db106d308a",
+      "bytes": 5990,
+      "transformations": [],
+      "imported_sha256": "b8505fc35ad5e3959dba22f3e0fc6a2e303f422492d454ccff29d5db106d308a"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/serving/protocol.py",
+      "source_sha256": "75b42419cfbe506a5fc78aee33025fb2a2e51051db10e1e59bbf53cd409bff7a",
+      "sha256": "75b42419cfbe506a5fc78aee33025fb2a2e51051db10e1e59bbf53cd409bff7a",
+      "bytes": 9878,
+      "transformations": [],
+      "imported_sha256": "75b42419cfbe506a5fc78aee33025fb2a2e51051db10e1e59bbf53cd409bff7a"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/serving/token_budget.py",
+      "source_sha256": "d8ceb6c3b0a43c68a0f7fc1cb944e4a4f72e5de3282f37b77c7f3cc4ad8685f0",
+      "sha256": "d8ceb6c3b0a43c68a0f7fc1cb944e4a4f72e5de3282f37b77c7f3cc4ad8685f0",
+      "bytes": 2949,
+      "transformations": [],
+      "imported_sha256": "d8ceb6c3b0a43c68a0f7fc1cb944e4a4f72e5de3282f37b77c7f3cc4ad8685f0"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/serving/tracking_service.py",
+      "source_sha256": "88a1912ce2b3ad7dede12c28f08475bbb9115756c3e5cd9b8e6018768fe17add",
+      "sha256": "88a1912ce2b3ad7dede12c28f08475bbb9115756c3e5cd9b8e6018768fe17add",
+      "bytes": 9660,
+      "transformations": [],
+      "imported_sha256": "88a1912ce2b3ad7dede12c28f08475bbb9115756c3e5cd9b8e6018768fe17add"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/serving/ws_server.py",
+      "source_sha256": "9bf483e3ca5cd7276113301c38eea85c50c4017bdf0bc83a924b2bfec59aae6e",
+      "sha256": "9bf483e3ca5cd7276113301c38eea85c50c4017bdf0bc83a924b2bfec59aae6e",
+      "bytes": 38797,
+      "transformations": [],
+      "imported_sha256": "9bf483e3ca5cd7276113301c38eea85c50c4017bdf0bc83a924b2bfec59aae6e"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/slowfast.py",
+      "source_sha256": "ac7deb3535341154f06b5419e6fe6b740ca169c136b3d03ad37bfed64de162cc",
+      "sha256": "ac7deb3535341154f06b5419e6fe6b740ca169c136b3d03ad37bfed64de162cc",
+      "bytes": 12407,
+      "transformations": [],
+      "imported_sha256": "ac7deb3535341154f06b5419e6fe6b740ca169c136b3d03ad37bfed64de162cc"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/tracking.py",
+      "source_sha256": "59de24911956821e00f80ca82d4cfad4b15ab0de4d85e85244436694ea805b69",
+      "sha256": "59de24911956821e00f80ca82d4cfad4b15ab0de4d85e85244436694ea805b69",
+      "bytes": 15155,
+      "transformations": [],
+      "imported_sha256": "59de24911956821e00f80ca82d4cfad4b15ab0de4d85e85244436694ea805b69"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/traj_vocab.py",
+      "source_sha256": "84c83780ba893d468e7529f5de44223f5f2aa44c099eb46fac3edb1786c14f0d",
+      "sha256": "84c83780ba893d468e7529f5de44223f5f2aa44c099eb46fac3edb1786c14f0d",
+      "bytes": 6899,
+      "transformations": [],
+      "imported_sha256": "84c83780ba893d468e7529f5de44223f5f2aa44c099eb46fac3edb1786c14f0d"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/velocity.py",
+      "source_sha256": "aa155b4a674298c1bf234679be4295ff6d387a87818dc66d407dfa74d2ca076f",
+      "sha256": "aa155b4a674298c1bf234679be4295ff6d387a87818dc66d407dfa74d2ca076f",
+      "bytes": 2463,
+      "transformations": [],
+      "imported_sha256": "aa155b4a674298c1bf234679be4295ff6d387a87818dc66d407dfa74d2ca076f"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/viz/__init__.py",
+      "source_sha256": "b0ddf34f974c7c1562ba603a7cb6e06aca7e77b4f49a881c5ed924d409d7fbec",
+      "sha256": "b0ddf34f974c7c1562ba603a7cb6e06aca7e77b4f49a881c5ed924d409d7fbec",
+      "bytes": 1717,
+      "transformations": [],
+      "imported_sha256": "b0ddf34f974c7c1562ba603a7cb6e06aca7e77b4f49a881c5ed924d409d7fbec"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/viz/projection.py",
+      "source_sha256": "a49840f72972c0d109a4f976ae314270bcdf98abb8dbb9bf441b9f165ceef345",
+      "sha256": "a49840f72972c0d109a4f976ae314270bcdf98abb8dbb9bf441b9f165ceef345",
+      "bytes": 2989,
+      "transformations": [],
+      "imported_sha256": "a49840f72972c0d109a4f976ae314270bcdf98abb8dbb9bf441b9f165ceef345"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/viz/recorder.py",
+      "source_sha256": "a2f979127935a37ea1e1cd4568d4da5d05b03ffb333204c3a71e94dc1181bace",
+      "sha256": "a2f979127935a37ea1e1cd4568d4da5d05b03ffb333204c3a71e94dc1181bace",
+      "bytes": 15198,
+      "transformations": [],
+      "imported_sha256": "a2f979127935a37ea1e1cd4568d4da5d05b03ffb333204c3a71e94dc1181bace"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/viz/render.py",
+      "source_sha256": "fb70c9bfcb8b5906c4f29d5f81a7e7781a6f3e5091d8babd09b58f26d274ef1b",
+      "sha256": "fb70c9bfcb8b5906c4f29d5f81a7e7781a6f3e5091d8babd09b58f26d274ef1b",
+      "bytes": 28440,
+      "transformations": [],
+      "imported_sha256": "fb70c9bfcb8b5906c4f29d5f81a7e7781a6f3e5091d8babd09b58f26d274ef1b"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/viz/render_episode.py",
+      "source_sha256": "8d2bf01de6beb00d38e763a3e5e546718334a7e62cefa137958c51d5b3a3822a",
+      "sha256": "8d2bf01de6beb00d38e763a3e5e546718334a7e62cefa137958c51d5b3a3822a",
+      "bytes": 9777,
+      "transformations": [],
+      "imported_sha256": "8d2bf01de6beb00d38e763a3e5e546718334a7e62cefa137958c51d5b3a3822a"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/viz/video.py",
+      "source_sha256": "67318a2d0d5d6b21b6c40313ce7c6e30eb7373c09befe2d11b9d08b529e23a54",
+      "sha256": "67318a2d0d5d6b21b6c40313ce7c6e30eb7373c09befe2d11b9d08b529e23a54",
+      "bytes": 4383,
+      "transformations": [],
+      "imported_sha256": "67318a2d0d5d6b21b6c40313ce7c6e30eb7373c09befe2d11b9d08b529e23a54"
+    },
+    {
+      "path": "deployment/lightnav/vendor/upstream/src/lightnav/vln_utils.py",
+      "source_sha256": "3d2e35fbe793497f6043a45d53a9d0a7b9498e07b10d4458df4832a04b5b8bec",
+      "sha256": "3d2e35fbe793497f6043a45d53a9d0a7b9498e07b10d4458df4832a04b5b8bec",
+      "bytes": 16288,
+      "transformations": [],
+      "imported_sha256": "3d2e35fbe793497f6043a45d53a9d0a7b9498e07b10d4458df4832a04b5b8bec"
+    },
+    {
+      "path": "deployment/maxwell/bringup.json",
+      "source_sha256": "245eac3c247d742dc18a6caf00ea0701538ed9da0f86bc6f59aa7e4668cea5b1",
+      "sha256": "245eac3c247d742dc18a6caf00ea0701538ed9da0f86bc6f59aa7e4668cea5b1",
+      "bytes": 593,
+      "transformations": [],
+      "imported_sha256": "245eac3c247d742dc18a6caf00ea0701538ed9da0f86bc6f59aa7e4668cea5b1"
+    },
+    {
+      "path": "deployment/maxwell/check_environment.py",
+      "source_sha256": "c5095de35f24d43d2479f05b0e51ca7a6f0ca16e92fe698c2df67531faee5b29",
+      "sha256": "c5095de35f24d43d2479f05b0e51ca7a6f0ca16e92fe698c2df67531faee5b29",
+      "bytes": 11932,
+      "transformations": [],
+      "imported_sha256": "c5095de35f24d43d2479f05b0e51ca7a6f0ca16e92fe698c2df67531faee5b29"
+    },
+    {
+      "path": "deployment/maxwell/environment.sh",
+      "source_sha256": "ce0f94744e20f132a3f35f7de9a8e227031c6764977b967442a751445c30da84",
+      "sha256": "ce0f94744e20f132a3f35f7de9a8e227031c6764977b967442a751445c30da84",
+      "bytes": 2894,
+      "transformations": [],
+      "imported_sha256": "ce0f94744e20f132a3f35f7de9a8e227031c6764977b967442a751445c30da84"
+    },
+    {
+      "path": "deployment/maxwell/jetson_link.sh",
+      "source_sha256": "d620aa447a7f790c59497bf0da9d85666b3e6732effb2da0b6d191a33d8d57d0",
+      "sha256": "f1c826190485fb0ad161270f0e51b119c6e4e62f70cae6588b9ff67febde6864",
+      "bytes": 3466,
+      "transformations": [
+        "deployment identity/path replaced with portable example"
+      ],
+      "imported_sha256": "f1c826190485fb0ad161270f0e51b119c6e4e62f70cae6588b9ff67febde6864"
+    },
+    {
+      "path": "deployment/maxwell/launch.py",
+      "source_sha256": "3be6ba1f2f085b2bcc031edcd7388744b11878e03b2df76f90702760b32afd60",
+      "sha256": "3be6ba1f2f085b2bcc031edcd7388744b11878e03b2df76f90702760b32afd60",
+      "bytes": 3423,
+      "transformations": [],
+      "imported_sha256": "3be6ba1f2f085b2bcc031edcd7388744b11878e03b2df76f90702760b32afd60"
+    },
+    {
+      "path": "deployment/maxwell/prepare_environment.sh",
+      "source_sha256": "04baf810090739c21a0988109de79d82255ff3ed2cc3fd576ccb507a6c65336d",
+      "sha256": "04baf810090739c21a0988109de79d82255ff3ed2cc3fd576ccb507a6c65336d",
+      "bytes": 4523,
+      "transformations": [],
+      "imported_sha256": "04baf810090739c21a0988109de79d82255ff3ed2cc3fd576ccb507a6c65336d"
+    },
+    {
+      "path": "deployment/maxwell/run_lightnav.sh",
+      "source_sha256": "2e1f169e1489f310ccc164949e8901f703992646f05cd4a5c9a8efcd81c57a60",
+      "sha256": "2e1f169e1489f310ccc164949e8901f703992646f05cd4a5c9a8efcd81c57a60",
+      "bytes": 294,
+      "transformations": [],
+      "imported_sha256": "2e1f169e1489f310ccc164949e8901f703992646f05cd4a5c9a8efcd81c57a60"
+    },
+    {
+      "path": "deployment/nomad/Dockerfile",
+      "source_sha256": "cc0a6d482e2ce3cead546f9cb8875e730ab62b96afe8dd7236e07a8a35710b88",
+      "sha256": "cc0a6d482e2ce3cead546f9cb8875e730ab62b96afe8dd7236e07a8a35710b88",
+      "bytes": 771,
+      "transformations": [],
+      "imported_sha256": "cc0a6d482e2ce3cead546f9cb8875e730ab62b96afe8dd7236e07a8a35710b88"
+    },
+    {
+      "path": "deployment/nomad/README.md",
+      "source_sha256": "6f92359751fe5176d86b86cfe703a7397676df072b7a37931ef7f5ab96fc739e",
+      "sha256": "2ba7dcd2e2805935024f012e77527e6a61718b01128520e3cb3a848c14fac009",
+      "bytes": 15216,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "c81115ac0380bfca5dd8d4a1efd6831a01109ddb4fe639004e7e505fd33ea17b",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/nomad/__init__.py",
+      "source_sha256": "152305094a4090b42aa215663da370174141a8cccf74c3639c72516060efafe3",
+      "sha256": "152305094a4090b42aa215663da370174141a8cccf74c3639c72516060efafe3",
+      "bytes": 58,
+      "transformations": [],
+      "imported_sha256": "152305094a4090b42aa215663da370174141a8cccf74c3639c72516060efafe3"
+    },
+    {
+      "path": "deployment/nomad/capture_rgb.py",
+      "source_sha256": "6313b9beecd7cd8cd91358249b27443d9bdf93484ba85a27eafe97adac4213b1",
+      "sha256": "6313b9beecd7cd8cd91358249b27443d9bdf93484ba85a27eafe97adac4213b1",
+      "bytes": 6119,
+      "transformations": [],
+      "imported_sha256": "6313b9beecd7cd8cd91358249b27443d9bdf93484ba85a27eafe97adac4213b1"
+    },
+    {
+      "path": "deployment/nomad/live_shadow.py",
+      "source_sha256": "8afb0767ac7ca8cef634a979c6420b20da44111413370ff89327c7b15c463813",
+      "sha256": "8afb0767ac7ca8cef634a979c6420b20da44111413370ff89327c7b15c463813",
+      "bytes": 20974,
+      "transformations": [],
+      "imported_sha256": "8afb0767ac7ca8cef634a979c6420b20da44111413370ff89327c7b15c463813"
+    },
+    {
+      "path": "deployment/nomad/mpc_reference.py",
+      "source_sha256": "753593bd2bc2fbcca304a7f9b03607a386a6e65f98b5ecfa46abea85ac7c28aa",
+      "sha256": "753593bd2bc2fbcca304a7f9b03607a386a6e65f98b5ecfa46abea85ac7c28aa",
+      "bytes": 8050,
+      "transformations": [],
+      "imported_sha256": "753593bd2bc2fbcca304a7f9b03607a386a6e65f98b5ecfa46abea85ac7c28aa"
+    },
+    {
+      "path": "deployment/nomad/ops/LICENSE.TinyNav",
+      "source_sha256": "97a075922ae744d0b5d59c48bf9713ac72c4930b5879479f6d60eafa7d8daf48",
+      "sha256": "97a075922ae744d0b5d59c48bf9713ac72c4930b5879479f6d60eafa7d8daf48",
+      "bytes": 11340,
+      "transformations": [],
+      "imported_sha256": "97a075922ae744d0b5d59c48bf9713ac72c4930b5879479f6d60eafa7d8daf48"
+    },
+    {
+      "path": "deployment/nomad/ops/README.md",
+      "source_sha256": "a857ed9ef7d907f7f387d61d3bf4791ecf7ca7f98ce852d472282f5e759bd589",
+      "sha256": "7398477d2808cdb381b4f557089a160127244eb6bdfd27ec96b1ff45a3f1ba64",
+      "bytes": 11192,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "7398477d2808cdb381b4f557089a160127244eb6bdfd27ec96b1ff45a3f1ba64"
+    },
+    {
+      "path": "deployment/nomad/ops/SOURCES.md",
+      "source_sha256": "2cc33c02c2ea0976fb45b8fe07d5da77a6e7e6415f917fc12397fd916c1f38c2",
+      "sha256": "2cc33c02c2ea0976fb45b8fe07d5da77a6e7e6415f917fc12397fd916c1f38c2",
+      "bytes": 2716,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "2cc33c02c2ea0976fb45b8fe07d5da77a6e7e6415f917fc12397fd916c1f38c2"
+    },
+    {
+      "path": "deployment/nomad/ops/foxglove_bridge.yaml",
+      "source_sha256": "b6a076f07e25286aaf711cb82c4f285ffb05e1b96f1185f3fe35708d6b3bb3c3",
+      "sha256": "b6a076f07e25286aaf711cb82c4f285ffb05e1b96f1185f3fe35708d6b3bb3c3",
+      "bytes": 989,
+      "transformations": [],
+      "imported_sha256": "b6a076f07e25286aaf711cb82c4f285ffb05e1b96f1185f3fe35708d6b3bb3c3"
+    },
+    {
+      "path": "deployment/nomad/ops/nomad_observe.foxglove-layout.json",
+      "source_sha256": "2c98ae8d698791aba3e1227e3fb149df776f55064017e4ee7b2b54ac4f5ca4a3",
+      "sha256": "2c98ae8d698791aba3e1227e3fb149df776f55064017e4ee7b2b54ac4f5ca4a3",
+      "bytes": 3325,
+      "transformations": [],
+      "imported_sha256": "2c98ae8d698791aba3e1227e3fb149df776f55064017e4ee7b2b54ac4f5ca4a3"
+    },
+    {
+      "path": "deployment/nomad/ops/nomad_shadow.foxglove-layout.json",
+      "source_sha256": "f9e017cbc518c5d6281de37a9bdbe02987780f34e9ec9fe6cbe92d16d05a7de6",
+      "sha256": "f9e017cbc518c5d6281de37a9bdbe02987780f34e9ec9fe6cbe92d16d05a7de6",
+      "bytes": 2128,
+      "transformations": [],
+      "imported_sha256": "f9e017cbc518c5d6281de37a9bdbe02987780f34e9ec9fe6cbe92d16d05a7de6"
+    },
+    {
+      "path": "deployment/nomad/ops/preview_relay.py",
+      "source_sha256": "eafa19debfaadaa4e8f0af819659ccb12570e2b56597fdedcaff610831b13956",
+      "sha256": "eafa19debfaadaa4e8f0af819659ccb12570e2b56597fdedcaff610831b13956",
+      "bytes": 5660,
+      "transformations": [],
+      "imported_sha256": "eafa19debfaadaa4e8f0af819659ccb12570e2b56597fdedcaff610831b13956"
+    },
+    {
+      "path": "deployment/nomad/ops/replay_shadow.py",
+      "source_sha256": "90ebd8dd5892272dd16b4ae9b62a1f92208309823067b8f832ec87bf733cfda1",
+      "sha256": "90ebd8dd5892272dd16b4ae9b62a1f92208309823067b8f832ec87bf733cfda1",
+      "bytes": 17751,
+      "transformations": [],
+      "imported_sha256": "90ebd8dd5892272dd16b4ae9b62a1f92208309823067b8f832ec87bf733cfda1"
+    },
+    {
+      "path": "deployment/nomad/ops/run_foxglove_bridge.sh",
+      "source_sha256": "d8ecba159343c4178870a7fa8fc3d1ea44ab171de2c64759c4586f13410311af",
+      "sha256": "d8ecba159343c4178870a7fa8fc3d1ea44ab171de2c64759c4586f13410311af",
+      "bytes": 1117,
+      "transformations": [],
+      "imported_sha256": "d8ecba159343c4178870a7fa8fc3d1ea44ab171de2c64759c4586f13410311af"
+    },
+    {
+      "path": "deployment/nomad/ops/run_preview_relay.sh",
+      "source_sha256": "6194193a4d200316e568ed17fb6a4b9ac5a40eb355df3a83f7bab13a8a189c1b",
+      "sha256": "6194193a4d200316e568ed17fb6a4b9ac5a40eb355df3a83f7bab13a8a189c1b",
+      "bytes": 476,
+      "transformations": [],
+      "imported_sha256": "6194193a4d200316e568ed17fb6a4b9ac5a40eb355df3a83f7bab13a8a189c1b"
+    },
+    {
+      "path": "deployment/nomad/ops/run_shadow_replay.sh",
+      "source_sha256": "8431bf8ba179ae4542ce3a4f877bf97304ead4fe9c597b7d08c8bede8bebd5be",
+      "sha256": "8431bf8ba179ae4542ce3a4f877bf97304ead4fe9c597b7d08c8bede8bebd5be",
+      "bytes": 582,
+      "transformations": [],
+      "imported_sha256": "8431bf8ba179ae4542ce3a4f877bf97304ead4fe9c597b7d08c8bede8bebd5be"
+    },
+    {
+      "path": "deployment/nomad/ops/run_vnc_desktop.sh",
+      "source_sha256": "ff13a54dcf329bc71e7f4ad605061a04ac5c22494947f710e4c7e1c92e1084c1",
+      "sha256": "ff13a54dcf329bc71e7f4ad605061a04ac5c22494947f710e4c7e1c92e1084c1",
+      "bytes": 2681,
+      "transformations": [],
+      "imported_sha256": "ff13a54dcf329bc71e7f4ad605061a04ac5c22494947f710e4c7e1c92e1084c1"
+    },
+    {
+      "path": "deployment/nomad/ops/vnc_xstartup.sh",
+      "source_sha256": "1a858309329f226201a240e944ef8532127da90fa28ba8ae68e85d79d3167c12",
+      "sha256": "1a858309329f226201a240e944ef8532127da90fa28ba8ae68e85d79d3167c12",
+      "bytes": 262,
+      "transformations": [],
+      "imported_sha256": "1a858309329f226201a240e944ef8532127da90fa28ba8ae68e85d79d3167c12"
+    },
+    {
+      "path": "deployment/nomad/policy.py",
+      "source_sha256": "f0c51b819a1043546d75a9d42719d28f670749586bc6c3616d9aba774b61daa7",
+      "sha256": "f0c51b819a1043546d75a9d42719d28f670749586bc6c3616d9aba774b61daa7",
+      "bytes": 14835,
+      "transformations": [],
+      "imported_sha256": "f0c51b819a1043546d75a9d42719d28f670749586bc6c3616d9aba774b61daa7"
+    },
+    {
+      "path": "deployment/nomad/prepare_bundle.py",
+      "source_sha256": "105308d4b28d12c8fbbfaa800195ef68f432a7fe2bc39d8cec5fbefc09fbb5a0",
+      "sha256": "4450a18cd9893e9f29dece856dc469a9d50fd192fab8939520a0d9935e388f12",
+      "bytes": 5778,
+      "transformations": [
+        "deployment identity/path replaced with portable example"
+      ],
+      "imported_sha256": "4450a18cd9893e9f29dece856dc469a9d50fd192fab8939520a0d9935e388f12"
+    },
+    {
+      "path": "deployment/nomad/prepare_foxglove_overlay.py",
+      "source_sha256": "aac59e4d00a15d35ecc3fb55a98eec21a8674c6b1faa472edb613869f9294824",
+      "sha256": "aac59e4d00a15d35ecc3fb55a98eec21a8674c6b1faa472edb613869f9294824",
+      "bytes": 3094,
+      "transformations": [],
+      "imported_sha256": "aac59e4d00a15d35ecc3fb55a98eec21a8674c6b1faa472edb613869f9294824"
+    },
+    {
+      "path": "deployment/nomad/server.py",
+      "source_sha256": "34a19a05f0ce6d948c07d856954574e74cb982e12e6f27e3ca316c8b56c9a6e2",
+      "sha256": "34a19a05f0ce6d948c07d856954574e74cb982e12e6f27e3ca316c8b56c9a6e2",
+      "bytes": 9317,
+      "transformations": [],
+      "imported_sha256": "34a19a05f0ce6d948c07d856954574e74cb982e12e6f27e3ca316c8b56c9a6e2"
+    },
+    {
+      "path": "deployment/nomad/shadow_client.py",
+      "source_sha256": "5b707c7f26b40b9cfc3b2884cd29ab5010745c52c97d93f3f28d6d690223a582",
+      "sha256": "5b707c7f26b40b9cfc3b2884cd29ab5010745c52c97d93f3f28d6d690223a582",
+      "bytes": 18222,
+      "transformations": [],
+      "imported_sha256": "5b707c7f26b40b9cfc3b2884cd29ab5010745c52c97d93f3f28d6d690223a582"
+    },
+    {
+      "path": "deployment/nomad/trajectory_adapter.py",
+      "source_sha256": "eb83e7463e90b687df313debe751324f70f5555e70d370f133c5c07a5fc6a6fb",
+      "sha256": "eb83e7463e90b687df313debe751324f70f5555e70d370f133c5c07a5fc6a6fb",
+      "bytes": 8770,
+      "transformations": [],
+      "imported_sha256": "eb83e7463e90b687df313debe751324f70f5555e70d370f133c5c07a5fc6a6fb"
+    },
+    {
+      "path": "deployment/nomad/vendor/lightnav/LICENSE",
+      "source_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357,
+      "transformations": [],
+      "imported_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "deployment/nomad/vendor/lightnav/SOURCE.json",
+      "source_sha256": "ca731f32f1c150e43ad5889ee695c6c463d92b25f81fa892b154f489b8fd6971",
+      "sha256": "ca731f32f1c150e43ad5889ee695c6c463d92b25f81fa892b154f489b8fd6971",
+      "bytes": 892,
+      "transformations": [],
+      "imported_sha256": "ca731f32f1c150e43ad5889ee695c6c463d92b25f81fa892b154f489b8fd6971"
+    },
+    {
+      "path": "deployment/nomad/vendor/lightnav/geometry.py",
+      "source_sha256": "af72a6ebca4ff18b3d1a09b69583c431d6cbdd071c478945cbe9aa45690d3a14",
+      "sha256": "af72a6ebca4ff18b3d1a09b69583c431d6cbdd071c478945cbe9aa45690d3a14",
+      "bytes": 3466,
+      "transformations": [],
+      "imported_sha256": "af72a6ebca4ff18b3d1a09b69583c431d6cbdd071c478945cbe9aa45690d3a14"
+    },
+    {
+      "path": "deployment/nomad/vendor/lightnav/mpc.py",
+      "source_sha256": "fe97c24c6eb5ec443892ea8e6719493390a448ed036cebac1fcbd213c795c0a8",
+      "sha256": "fe97c24c6eb5ec443892ea8e6719493390a448ed036cebac1fcbd213c795c0a8",
+      "bytes": 7965,
+      "transformations": [],
+      "imported_sha256": "fe97c24c6eb5ec443892ea8e6719493390a448ed036cebac1fcbd213c795c0a8"
+    },
+    {
+      "path": "deployment/nomad/vendor/lightnav/protocol.py",
+      "source_sha256": "20e0a018fb31f5f824132d1c4550b39d8eb8c2176680dabdef7387c54ac322fd",
+      "sha256": "20e0a018fb31f5f824132d1c4550b39d8eb8c2176680dabdef7387c54ac322fd",
+      "bytes": 4003,
+      "transformations": [],
+      "imported_sha256": "20e0a018fb31f5f824132d1c4550b39d8eb8c2176680dabdef7387c54ac322fd"
+    },
+    {
+      "path": "deployment/operator/LICENSE.LightNav",
+      "source_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "bytes": 11357,
+      "transformations": [],
+      "imported_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "deployment/operator/README.md",
+      "source_sha256": "86393979468ffb9ae54d13e05544ccac877b5dbc5e7faf59b8369060e175ebc5",
+      "sha256": "23d2c6d34a264d1f9b916f71bd1579caf6c5ac6be333d4ab4124fe8279de9c44",
+      "bytes": 7105,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "23d2c6d34a264d1f9b916f71bd1579caf6c5ac6be333d4ab4124fe8279de9c44"
+    },
+    {
+      "path": "deployment/operator/SOURCES.md",
+      "source_sha256": "0c955b0f0cc4fad73910d9b57367cc06217a8efb4ec9dbe46d4c4a6cd16a90d9",
+      "sha256": "0c955b0f0cc4fad73910d9b57367cc06217a8efb4ec9dbe46d4c4a6cd16a90d9",
+      "bytes": 713,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "0c955b0f0cc4fad73910d9b57367cc06217a8efb4ec9dbe46d4c4a6cd16a90d9"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/.gitignore",
+      "source_sha256": "3b5a526b6cbc8b3eadba18bf31c32d00c9e4d2d55714f073397241fcb12571a5",
+      "sha256": "3b5a526b6cbc8b3eadba18bf31c32d00c9e4d2d55714f073397241fcb12571a5",
+      "bytes": 1610,
+      "transformations": [],
+      "imported_sha256": "3b5a526b6cbc8b3eadba18bf31c32d00c9e4d2d55714f073397241fcb12571a5"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/.prettierrc.yaml",
+      "source_sha256": "7aeb16a329fe04b1b984aa18b1eab9827f3ea4917b1c3048884bc78a6e508dbe",
+      "sha256": "7aeb16a329fe04b1b984aa18b1eab9827f3ea4917b1c3048884bc78a6e508dbe",
+      "bytes": 80,
+      "transformations": [],
+      "imported_sha256": "7aeb16a329fe04b1b984aa18b1eab9827f3ea4917b1c3048884bc78a6e508dbe"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/CHANGELOG.md",
+      "source_sha256": "83768d4aa9740aa4f75c4b68b4604e1e9249b8e05cba00a55b98e7a18018ac7c",
+      "sha256": "83768d4aa9740aa4f75c4b68b4604e1e9249b8e05cba00a55b98e7a18018ac7c",
+      "bytes": 5223,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "83768d4aa9740aa4f75c4b68b4604e1e9249b8e05cba00a55b98e7a18018ac7c"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/LICENSE",
+      "source_sha256": "3e0c8aadc8ecc536c7f576679130aff04c2f04b5bee6df9c46a47629dded65db",
+      "sha256": "3e0c8aadc8ecc536c7f576679130aff04c2f04b5bee6df9c46a47629dded65db",
+      "bytes": 178,
+      "transformations": [],
+      "imported_sha256": "3e0c8aadc8ecc536c7f576679130aff04c2f04b5bee6df9c46a47629dded65db"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/README.md",
+      "source_sha256": "f38909a1509053470e4dac84803092da7d64de2dec817bd13f0106bf681a5537",
+      "sha256": "f38909a1509053470e4dac84803092da7d64de2dec817bd13f0106bf681a5537",
+      "bytes": 15102,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "f38909a1509053470e4dac84803092da7d64de2dec817bd13f0106bf681a5537"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/build_offline.py",
+      "source_sha256": "1fb4bd1048b32e07d82dafd38b89962a1d35539d7087623b1150bdaeac3b9ed2",
+      "sha256": "1fb4bd1048b32e07d82dafd38b89962a1d35539d7087623b1150bdaeac3b9ed2",
+      "bytes": 5192,
+      "transformations": [],
+      "imported_sha256": "1fb4bd1048b32e07d82dafd38b89962a1d35539d7087623b1150bdaeac3b9ed2"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/demo/index.html",
+      "source_sha256": "32900a2b0101ddb8aa7c69f3ab508312076ffc3476946384b59f1c0d02939f12",
+      "sha256": "32900a2b0101ddb8aa7c69f3ab508312076ffc3476946384b59f1c0d02939f12",
+      "bytes": 772,
+      "transformations": [],
+      "imported_sha256": "32900a2b0101ddb8aa7c69f3ab508312076ffc3476946384b59f1c0d02939f12"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/demo/main.ts",
+      "source_sha256": "129999d9f8b35c5b5c21b871a5661642b9ce33496495e0b53386dbf8929eed98",
+      "sha256": "129999d9f8b35c5b5c21b871a5661642b9ce33496495e0b53386dbf8929eed98",
+      "bytes": 9836,
+      "transformations": [],
+      "imported_sha256": "129999d9f8b35c5b5c21b871a5661642b9ce33496495e0b53386dbf8929eed98"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/eslint.config.js",
+      "source_sha256": "ceabbfe4c8daf520b8194001c14cccb6493dac94df899ab81840846f415198bd",
+      "sha256": "ceabbfe4c8daf520b8194001c14cccb6493dac94df899ab81840846f415198bd",
+      "bytes": 574,
+      "transformations": [],
+      "imported_sha256": "ceabbfe4c8daf520b8194001c14cccb6493dac94df899ab81840846f415198bd"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/package-lock.json",
+      "source_sha256": "bf0eb556cbfaa75c1f5de8e522a62592d6b63e04cd6292713237204ec4a65448",
+      "sha256": "bf0eb556cbfaa75c1f5de8e522a62592d6b63e04cd6292713237204ec4a65448",
+      "bytes": 210511,
+      "transformations": [],
+      "imported_sha256": "bf0eb556cbfaa75c1f5de8e522a62592d6b63e04cd6292713237204ec4a65448"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/package.json",
+      "source_sha256": "1133e0304575202510ac5c97a6f5645f1494a8e0457571c36d0e12a341599893",
+      "sha256": "80296c56e60c9ac136169b1f09aaac03f6da791cd1ff23d057589192223fe4d9",
+      "bytes": 1587,
+      "transformations": [],
+      "imported_sha256": "1133e0304575202510ac5c97a6f5645f1494a8e0457571c36d0e12a341599893",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/index.ts",
+      "source_sha256": "e637f96d6a9d7687fe46e007fb33abcdcf1cf1f251147d73a77b2b1456821124",
+      "sha256": "e637f96d6a9d7687fe46e007fb33abcdcf1cf1f251147d73a77b2b1456821124",
+      "bytes": 263,
+      "transformations": [],
+      "imported_sha256": "e637f96d6a9d7687fe46e007fb33abcdcf1cf1f251147d73a77b2b1456821124"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/model.ts",
+      "source_sha256": "e92ddf980cdaec77ba73362e62933e19c961a347b1d07badcad3d810fcf7af58",
+      "sha256": "e92ddf980cdaec77ba73362e62933e19c961a347b1d07badcad3d810fcf7af58",
+      "bytes": 18922,
+      "transformations": [],
+      "imported_sha256": "e92ddf980cdaec77ba73362e62933e19c961a347b1d07badcad3d810fcf7af58"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/panel.ts",
+      "source_sha256": "24ae5c879b70b8f293770199088d118c1e8d2b2a4ee408aad2db943df5ccc5f6",
+      "sha256": "24ae5c879b70b8f293770199088d118c1e8d2b2a4ee408aad2db943df5ccc5f6",
+      "bytes": 47765,
+      "transformations": [],
+      "imported_sha256": "24ae5c879b70b8f293770199088d118c1e8d2b2a4ee408aad2db943df5ccc5f6"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/styles.ts",
+      "source_sha256": "532219e267a5d40249a7e7d15df85c8ff8d7437e151f2423dddfc4b8e167a818",
+      "sha256": "532219e267a5d40249a7e7d15df85c8ff8d7437e151f2423dddfc4b8e167a818",
+      "bytes": 13681,
+      "transformations": [],
+      "imported_sha256": "532219e267a5d40249a7e7d15df85c8ff8d7437e151f2423dddfc4b8e167a818"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tests/browser.test.mjs",
+      "source_sha256": "8425b78f9302f5da0da8d80af947d14035b5f5ec1d3ae8f8b6bb950d56dc4c1d",
+      "sha256": "707eff39693f4545aae4d6829576bafe1bbd76895e68f41ff8a539dfe0c58dd4",
+      "bytes": 58991,
+      "transformations": [],
+      "imported_sha256": "8425b78f9302f5da0da8d80af947d14035b5f5ec1d3ae8f8b6bb950d56dc4c1d",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tests/model.test.mjs",
+      "source_sha256": "87cb808a77edb1faa2fb83cf7dfef3cd04eef35cb25c54c18e391d83da6ab0e3",
+      "sha256": "87cb808a77edb1faa2fb83cf7dfef3cd04eef35cb25c54c18e391d83da6ab0e3",
+      "bytes": 14272,
+      "transformations": [],
+      "imported_sha256": "87cb808a77edb1faa2fb83cf7dfef3cd04eef35cb25c54c18e391d83da6ab0e3"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tests/offline-assert.js",
+      "source_sha256": "35dfbe49656c6504e43f55a3fe4a19f5908a22b80797a4b2942f8a6917fc6f26",
+      "sha256": "35dfbe49656c6504e43f55a3fe4a19f5908a22b80797a4b2942f8a6917fc6f26",
+      "bytes": 944,
+      "transformations": [],
+      "imported_sha256": "35dfbe49656c6504e43f55a3fe4a19f5908a22b80797a4b2942f8a6917fc6f26"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tests/offline-panel.js",
+      "source_sha256": "b0bfcbc9905d4ff44d985509c959d5cff41e1aecd77aafef1edbbf3dc77f7b62",
+      "sha256": "b0bfcbc9905d4ff44d985509c959d5cff41e1aecd77aafef1edbbf3dc77f7b62",
+      "bytes": 6049,
+      "transformations": [],
+      "imported_sha256": "b0bfcbc9905d4ff44d985509c959d5cff41e1aecd77aafef1edbbf3dc77f7b62"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tsconfig.json",
+      "source_sha256": "d45d23ba09f20dc5e340eac95139ed9fcb01a56f428ef74263b7e74884a707c2",
+      "sha256": "d45d23ba09f20dc5e340eac95139ed9fcb01a56f428ef74263b7e74884a707c2",
+      "bytes": 820,
+      "transformations": [],
+      "imported_sha256": "d45d23ba09f20dc5e340eac95139ed9fcb01a56f428ef74263b7e74884a707c2"
+    },
+    {
+      "path": "deployment/operator/foxglove.yaml",
+      "source_sha256": "2180d1d60ee8168c4e113d9cd349ca967c6674c6d31261597c708df51ba0ee95",
+      "sha256": "2180d1d60ee8168c4e113d9cd349ca967c6674c6d31261597c708df51ba0ee95",
+      "bytes": 946,
+      "transformations": [],
+      "imported_sha256": "2180d1d60ee8168c4e113d9cd349ca967c6674c6d31261597c708df51ba0ee95"
+    },
+    {
+      "path": "deployment/operator/imagegoal-console.foxglove-layout.json",
+      "source_sha256": "a6cf58fa8f58cea25d9cc910be28479f382bab9b8a3e892c423a383ffc5aa866",
+      "sha256": "a6cf58fa8f58cea25d9cc910be28479f382bab9b8a3e892c423a383ffc5aa866",
+      "bytes": 383,
+      "transformations": [],
+      "imported_sha256": "a6cf58fa8f58cea25d9cc910be28479f382bab9b8a3e892c423a383ffc5aa866"
+    },
+    {
+      "path": "deployment/operator/imagegoal.foxglove-layout.json",
+      "source_sha256": "be7f08894a02e665bdc279f2c9add6dcb7270d7eec97d87015e7c31915828c55",
+      "sha256": "be7f08894a02e665bdc279f2c9add6dcb7270d7eec97d87015e7c31915828c55",
+      "bytes": 2378,
+      "transformations": [],
+      "imported_sha256": "be7f08894a02e665bdc279f2c9add6dcb7270d7eec97d87015e7c31915828c55"
+    },
+    {
+      "path": "deployment/operator/native_imagegoal.foxglove-layout.json",
+      "source_sha256": "03b61717c656cbdf4e9a7b7f3cb46b84c2afd52fee7e86b56f298ac0ae5ffe4e",
+      "sha256": "03b61717c656cbdf4e9a7b7f3cb46b84c2afd52fee7e86b56f298ac0ae5ffe4e",
+      "bytes": 382,
+      "transformations": [],
+      "imported_sha256": "03b61717c656cbdf4e9a7b7f3cb46b84c2afd52fee7e86b56f298ac0ae5ffe4e"
+    },
+    {
+      "path": "deployment/operator/open_console.py",
+      "source_sha256": "725212840806217e7e382790ae4fc0527c2d1b19d838d402fe1d7564e389ecde",
+      "sha256": "2379917148284f2e28d72ebabf7a930b75abc2d13532dbcc9ed53fb8e8f0bda2",
+      "bytes": 17660,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example"
+      ],
+      "imported_sha256": "49bc162c96e7f9d4072def2c71c51de151cdcbe4eea21b281b6044f7dc15572d",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/operator/open_lightnav.sh",
+      "source_sha256": "ccaada092eaaf52f903775d661520b069a4a5e0b9b26b77c79b99270d9a784aa",
+      "sha256": "ccaada092eaaf52f903775d661520b069a4a5e0b9b26b77c79b99270d9a784aa",
+      "bytes": 211,
+      "transformations": [],
+      "imported_sha256": "ccaada092eaaf52f903775d661520b069a4a5e0b9b26b77c79b99270d9a784aa"
+    },
+    {
+      "path": "deployment/operator/run_foxglove.sh",
+      "source_sha256": "bf4d25cf2af7ac9698df5155704202ba6224d55b4a67f1b748abcc01421806d9",
+      "sha256": "bf4d25cf2af7ac9698df5155704202ba6224d55b4a67f1b748abcc01421806d9",
+      "bytes": 334,
+      "transformations": [],
+      "imported_sha256": "bf4d25cf2af7ac9698df5155704202ba6224d55b4a67f1b748abcc01421806d9"
+    },
+    {
+      "path": "deployment/operator/tests/probe_foxglove.mjs",
+      "source_sha256": "94a5e1654d7dabc4de0ab3520da17f3edfa6c5a43c0a3ceee57b039c9506cf08",
+      "sha256": "94a5e1654d7dabc4de0ab3520da17f3edfa6c5a43c0a3ceee57b039c9506cf08",
+      "bytes": 41908,
+      "transformations": [],
+      "imported_sha256": "94a5e1654d7dabc4de0ab3520da17f3edfa6c5a43c0a3ceee57b039c9506cf08"
+    },
+    {
+      "path": "deployment/operator/tests/probe_video.mjs",
+      "source_sha256": "32e03e0885aad96f707178888de9fd34d7bf98a0ace66674d02687f22df0f0ab",
+      "sha256": "32e03e0885aad96f707178888de9fd34d7bf98a0ace66674d02687f22df0f0ab",
+      "bytes": 8670,
+      "transformations": [],
+      "imported_sha256": "32e03e0885aad96f707178888de9fd34d7bf98a0ace66674d02687f22df0f0ab"
+    },
+    {
+      "path": "deployment/operator/tests/test_adapter.py",
+      "source_sha256": "1ed223dcc47a03d59256664ec6dffff8d5ed62096330c8dca8cfae1fdeb8d7df",
+      "sha256": "1ed223dcc47a03d59256664ec6dffff8d5ed62096330c8dca8cfae1fdeb8d7df",
+      "bytes": 10191,
+      "transformations": [],
+      "imported_sha256": "1ed223dcc47a03d59256664ec6dffff8d5ed62096330c8dca8cfae1fdeb8d7df"
+    },
+    {
+      "path": "deployment/operator/tests/test_compressed_preview.py",
+      "source_sha256": "bf95b9abc578f166e3417804a706426a2022fb85a6405906c00d4d21a5c9676c",
+      "sha256": "bf95b9abc578f166e3417804a706426a2022fb85a6405906c00d4d21a5c9676c",
+      "bytes": 1036,
+      "transformations": [],
+      "imported_sha256": "bf95b9abc578f166e3417804a706426a2022fb85a6405906c00d4d21a5c9676c"
+    },
+    {
+      "path": "deployment/operator/tests/test_ensure_observation.py",
+      "source_sha256": "5b9decb0a6de06e2cb6f108e59982ba24d21074c4fabef4e1e500952ee8651ea",
+      "sha256": "5b9decb0a6de06e2cb6f108e59982ba24d21074c4fabef4e1e500952ee8651ea",
+      "bytes": 7475,
+      "transformations": [],
+      "imported_sha256": "5b9decb0a6de06e2cb6f108e59982ba24d21074c4fabef4e1e500952ee8651ea"
+    },
+    {
+      "path": "deployment/operator/tests/test_launcher.py",
+      "source_sha256": "d1495efbd97c38cf0b5a0e1197180cc1a7c712d027b3317bfada4dc12de75b85",
+      "sha256": "d1495efbd97c38cf0b5a0e1197180cc1a7c712d027b3317bfada4dc12de75b85",
+      "bytes": 2428,
+      "transformations": [],
+      "imported_sha256": "d1495efbd97c38cf0b5a0e1197180cc1a7c712d027b3317bfada4dc12de75b85"
+    },
+    {
+      "path": "deployment/operator/tests/test_lightnav_history.py",
+      "source_sha256": "30c9241f93b1ec19e8be44521212d5b5a7a83d1b8470b7cc4c5027a9da4292b0",
+      "sha256": "38c1425c0d72d3d53178306acc603f5cb08864525a3ce4f7b9f47360933649ba",
+      "bytes": 15463,
+      "transformations": [],
+      "imported_sha256": "30c9241f93b1ec19e8be44521212d5b5a7a83d1b8470b7cc4c5027a9da4292b0",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/operator/tests/test_preview.py",
+      "source_sha256": "254b3a992d138478663f79bc7fb764b5b98433d0ef82b7374794f0704748ea39",
+      "sha256": "254b3a992d138478663f79bc7fb764b5b98433d0ef82b7374794f0704748ea39",
+      "bytes": 3010,
+      "transformations": [],
+      "imported_sha256": "254b3a992d138478663f79bc7fb764b5b98433d0ef82b7374794f0704748ea39"
+    },
+    {
+      "path": "deployment/operator/tests/test_protocol.py",
+      "source_sha256": "943f0acad3b042ad2f1cde518f1f822ed0a43734585fa3448e627f1d7a42bcf4",
+      "sha256": "943f0acad3b042ad2f1cde518f1f822ed0a43734585fa3448e627f1d7a42bcf4",
+      "bytes": 1390,
+      "transformations": [],
+      "imported_sha256": "943f0acad3b042ad2f1cde518f1f822ed0a43734585fa3448e627f1d7a42bcf4"
+    },
+    {
+      "path": "deployment/operator/tests/test_runtime_session.py",
+      "source_sha256": "671111e8ba1a77444239c11fc1c929314750537fd5d26ab6d6ad900c665d1af2",
+      "sha256": "671111e8ba1a77444239c11fc1c929314750537fd5d26ab6d6ad900c665d1af2",
+      "bytes": 2611,
+      "transformations": [],
+      "imported_sha256": "671111e8ba1a77444239c11fc1c929314750537fd5d26ab6d6ad900c665d1af2"
+    },
+    {
+      "path": "deployment/operator/unitree_imagegoal.foxglove-layout.json",
+      "source_sha256": "3a70c66c9148975194a3e4722eb92eb2df927cdce229e6077ee3e0bd0d8265bd",
+      "sha256": "3a70c66c9148975194a3e4722eb92eb2df927cdce229e6077ee3e0bd0d8265bd",
+      "bytes": 2400,
+      "transformations": [],
+      "imported_sha256": "3a70c66c9148975194a3e4722eb92eb2df927cdce229e6077ee3e0bd0d8265bd"
+    },
+    {
+      "path": "deployment/operator/web/imagegoal.css",
+      "source_sha256": "0fedf9e6d0fb03014845496e5a5583f62c688781e2a4f869889226e6dc4a6fdb",
+      "sha256": "0fedf9e6d0fb03014845496e5a5583f62c688781e2a4f869889226e6dc4a6fdb",
+      "bytes": 2741,
+      "transformations": [],
+      "imported_sha256": "0fedf9e6d0fb03014845496e5a5583f62c688781e2a4f869889226e6dc4a6fdb"
+    },
+    {
+      "path": "deployment/operator/web/imagegoal.js",
+      "source_sha256": "cdf73f3f9133c0e304a9e135e684e106f11204afbb080a38f0bbe346ad254dbb",
+      "sha256": "cdf73f3f9133c0e304a9e135e684e106f11204afbb080a38f0bbe346ad254dbb",
+      "bytes": 17153,
+      "transformations": [],
+      "imported_sha256": "cdf73f3f9133c0e304a9e135e684e106f11204afbb080a38f0bbe346ad254dbb"
+    },
+    {
+      "path": "deployment/operator/web/index.html",
+      "source_sha256": "b5ef3e593415581de45582c7bc35bfb61b4691d24e56e8c9c8c21062b33794cf",
+      "sha256": "bbb2d32321287b8bf949ece8413838bbd5810d892af94255a5e56bdd40a24a40",
+      "bytes": 4914,
+      "transformations": [],
+      "imported_sha256": "b5ef3e593415581de45582c7bc35bfb61b4691d24e56e8c9c8c21062b33794cf",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/operator/web/lightnav-base.css",
+      "source_sha256": "274db0ac6b76d9e80473c1ce4933b5f2f350a3cc02dc3a65004b2ae95bc4baee",
+      "sha256": "274db0ac6b76d9e80473c1ce4933b5f2f350a3cc02dc3a65004b2ae95bc4baee",
+      "bytes": 13227,
+      "transformations": [],
+      "imported_sha256": "274db0ac6b76d9e80473c1ce4933b5f2f350a3cc02dc3a65004b2ae95bc4baee"
+    },
+    {
+      "path": "deployment/sensors/README.md",
+      "source_sha256": "c18ce0a9706bfbccb668ffb0426f8bad740a79174673ec85bb2d37fe16cc9b46",
+      "sha256": "c31ddae9287a39e3895f42759f22b3b76f82381633d27083a9900b00f399b37b",
+      "bytes": 3707,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "6690569f298a65a607f865ce7d921f5937a8ebe6c527a60c90e90f203e51a0d6",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "deployment/sensors/inspect_rgbd.py",
+      "source_sha256": "4241f84b522bac22157ad716c9282cf09f90734d615d60a83c6462dde228ae4b",
+      "sha256": "4241f84b522bac22157ad716c9282cf09f90734d615d60a83c6462dde228ae4b",
+      "bytes": 10346,
+      "transformations": [],
+      "imported_sha256": "4241f84b522bac22157ad716c9282cf09f90734d615d60a83c6462dde228ae4b"
+    },
+    {
+      "path": "deployment/sensors/prepare_jetson_gpu.sh",
+      "source_sha256": "d493680e3c63ded314117b6892431f38aca97ed6a6b732aeb4b3f01527258b74",
+      "sha256": "d493680e3c63ded314117b6892431f38aca97ed6a6b732aeb4b3f01527258b74",
+      "bytes": 1930,
+      "transformations": [],
+      "imported_sha256": "d493680e3c63ded314117b6892431f38aca97ed6a6b732aeb4b3f01527258b74"
+    },
+    {
+      "path": "deployment/sensors/prepare_realsense_overlay.py",
+      "source_sha256": "c5ae5ab6105909f34e7a0a023eb7a7f8e78f7c0eaa7d26df292d8397c9b9a68b",
+      "sha256": "c5ae5ab6105909f34e7a0a023eb7a7f8e78f7c0eaa7d26df292d8397c9b9a68b",
+      "bytes": 3399,
+      "transformations": [],
+      "imported_sha256": "c5ae5ab6105909f34e7a0a023eb7a7f8e78f7c0eaa7d26df292d8397c9b9a68b"
+    },
+    {
+      "path": "deployment/sensors/profile_nomad_math.py",
+      "source_sha256": "28c6b42b755a24b06e45667d293690b9ff7b2bbc149e9dd057e057f465c065a2",
+      "sha256": "28c6b42b755a24b06e45667d293690b9ff7b2bbc149e9dd057e057f465c065a2",
+      "bytes": 3274,
+      "transformations": [],
+      "imported_sha256": "28c6b42b755a24b06e45667d293690b9ff7b2bbc149e9dd057e057f465c065a2"
+    },
+    {
+      "path": "deployment/sensors/profile_nomad_precision.py",
+      "source_sha256": "0cb38448b19d6ab3ea2e55dc87f45694a53f06bde177667438462146d2710d41",
+      "sha256": "0cb38448b19d6ab3ea2e55dc87f45694a53f06bde177667438462146d2710d41",
+      "bytes": 9070,
+      "transformations": [],
+      "imported_sha256": "0cb38448b19d6ab3ea2e55dc87f45694a53f06bde177667438462146d2710d41"
+    },
+    {
+      "path": "deployment/sensors/requirements-jetson-gpu.txt",
+      "source_sha256": "fd3e2af770ad52f79fb1484342287ca1b709eceb889dea54f39a971f9baf233a",
+      "sha256": "fd3e2af770ad52f79fb1484342287ca1b709eceb889dea54f39a971f9baf233a",
+      "bytes": 509,
+      "transformations": [],
+      "imported_sha256": "fd3e2af770ad52f79fb1484342287ca1b709eceb889dea54f39a971f9baf233a"
+    },
+    {
+      "path": "deployment/sensors/requirements-nomad-runtime.txt",
+      "source_sha256": "a8ca94f22c6e87d8473b61bad5cd27f70f7b73d2d17d0713ac728e87e91769a1",
+      "sha256": "a8ca94f22c6e87d8473b61bad5cd27f70f7b73d2d17d0713ac728e87e91769a1",
+      "bytes": 369,
+      "transformations": [],
+      "imported_sha256": "a8ca94f22c6e87d8473b61bad5cd27f70f7b73d2d17d0713ac728e87e91769a1"
+    },
+    {
+      "path": "deployment/sensors/run_nomad_jetson.sh",
+      "source_sha256": "fdab5494799498fab9906155cbe44a8da1270318cba57c69ce7d9692498898e5",
+      "sha256": "fdab5494799498fab9906155cbe44a8da1270318cba57c69ce7d9692498898e5",
+      "bytes": 634,
+      "transformations": [],
+      "imported_sha256": "fdab5494799498fab9906155cbe44a8da1270318cba57c69ce7d9692498898e5"
+    },
+    {
+      "path": "deployment/sensors/run_realsense.sh",
+      "source_sha256": "549742201d1a1bd69b7a528de27a327462d497f0aef6290b2839d53a7265d3a5",
+      "sha256": "549742201d1a1bd69b7a528de27a327462d497f0aef6290b2839d53a7265d3a5",
+      "bytes": 855,
+      "transformations": [],
+      "imported_sha256": "549742201d1a1bd69b7a528de27a327462d497f0aef6290b2839d53a7265d3a5"
+    },
+    {
+      "path": "docs/DEJAVIEW_GO2_LIGHTNAV_DEPLOYMENT_PLAN_20261015.md",
+      "source_sha256": "d478a1b409ff079e8138c09ed8b344002db4df77abfe74d70926a7c09a690c6a",
+      "sha256": "12531faada60495fd4a7a68c998adb48420c7cdac2302bd5b0c90cd75a0062cc",
+      "bytes": 4468,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "d478a1b409ff079e8138c09ed8b344002db4df77abfe74d70926a7c09a690c6a",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "docs/DEJAVIEW_GO2_NOMAD_DEPLOYMENT_PLAN_20261017.md",
+      "source_sha256": "325b97a30400f791b59b9e4c6d4ef931701e1175a961a966351aad8cda5bb48c",
+      "sha256": "3d4f553cc0f3f4f4456d1e49071dc3e92af200da8cf5c6d92bfcb9aa314a2205",
+      "bytes": 22830,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "c68019da6e5e26aacbdbc0d694cea2db812ac6f16c48201cedb4334e736a7243",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "docs/DEJAVIEW_JETSON_GPU_RGBD_20261017.md",
+      "source_sha256": "9c5af47c28f633317759c1988a7c40ae83d83c22fcbdd878619f7c7bfc2a96f2",
+      "sha256": "9ba4265ac399d0311c4d38fa5b816544b0e037414bd1f943204f7ad5497b9cca",
+      "bytes": 7945,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "38fb5430a3f88d2ba403401cc5da3bb0105f09a3b39f44bc5671e9ac6d5c6538",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "docs/DEJAVIEW_LIGHTNAV_IMAGEGOAL_20261017.md",
+      "source_sha256": "cae6b1127a4ce56a665606c8e77447d37e088a669399b6a5d632622296452c13",
+      "sha256": "2f3eebd57da67f73eed5cd89078ccd21e089a788d5ae4b755148574e01c1b2f3",
+      "bytes": 8386,
+      "transformations": [
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "cae6b1127a4ce56a665606c8e77447d37e088a669399b6a5d632622296452c13",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    },
+    {
+      "path": "docs/DEJAVIEW_NOMAD_BRINGUP_20261017.md",
+      "source_sha256": "cb1bf5333d151a976d5fc1f36b3f737a1342d0a879e11857f4bf12feef829199",
+      "sha256": "2e97bac6de5c6933225607c4e70600be2ce4163fee701fcf4b21fc74f3a56f19",
+      "bytes": 10430,
+      "transformations": [
+        "deployment identity/path replaced with portable example",
+        "deployment identity/path replaced with portable example",
+        "local workstation examples generalized"
+      ],
+      "imported_sha256": "ebfe5cde4b5f47459ae06a2297ead263558cc79a15a9626d5773f238ed17863b",
+      "local_changes_after_import": [
+        "Portable integration or CPU regression update; exact local delta is recorded in this branch."
+      ]
+    }
+  ],
+  "snapshot_version": "go2-console-0.1.11",
+  "frozen_source_at": "2026-10-20T04:18:29+08:00",
+  "source_concurrent_changes_after_snapshot": [
+    {
+      "path": "deployment/go2/native_imagegoal.py",
+      "source_sha256_at_import": "7d51fedafb08df8bbe336b1f9a159d3b059b722dd36b19cc3e9bf8d3933c2544",
+      "source_sha256_after_import": "4b7ef62186d78cafce23243eda0a1c3024a352fc9b9319b824c987f4dcf9b19f"
+    },
+    {
+      "path": "deployment/go2/start_native_imagegoal.py",
+      "source_sha256_at_import": "2d480f4d4aff342a0a120e6f8aaea29c4dcff8a095e517a18d47313510cf7058",
+      "source_sha256_after_import": "c2171a6dfa4f85002564d412f678ab2bf66b89a7f2965bb1414c5e34a0345188"
+    },
+    {
+      "path": "deployment/imagegoal/native_control.py",
+      "source_sha256_at_import": "7d45e29e2671e108529412c26b9c11543a87c04334e7a2233c539dfd771dde17",
+      "source_sha256_after_import": "1420cd5c2ac521ae67b131e1d0715baa9b49391e48001fef1f179b251fa668ab"
+    },
+    {
+      "path": "deployment/imagegoal/runtime.py",
+      "source_sha256_at_import": "8b75630048efcf193067f0a432613a05f2ec33ba0edd593e966b1654805f91a5",
+      "source_sha256_after_import": "57198772d09223038bb0c31c8865eb302cbb3b4d9fd4ee6b778d983a6ee986a7"
+    },
+    {
+      "path": "deployment/operator/README.md",
+      "source_sha256_at_import": "86393979468ffb9ae54d13e05544ccac877b5dbc5e7faf59b8369060e175ebc5",
+      "source_sha256_after_import": "0f23f7d0318a03e8360ca607f8f744cb186c1abd740f8204d6d69ccdef7f4b8c"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/README.md",
+      "source_sha256_at_import": "f38909a1509053470e4dac84803092da7d64de2dec817bd13f0106bf681a5537",
+      "source_sha256_after_import": "2deefde4e75d946a94b65ccd39fa5a7b952c7afd3304b904b3274565d99b2804"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/package-lock.json",
+      "source_sha256_at_import": "bf0eb556cbfaa75c1f5de8e522a62592d6b63e04cd6292713237204ec4a65448",
+      "source_sha256_after_import": "81258cedaf82e8b759d837c6da48ce5a1e0e6fb30d670c839c813174247875cb"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/package.json",
+      "source_sha256_at_import": "1133e0304575202510ac5c97a6f5645f1494a8e0457571c36d0e12a341599893",
+      "source_sha256_after_import": "68fde4a2ecd2d6d2e0bab032c54a94aa68fd733ff36c67c446385a246c296302"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/model.ts",
+      "source_sha256_at_import": "e92ddf980cdaec77ba73362e62933e19c961a347b1d07badcad3d810fcf7af58",
+      "source_sha256_after_import": "164fca60de3166942dfb5bd17700768bf5940e03a4ad236fe9a074207ea362b4"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/panel.ts",
+      "source_sha256_at_import": "24ae5c879b70b8f293770199088d118c1e8d2b2a4ee408aad2db943df5ccc5f6",
+      "source_sha256_after_import": "7dd547408411204c8f8a5c93108b312b3fd6a7437a14604dcdef4f1e1b4cd022"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/src/styles.ts",
+      "source_sha256_at_import": "532219e267a5d40249a7e7d15df85c8ff8d7437e151f2423dddfc4b8e167a818",
+      "source_sha256_after_import": "55052f6b99e23b0b0b0ff89d1cc8a6ed5336859d6272e89d6dd4f133ffd06be6"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tests/browser.test.mjs",
+      "source_sha256_at_import": "8425b78f9302f5da0da8d80af947d14035b5f5ec1d3ae8f8b6bb950d56dc4c1d",
+      "source_sha256_after_import": "6fb8c4a1d3f969663b7669ca3f011a0d65609dcf15870ee166b765d46b2e0b80"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/tests/model.test.mjs",
+      "source_sha256_at_import": "87cb808a77edb1faa2fb83cf7dfef3cd04eef35cb25c54c18e391d83da6ab0e3",
+      "source_sha256_after_import": "165c155abdf0ca9ca3c960d300b83c25f2939728be11d02e1a8158dc6e4a7287"
+    },
+    {
+      "path": "deployment/operator/open_console.py",
+      "source_sha256_at_import": "725212840806217e7e382790ae4fc0527c2d1b19d838d402fe1d7564e389ecde",
+      "source_sha256_after_import": "f14fab0c8800da402f722d840161161a79e0a81e43d638cdeadcd8bd34663f92"
+    },
+    {
+      "path": "deployment/operator/tests/test_adapter.py",
+      "source_sha256_at_import": "1ed223dcc47a03d59256664ec6dffff8d5ed62096330c8dca8cfae1fdeb8d7df",
+      "source_sha256_after_import": "3fdadeacb1639c1846c3b27527fbaf8b47116241988fd89efd31bc30b4718816"
+    },
+    {
+      "path": "deployment/operator/tests/test_launcher.py",
+      "source_sha256_at_import": "d1495efbd97c38cf0b5a0e1197180cc1a7c712d027b3317bfada4dc12de75b85",
+      "source_sha256_after_import": "17cb46a07e85e30f5d290a839745684c97f7289662cc09daa18a9512864dbaa0"
+    }
+  ],
+  "source_concurrent_changes_note": "Later source-workspace NavGPT-3 / Foxglove 0.1.12 changes were intentionally not imported or overwritten.",
+  "generated_or_release_files": [
+    {
+      "path": "deployment/operator/dist/dejaview.dejaview-imagegoal-0.1.11.foxe",
+      "sha256": "f5703fd1f46974e848e4630bc660018298d0d46f04331694e0cba5d35317a7b8",
+      "bytes": 89330,
+      "origin": "frozen 0.1.11 release / source layout"
+    },
+    {
+      "path": "deployment/operator/web/downloads/dejaview.dejaview-imagegoal-0.1.11.foxe",
+      "sha256": "f5703fd1f46974e848e4630bc660018298d0d46f04331694e0cba5d35317a7b8",
+      "bytes": 89330,
+      "origin": "frozen 0.1.11 release / source layout"
+    },
+    {
+      "path": "deployment/operator/web/downloads/native_imagegoal.foxglove-layout.json",
+      "sha256": "03b61717c656cbdf4e9a7b7f3cb46b84c2afd52fee7e86b56f298ac0ae5ffe4e",
+      "bytes": 382,
+      "origin": "frozen 0.1.11 release / source layout"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/demo/live-rgb.jpg",
+      "sha256": "0e77fa0b4f4c93ca3ff143cfce7bb335d29ae8410aa27eb8b9bc270e7d09ce60",
+      "bytes": 11646,
+      "origin": "synthetic constants via demo/generate_fixtures.py"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/demo/live-goal.jpg",
+      "sha256": "b2a815ddedaa40badcf177dbd3adc896e555b340a0fa515e2bb34f176bdd0368",
+      "bytes": 11336,
+      "origin": "synthetic constants via demo/generate_fixtures.py"
+    },
+    {
+      "path": "deployment/operator/foxglove-extension/demo/fixture-status.json",
+      "sha256": "6bca31a6823846ddb7dd32ac00417b3c792d3cead713f6fe5abd9609c49d26dc",
+      "bytes": 348,
+      "origin": "synthetic constants via demo/generate_fixtures.py"
+    }
+  ],
+  "local_integration_changes": [
+    "Parameterize operator SSH host/remote project; default to new independent checkout.",
+    "Add LightNav-only shadow/native profiles; no NoMaD model/weights required.",
+    "Guard loaded lightnav module origins; never replace sys.modules to bypass provenance.",
+    "Update stale imported history tests to explicit ImageGoal, bounded histories and current STOP contracts.",
+    "Retain all F checks; allow imported compact E/I style and remove unused locals/imports.",
+    "Use synthetic demo fixtures, portable browser path and current 0.1.11 download links.",
+    "Document official vs experimental modes, historical setup notes, unchanged production workspace and third-party scope."
+  ]
+}

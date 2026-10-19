@@ -1,0 +1,100 @@
+{
+  "configById": {
+    "Image!recordedRgb": {
+      "imageMode": {
+        "imageTopic": "/go2/front_camera/image_raw/compressed",
+        "rectifyImage": false,
+        "publish": {
+          "clickEnabled": false,
+          "hoverEnabled": false
+        }
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Go2 native RGB · receive-time stamps"
+    },
+    "Image!recordedGoal": {
+      "imageMode": {
+        "imageTopic": "/imagegoal/shadow/goal/compressed",
+        "rectifyImage": false,
+        "publish": {
+          "clickEnabled": false,
+          "hoverEnabled": false
+        }
+      },
+      "synchronize": false,
+      "foxglovePanelTitle": "Active full goal"
+    },
+    "3D!syntheticPaths": {
+      "fixedFrame": "go2_odom",
+      "followTf": "go2_odom",
+      "followMode": "follow-pose",
+      "cameraState": {
+        "distance": 1.5,
+        "perspective": false,
+        "phi": 0,
+        "thetaOffset": 0,
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "targetOffset": [
+          0,
+          0,
+          0
+        ],
+        "targetOrientation": [
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "topics": {
+        "/imagegoal/shadow/path": {
+          "visible": true,
+          "color": "#23c483",
+          "lineWidth": 0.01
+        },
+        "/imagegoal/shadow/reference": {
+          "visible": true,
+          "color": "#f4cc45",
+          "lineWidth": 0.006
+        },
+        "/imagegoal/shadow/prediction": {
+          "visible": true,
+          "color": "#51a7fa",
+          "lineWidth": 0.006
+        }
+      },
+      "foxglovePanelTitle": "Measured odom paths (empty until feedback)"
+    },
+    "RawMessages!recordedStatus": {
+      "topicPath": "/imagegoal/shadow/status",
+      "foxglovePanelTitle": "ImageGoal runtime / source validity"
+    }
+  },
+  "globalVariables": {},
+  "userNodes": {},
+  "linkedGlobalVariables": [],
+  "playbackConfig": {
+    "speed": 1,
+    "messageOrder": "receiveTime"
+  },
+  "layout": {
+    "direction": "row",
+    "first": {
+      "direction": "column",
+      "first": "Image!recordedRgb",
+      "second": "Image!recordedGoal",
+      "splitPercentage": 60
+    },
+    "second": {
+      "direction": "column",
+      "first": "3D!syntheticPaths",
+      "second": "RawMessages!recordedStatus",
+      "splitPercentage": 60
+    },
+    "splitPercentage": 50
+  }
+}

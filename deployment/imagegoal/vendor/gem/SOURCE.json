@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/AlanZhu2006/GEM-RealWorld",
+  "commit": "fd23b5d4006226e7a76b2c3f0bf03a8ec16e3436",
+  "files": {
+    "trajectory_control.py": {"source": "deployment/go2/trajectory_control.py", "sha256": "761031926ab6b0a34938cf5a752f644870e117725aeaefb77bb320754fc8550e"},
+    "latency_motion_guard.py": {"source": "deployment/go2/latency_motion_guard.py", "sha256": "10d706cab31f91d3685363cd27b556aeb2f5264c0b876a7d50d8cf7d1c4a5462"}
+  },
+  "unmodified": true,
+  "purpose": "Reuse original pure depth and plan-age guards; never import the hardware bridge."
+}

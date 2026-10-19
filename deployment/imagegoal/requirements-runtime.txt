@@ -1,0 +1,7 @@
+# Jetson CPU controller/HTTP runtime only. ROS 2 Humble remains a system dependency.
+# Do not install the root GPU project or the LightNav server environment here.
+numpy>=1.24,<3
+Pillow>=10,<13
+casadi==3.7.2
+opencv-python-headless>=4.8,<6
+PyYAML>=6,<7

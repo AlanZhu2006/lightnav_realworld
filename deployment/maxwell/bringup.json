@@ -1,0 +1,19 @@
+{
+  "name": "maxwell_lightnav",
+  "components": [
+    {
+      "name": "lightnav",
+      "command": ["bash", "deployment/maxwell/run_lightnav.sh"],
+      "health_url": "http://127.0.0.1:18884/healthz",
+      "health_expect": {
+        "ok": true,
+        "model_loaded": true,
+        "contract.model": "LightOriginsHQ/LightNav-0",
+        "contract.model_revision": "826dc5fbfa37afa8293d2e336d329b6ffc0bfb64",
+        "contract.model_sha256": "ffc4a925378a881afa761865048eb8d07c55cacf5eaf66548b6641c39f67af18"
+      },
+      "startup_timeout_s": 180,
+      "adopt_existing": false
+    }
+  ]
+}

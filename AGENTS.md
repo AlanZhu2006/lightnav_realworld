@@ -53,3 +53,20 @@ Hardware bring-up is performed by the operator. --dry-run prints commands;
 
 Keep source provenance and upstream attribution. No new learning algorithm or
 navigation performance claim is implied by deployment integration.
+
+## Imported Go2 console
+
+`deployment/lightnav`, `imagegoal`, `go2`, `operator`, `bringup`, `nomad`,
+`sensors`, and `maxwell` implement the separate HTTP/Foxglove Go2 path. Read
+`docs/REALWORLD_GO2_CONSOLE.md` before modifying it. Root `src/lightnav` and the
+hash-locked vendor core must run in separate processes; never clear sys.modules
+to bypass the source-origin guard. `make test-go2` runs the portable CPU suite
+without GPUs or hardware. Preserve the 0.1.11 source snapshot; concurrent NavGPT-3
+changes in the source workspace are intentionally outside this import. Update
+`deployment/go2-source-manifest.json` only with explicit source/local provenance.
+
+The new `jetson_lightnav` / `jetson_native_lightnav` profiles omit the optional
+NoMaD model while keeping its shared utility modules. Source synchronization
+does not authorize switching production paths, starting physical motion or
+allocating a shared-server GPU. Machine identities and recording images do not
+belong in tracked templates or synthetic UI fixtures.

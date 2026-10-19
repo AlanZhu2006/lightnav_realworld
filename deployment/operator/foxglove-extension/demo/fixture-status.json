@@ -1,0 +1,16 @@
+{
+  "schema_version": "imagegoal.runtime.v1",
+  "session_id": "synthetic-read-only-preview",
+  "timestamp_ns": 1,
+  "epoch": 1,
+  "state": "IDLE",
+  "task": null,
+  "profile": "simulated-replay",
+  "synthetic_feedback": true,
+  "sensors": {},
+  "execution_capability": {},
+  "metrics": {},
+  "gates": [
+    "synthetic_fixture_not_for_motion"
+  ]
+}

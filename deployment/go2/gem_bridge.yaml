@@ -1,0 +1,21 @@
+navdp_go2_cmd_bridge:
+  ros__parameters:
+    enabled: false
+    cmd_vel_topic: /imagegoal/authorized_cmd_vel
+    rate_hz: 20.0
+    timeout_sec: 0.25
+    max_vx: 0.2
+    max_vy: 0.0
+    max_wz: 0.4
+    min_cmd_v: 0.0
+    min_cmd_w: 0.0
+    x_sign: 1.0
+    y_sign: 1.0
+    wz_sign: 1.0
+    swap_xy: false
+    remote_priority: true
+    remote_hold_sec: 0.8
+    remote_deadband: 0.12
+    send_zero_when_idle: false
+    stop_once_on_release: true
+    battery_topic: /go2/bridge/battery
